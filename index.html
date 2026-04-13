@@ -7,26 +7,78 @@
 </head>
 <body>
 
-<!-- START -->
+<!-- ================= START SCREEN ================= -->
 <div id="start-screen">
   <div class="card">
+
     <h1>📧 Email Etiquette Simulator</h1>
-    <p>Select Difficulty</p>
+
+    <p><strong>Corporate Training Overview</strong></p>
+
+    <div style="text-align:left; font-size:14px; line-height:1.5; margin: 10px 0;">
+      <p>Welcome to your email communication training module.</p>
+      <p>You will review simulated corporate emails and evaluate professionalism.</p>
+    </div>
+
+    <p><strong>How to Play:</strong></p>
+
+    <div style="text-align:left; font-size:14px; line-height:1.5; margin: 10px 0;">
+      <p>• Select a difficulty level to begin.</p>
+      <p>• Open emails from your inbox and evaluate each message.</p>
+      <p>• Decide if the email follows proper business etiquette:</p>
+      <ul>
+        <li>✅ Professional tone, clarity, structure → Appropriate</li>
+        <li>❌ Informal, vague, rude, or unclear → Inappropriate</li>
+      </ul>
+      <p>• Each correct answer increases your final score (out of 100).</p>
+      <p>• Each incorrect answer adds a strike.</p>
+      <p>• 3 strikes will end the simulation early.</p>
+      <p>• Your final grade (A–F) is shown at completion.</p>
+    </div>
+
+    <p><strong>Select Difficulty:</strong></p>
+
     <button onclick="startGame('novice')">Novice</button>
     <button onclick="startGame('intermediate')">Intermediate</button>
     <button onclick="startGame('expert')">Expert</button>
+
+    <hr style="margin:15px 0; opacity:0.3;">
+
+    <!-- ================= TUTORIAL ================= -->
+    <p><strong>Interactive Tutorial</strong></p>
+
+    <div style="text-align:left; font-size:13px; line-height:1.5; opacity:0.9;">
+
+      <p><strong>Step 1:</strong> Inbox Navigation</p>
+      <p>You will see a list of emails on the left side. Click one to open it.</p>
+
+      <p><strong>Step 2:</strong> Evaluation</p>
+      <p>Read the email and decide if it is professionally written.</p>
+
+      <p><strong>Step 3:</strong> Decision Buttons</p>
+      <p>Use:</p>
+      <ul>
+        <li>✅ Appropriate → Proper business communication</li>
+        <li>❌ Inappropriate → Poor etiquette or unclear messaging</li>
+      </ul>
+
+      <p><strong>Step 4:</strong> Feedback</p>
+      <p>You will receive immediate feedback with explanations after each answer.</p>
+
+      <p><strong>Step 5:</strong> Completion</p>
+      <p>Finish all emails or reach 3 strikes to see your final score and grade.</p>
+
+    </div>
+
   </div>
 </div>
 
-<!-- APP -->
+<!-- ================= GAME APP ================= -->
 <div id="app" class="hidden">
 
   <div id="topbar">
     <div>
-      <span id="difficulty"></span> |
-      <span id="strikes"></span> |
-      <span id="score"></span> |
-      <span id="grade"></span>
+      <span id="strikes">Strikes: 0 / 3</span>
     </div>
 
     <button id="modeToggle" onclick="toggleMode()">🌙 Dark Mode</button>
@@ -40,6 +92,7 @@
     </div>
 
     <div id="content">
+
       <h2 id="email-subject">Select an email</h2>
 
       <div id="email-body"></div>
@@ -50,17 +103,18 @@
       </div>
 
       <div id="feedback" class="hidden"></div>
+
     </div>
 
   </div>
 </div>
 
-<!-- END -->
+<!-- ================= END SCREEN ================= -->
 <div id="end-screen" class="hidden">
   <div class="card">
     <h1 id="end-message"></h1>
     <p id="final-score"></p>
-    <button onclick="location.reload()">Play Again</button>
+    <button onclick="location.reload()">Restart Training</button>
   </div>
 </div>
 
