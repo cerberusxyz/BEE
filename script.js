@@ -5,22 +5,22 @@ let strikes = 0;
 let answered = [];
 let awaitingNext = false;
 
-// ================= DATA =================
+/* ================= DATA ================= */
 emails = {
   novice: [
     {
       from: "Emily Carter <ecarter@northironridge.com>",
-      subject: "Request to Schedule Meeting",
-      body: "Dear Mr. Thompson,\n\nI would like to schedule a meeting this week to discuss the project timeline.\n\nBest regards,\nEmily Carter",
+      subject: "Meeting Request",
+      body: "Dear Mr. Thompson,\n\nI would like to schedule a meeting this week.\n\nBest regards,\nEmily Carter",
       correct: true,
-      explanation: "Professional tone, clear purpose, and proper structure."
+      explanation: "Clear, polite, and properly structured business email."
     },
     {
       from: "unknown@unknown.com",
       subject: "meeting",
       body: "hey can we meet",
       correct: false,
-      explanation: "Too informal and lacks professional structure and tone."
+      explanation: "Too informal and missing professional structure."
     }
   ],
 
@@ -30,36 +30,36 @@ emails = {
       subject: "Weekly Update",
       body: "Dear Team,\n\nWe are on track with the project timeline.\n\nBest regards,\nKaren Mitchell",
       correct: true,
-      explanation: "Clear, structured, and appropriate professional communication."
+      explanation: "Professional, concise, and appropriate tone."
     },
     {
-      from: "manager@halcyonlogistics.com",
+      from: "manager@company.com",
       subject: "Update",
-      body: "I already told you this. Please check.",
+      body: "I already told you this.",
       correct: false,
-      explanation: "Dismissive tone that is not appropriate for workplace communication."
+      explanation: "Dismissive tone is unprofessional in workplace communication."
     }
   ],
 
   expert: [
     {
       from: "Angela Foster <afoster@bluecorefinance.com>",
-      subject: "Quarterly Financial Summary",
-      body: "Dear Board Members,\n\nPlease review the quarterly summary below.\n\nKind regards,\nAngela Foster",
+      subject: "Quarterly Summary",
+      body: "Dear Board Members,\n\nPlease review the quarterly report.\n\nKind regards,\nAngela Foster",
       correct: true,
-      explanation: "Formal, concise, and appropriate for executive-level communication."
+      explanation: "Appropriate executive-level clarity and tone."
     },
     {
-      from: "exec@halcyonlogistics.com",
+      from: "exec@company.com",
       subject: "Financials",
       body: "Here are the numbers.",
       correct: false,
-      explanation: "Too vague and lacks clarity required for executive communication."
+      explanation: "Too vague and lacks executive-level communication detail."
     }
   ]
 };
 
-// ================= START GAME =================
+/* ================= START ================= */
 function startGame(level) {
   currentEmails = shuffle([...emails[level]]);
   strikes = 0;
@@ -70,24 +70,22 @@ function startGame(level) {
   document.getElementById("end-screen").classList.add("hidden");
   document.getElementById("app").classList.remove("hidden");
 
-  document.getElementById("strikes").innerText = "Strikes: 0 / 3";
-
+  updateStrikes();
   renderInbox();
   openNextEmail();
 }
 
-// ================= INBOX =================
+/* ================= INBOX ================= */
 function renderInbox() {
   const list = document.getElementById("email-list");
   list.innerHTML = "";
 
   currentEmails.forEach((email, i) => {
     const li = document.createElement("li");
-    li.innerText = email.subject;
+    li.textContent = email.subject;
 
     if (answered[i]) {
       li.style.opacity = "0.4";
-      li.style.pointerEvents = "none";
     } else {
       li.onclick = () => openEmail(i);
     }
@@ -96,28 +94,27 @@ function renderInbox() {
   });
 }
 
-// ================= OPEN EMAIL =================
+/* ================= OPEN EMAIL ================= */
 function openEmail(i) {
   if (awaitingNext || answered[i]) return;
 
   currentIndex = i;
   const email = currentEmails[i];
 
-  document.getElementById("email-subject").innerText = email.subject;
+  document.getElementById("email-subject").textContent = email.subject;
 
-  document.getElementById("email-body").innerText =
+  document.getElementById("email-body").textContent =
 `From: ${email.from}
 Subject: ${email.subject}
 
 ${email.body}`;
 
   document.getElementById("actions").classList.remove("hidden");
-
-  highlight(i);
   clearFeedback();
+  highlight(i);
 }
 
-// ================= ANSWER =================
+/* ================= ANSWER ================= */
 function answer(choice) {
   if (awaitingNext) return;
 
@@ -126,8 +123,7 @@ function answer(choice) {
 
   if (!correct) {
     strikes++;
-    document.getElementById("strikes").innerText = `Strikes: ${strikes} / 3`;
-
+    updateStrikes();
     if (strikes >= 3) return gameOver(false);
   }
 
@@ -140,7 +136,7 @@ function answer(choice) {
   document.getElementById("actions").classList.add("hidden");
 }
 
-// ================= NEXT EMAIL =================
+/* ================= NEXT ================= */
 function nextEmail() {
   awaitingNext = false;
   clearFeedback();
@@ -149,48 +145,44 @@ function nextEmail() {
 
 function openNextEmail() {
   const next = currentEmails.findIndex((e, i) => !answered[i]);
-
   if (next === -1) return gameOver(true);
-
   openEmail(next);
 }
 
-// ================= FEEDBACK =================
+/* ================= FEEDBACK ================= */
 function showFeedback(correct, explanation) {
   const box = document.getElementById("feedback");
+  box.classList.remove("hidden");
 
   box.innerHTML = `
-    <div style="font-size:18px;font-weight:600;margin-bottom:8px;">
-      ${correct ? "✅ Correct" : "❌ Incorrect"}
-    </div>
-
-    <div style="line-height:1.5;margin-bottom:10px;">
-      ${explanation}
-    </div>
+    <b>${correct ? "Correct" : "Incorrect"}</b>
+    <p>${explanation}</p>
   `;
 
   const btn = document.createElement("button");
-  btn.innerText = "Next Email";
+  btn.textContent = "Next Email";
   btn.onclick = nextEmail;
-
   box.appendChild(btn);
-  box.classList.remove("hidden");
 }
 
 function clearFeedback() {
   const box = document.getElementById("feedback");
-  box.innerHTML = "";
   box.classList.add("hidden");
+  box.innerHTML = "";
 }
 
-// ================= UI =================
+/* ================= UI ================= */
+function updateStrikes() {
+  document.getElementById("strikes").textContent = `Strikes: ${strikes} / 3`;
+}
+
 function highlight(i) {
   document.querySelectorAll("#email-list li").forEach((el, idx) => {
     el.classList.toggle("selected", idx === i);
   });
 }
 
-// ================= GAME OVER =================
+/* ================= GAME OVER ================= */
 function gameOver(win) {
   document.getElementById("app").classList.add("hidden");
   document.getElementById("end-screen").classList.remove("hidden");
@@ -198,25 +190,16 @@ function gameOver(win) {
   const done = answered.filter(Boolean).length;
   const total = currentEmails.length;
 
-  document.getElementById("end-message").innerHTML = `
-    <h2>${win ? "🎉 Inbox Cleared!" : "💀 Game Over"}</h2>
-
-    <p><b>Completed:</b> ${done}/${total}</p>
-    <p><b>Strikes:</b> ${strikes}/3</p>
-
-    <br>
-
-    <p style="max-width:520px;margin:auto;">
-      ${
-        win
-          ? "Great job. You demonstrated strong business email etiquette."
-          : "You reached the maximum number of communication errors. Focus on tone, clarity, and professionalism."
-      }
-    </p>
-  `;
+  document.getElementById("end-message").innerHTML =
+    `${win ? "🎉 Inbox Cleared!" : "💀 Game Over"}<br><br>
+     Completed: ${done}/${total}<br>
+     Strikes: ${strikes}/3<br><br>
+     ${win
+       ? "Excellent business email etiquette."
+       : "Too many communication errors. Focus on tone, clarity, and professionalism."}`;
 }
 
-// ================= UTIL =================
-function shuffle(arr) {
-  return arr.sort(() => Math.random() - 0.5);
+/* ================= UTIL ================= */
+function shuffle(a) {
+  return a.sort(() => Math.random() - 0.5);
 }
