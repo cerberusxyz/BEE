@@ -7,27 +7,27 @@ let awaitingNext = false;
 // ================= EMAIL DATA =================
 const emails = {
   novice: [
-    {from:"Emily Carter <ecarter@northironridge.com>",subject:"Request to Schedule Meeting",body:"Dear Mr. Thompson,\n\nI hope you are doing well. I would like to schedule a meeting this week to discuss the project timeline.\n\nPlease let me know your availability.\n\nBest regards,\nEmily Carter",correct:true,explanation:"The email uses a polite tone and clearly states its purpose. It includes a proper greeting and professional closing."},
-    {from:"Daniel Lee <dlee@valewoodtech.com>",subject:"Thank You",body:"Hello Ms. Rivera,\n\nThank you for your assistance earlier today. I appreciate your support.\n\nSincerely,\nDaniel Lee",correct:true,explanation:"This message expresses appreciation clearly and maintains a professional tone. It is concise and well-structured."},
+    {from:"Emily Carter <ecarter@northironridge.com>",subject:"Request to Schedule Meeting",body:"Dear Mr. Thompson,\n\nI hope you are doing well. I would like to schedule a meeting this week to discuss the project timeline.\n\nPlease let me know your availability.\n\nBest regards,\nEmily Carter",correct:true,explanation:"The email is polite, structured, and clearly communicates its purpose."},
+    {from:"Daniel Lee <dlee@valewoodtech.com>",subject:"Thank You",body:"Hello Ms. Rivera,\n\nThank you for your assistance earlier today.\n\nSincerely,\nDaniel Lee",correct:true,explanation:"This message is professional and appropriately expresses gratitude."},
 
-    {from:"unknown@unknown.com",subject:"meeting",body:"hey can we meet",correct:false,explanation:"The message is too informal and lacks proper capitalization. It does not follow basic professional email structure."},
-    {from:"manager@northironridge.com",subject:"URGENT",body:"WHY HAVENT YOU DONE THIS",correct:false,explanation:"Using all caps makes the message appear aggressive. Professional emails should maintain a calm and respectful tone."}
+    {from:"unknown@unknown.com",subject:"meeting",body:"hey can we meet",correct:false,explanation:"The email is too informal and lacks proper structure and professionalism."},
+    {from:"manager@northironridge.com",subject:"URGENT",body:"WHY HAVENT YOU DONE THIS",correct:false,explanation:"All caps creates an aggressive tone and is not professional."}
   ],
 
   intermediate: [
-    {from:"Karen Mitchell <kmitchell@bluecorefinance.com>",subject:"Weekly Project Update",body:"Dear Team,\n\nI wanted to provide a brief update. We are currently on track and progressing as scheduled.\n\nBest regards,\nKaren Mitchell",correct:true,explanation:"The email is clear, neutral, and informative. It communicates updates professionally without unnecessary detail."},
+    {from:"Karen Mitchell <kmitchell@bluecorefinance.com>",subject:"Weekly Project Update",body:"Dear Team,\n\nWe are currently on track with the project timeline.\n\nBest regards,\nKaren Mitchell",correct:true,explanation:"Clear and professional update with appropriate tone."},
 
-    {from:"manager@halcyonlogistics.com",subject:"Update",body:"I already explained this earlier. Please check.",correct:false,explanation:"The tone is dismissive and may frustrate the recipient. Professional emails should remain courteous and helpful."}
+    {from:"manager@halcyonlogistics.com",subject:"Update",body:"I already told you this. Please check.",correct:false,explanation:"The tone is dismissive and not constructive."}
   ],
 
   expert: [
-    {from:"Angela Foster <afoster@bluecorefinance.com>",subject:"Quarterly Financial Summary",body:"Dear Board Members,\n\nBelow is a summary of our financial performance for the past quarter.\n\nKind regards,\nAngela Foster\nChief Financial Officer",correct:true,explanation:"This email is appropriately formal for an executive audience. It is concise while maintaining professionalism."},
+    {from:"Angela Foster <afoster@bluecorefinance.com>",subject:"Quarterly Financial Summary",body:"Dear Board Members,\n\nPlease find the quarterly summary below.\n\nKind regards,\nAngela Foster",correct:true,explanation:"Appropriate formal communication for executive audience."},
 
-    {from:"exec@halcyonlogistics.com",subject:"Financials",body:"Here are the numbers.",correct:false,explanation:"The message is too vague and lacks context. Executive communication should be more detailed and structured."}
+    {from:"exec@halcyonlogistics.com",subject:"Financials",body:"Here are the numbers.",correct:false,explanation:"Too vague and lacks executive-level clarity."}
   ]
 };
 
-// ================= GAME LOGIC =================
+// ================= GAME START =================
 
 function startGame(level) {
   currentEmails = shuffle([...emails[level]]);
@@ -42,7 +42,10 @@ function startGame(level) {
   document.getElementById("strikes").innerText = "Strikes: 0 / 3";
 
   renderEmailList();
+  openFirstAvailableEmail();
 }
+
+// ================= EMAIL LIST =================
 
 function renderEmailList() {
   const list = document.getElementById("email-list");
@@ -55,15 +58,17 @@ function renderEmailList() {
     if (!answered[index]) {
       li.onclick = () => openEmail(index);
     } else {
-      li.style.opacity = "0.5";
+      li.style.opacity = "0.4";
     }
 
     list.appendChild(li);
   });
 }
 
+// ================= OPEN EMAIL =================
+
 function openEmail(index) {
-  if (awaitingNext) return;
+  if (awaitingNext || answered[index]) return;
 
   currentIndex = index;
   const email = currentEmails[index];
@@ -75,9 +80,25 @@ function openEmail(index) {
     email.body;
 
   document.getElementById("actions").classList.remove("hidden");
+
   clearFeedback();
   highlightSelected(index);
 }
+
+// ================= AUTO OPEN NEXT =================
+
+function openFirstAvailableEmail() {
+  const nextIndex = currentEmails.findIndex((_, i) => !answered[i]);
+
+  if (nextIndex === -1) {
+    endGame(true);
+    return;
+  }
+
+  openEmail(nextIndex);
+}
+
+// ================= ANSWER =================
 
 function answer(choice) {
   if (awaitingNext) return;
@@ -104,7 +125,26 @@ function answer(choice) {
   document.getElementById("actions").classList.add("hidden");
 }
 
-// ================= IMPROVED FEEDBACK =================
+// ================= NEXT EMAIL (FIXED) =================
+
+function nextEmail() {
+  awaitingNext = false;
+
+  clearFeedback();
+
+  // Remove current email from "active flow"
+  const nextIndex = currentEmails.findIndex((_, i) => !answered[i]);
+
+  if (nextIndex === -1) {
+    endGame(true);
+    return;
+  }
+
+  openEmail(nextIndex);
+}
+
+// ================= FEEDBACK =================
+
 function showFeedback(correct, explanation) {
   const content = document.getElementById("content");
 
@@ -116,13 +156,13 @@ function showFeedback(correct, explanation) {
   }
 
   feedback.innerHTML = `
-    <div style="font-weight:bold; font-size:18px; margin-bottom:10px;">
+    <div style="font-weight:bold; font-size:18px;">
       ${correct ? "✅ Correct" : "❌ Incorrect"}
     </div>
 
     <hr style="margin:10px 0;">
 
-    <div style="line-height:1.5; margin-bottom:15px;">
+    <div style="line-height:1.5;">
       ${explanation}
     </div>
   `;
@@ -131,27 +171,17 @@ function showFeedback(correct, explanation) {
   nextBtn.innerText = "Next Email";
   nextBtn.onclick = nextEmail;
 
+  feedback.appendChild(document.createElement("br"));
   feedback.appendChild(nextBtn);
 
   feedback.style.marginTop = "20px";
-  feedback.style.padding = "20px";
+  feedback.style.padding = "18px";
   feedback.style.borderRadius = "8px";
   feedback.style.background = correct ? "#e6f4ea" : "#fdecea";
   feedback.style.border = correct ? "1px solid #b7e1cd" : "1px solid #f5c6cb";
 }
 
-function nextEmail() {
-  awaitingNext = false;
-
-  if (answered.every(a => a)) {
-    endGame(true);
-    return;
-  }
-
-  document.getElementById("email-subject").innerText = "Select an email";
-  document.getElementById("email-body").innerText = "";
-  clearFeedback();
-}
+// ================= HELPERS =================
 
 function clearFeedback() {
   const feedback = document.getElementById("feedback");
