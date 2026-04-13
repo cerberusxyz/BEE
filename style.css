@@ -1,101 +1,175 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f4f6f9;
-  color: #111;
+  background: #eef1f6;
+  color: #1a1a1a;
 }
 
+/* ================= START SCREEN ================= */
 #start-screen {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px;
+  justify-content: center;
+  height: 100vh;
   gap: 10px;
 }
 
+/* ================= APP LAYOUT ================= */
 #app {
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 
+/* TOP BAR (RESTORED LOOK) */
+#topbar {
+  height: 50px;
+  background: #ffffff;
+  border-bottom: 1px solid #d9d9d9;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  font-weight: bold;
+}
+
+/* ================= MAIN LAYOUT ================= */
 #main {
   display: flex;
-  height: 90vh;
+  flex: 1;
+  overflow: hidden;
 }
 
+/* SIDEBAR (INBOX STYLE RESTORED) */
 #sidebar {
-  width: 250px;
-  background: #fff;
-  border-right: 1px solid #ddd;
-  padding: 10px;
+  width: 280px;
+  background: #ffffff;
+  border-right: 1px solid #d9d9d9;
+  overflow-y: auto;
 }
 
-#sidebar ul {
+#sidebar h3 {
+  margin: 0;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #666;
+}
+
+#email-list {
   list-style: none;
+  margin: 0;
   padding: 0;
 }
 
-#sidebar li {
-  padding: 8px;
+#email-list li {
+  padding: 12px 15px;
+  border-bottom: 1px solid #f0f0f0;
   cursor: pointer;
-  border-bottom: 1px solid #eee;
+  transition: background 0.15s ease;
+  font-size: 14px;
 }
 
+#email-list li:hover {
+  background: #f5f7fb;
+}
+
+/* ================= CONTENT PANEL ================= */
 #content {
   flex: 1;
   padding: 20px;
+  overflow-y: auto;
+}
+
+#email-subject {
+  margin-top: 0;
 }
 
 #email-body {
   white-space: pre-wrap;
-  background: #fff;
+  background: #ffffff;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 6px;
+  border: 1px solid #e5e5e5;
+  min-height: 200px;
+}
+
+/* ================= ACTION BUTTONS ================= */
+#actions {
+  margin-top: 15px;
 }
 
 #actions button {
+  padding: 10px 14px;
   margin-right: 10px;
-  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
 }
 
+#actions button:first-child {
+  background: #2ecc71;
+  color: white;
+}
+
+#actions button:last-child {
+  background: #e74c3c;
+  color: white;
+}
+
+/* ================= FEEDBACK BOX ================= */
 #feedback {
-  margin-top: 20px;
-  padding: 10px;
+  margin-top: 15px;
+  padding: 12px;
   border-radius: 6px;
+  background: #fff;
+  border: 1px solid #ddd;
 }
 
 .good-box {
-  border: 2px solid green;
-  color: green;
+  border-left: 5px solid #2ecc71;
+  color: #1e7e34;
 }
 
 .bad-box {
-  border: 2px solid red;
-  color: red;
+  border-left: 5px solid #e74c3c;
+  color: #c0392b;
 }
 
-/* END SCREEN */
+/* ================= END SCREEN ================= */
 #end-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
   text-align: center;
-  padding: 50px;
+  background: #eef1f6;
 }
 
-/* DARK MODE */
+#final-score {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+/* ================= DARK MODE (RESTORED COMPATIBILITY) ================= */
 .dark-mode {
-  background: #121212;
+  background: #1c1c1c;
   color: #eaeaea;
 }
 
-.dark-mode #sidebar {
-  background: #1e1e1e;
-  border-color: #333;
-}
-
-.dark-mode #email-body {
-  background: #1e1e1e;
+.dark-mode #topbar,
+.dark-mode #sidebar,
+.dark-mode #email-body,
+.dark-mode #feedback {
+  background: #2a2a2a;
   color: #eaeaea;
+  border-color: #444;
 }
 
-.dark-mode #start-screen {
-  background: #121212;
+.dark-mode #email-list li:hover {
+  background: #333;
 }
