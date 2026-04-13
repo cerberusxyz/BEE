@@ -6,7 +6,7 @@ let answered = [];
 let locked = false;
 
 /* =========================
-   SHUFFLE FUNCTION
+   SHUFFLE
 ========================= */
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -17,7 +17,7 @@ function shuffle(array) {
 }
 
 /* =========================
-   EMAIL DATASET (UPDATED BALANCED VERSION)
+   EMAIL DATASET
 ========================= */
 
 emails = {
@@ -36,7 +36,7 @@ Reminder that we have a meeting tomorrow at 10 AM to discuss project updates.
 Best regards,
 Laura Bennett`,
 correct: true,
-explanation: { points: ["Clear and polite.", "Normal workplace tone.", "Simple structure."] }
+explanation: { points: ["Clear and polite.", "Standard workplace tone.", "Simple structure."] }
 },
 {
 subject: "Weekly Update",
@@ -50,7 +50,7 @@ Project is progressing as expected this week.
 Regards,
 James Carter`,
 correct: true,
-explanation: { points: ["Short status update.", "Professional tone.", "Clear meaning."] }
+explanation: { points: ["Clear status update.", "Neutral tone.", "Professional format."] }
 },
 {
 subject: "Office Hours",
@@ -64,7 +64,7 @@ Office hours are 9 AM to 5 PM, Monday through Friday.
 Thanks,
 HR Team`,
 correct: true,
-explanation: { points: ["Clear information.", "Standard HR message.", "No issues."] }
+explanation: { points: ["Clear information.", "Standard HR communication.", "No ambiguity."] }
 },
 {
 subject: "Meeting Confirmation",
@@ -78,7 +78,7 @@ Confirming our meeting on Thursday at 2 PM.
 Best,
 Sophie Turner`,
 correct: true,
-explanation: { points: ["Simple confirmation.", "Appropriate tone.", "Clear intent."] }
+explanation: { points: ["Direct confirmation.", "Professional tone.", "Clear intent."] }
 },
 {
 subject: "Monthly Reports",
@@ -95,7 +95,7 @@ correct: true,
 explanation: { points: ["Clear request.", "Normal tone.", "Direct instruction."] }
 },
 
-/* INAPPROPRIATE */
+/* INAPPROPRIATE (CLEAR BUT NOT OBVIOUS) */
 {
 subject: "Project update",
 from: "operations@northfieldadmin.net",
@@ -460,10 +460,8 @@ explanation: { points: ["Implied criticism.", "No context.", "Poor framing."] }
 ]
 };
 
-
-
 /* =========================
-   GAME START (FIXED GLOBAL)
+   GAME START
 ========================= */
 window.startGame = function (difficulty) {
   current = shuffle([...emails[difficulty]]);
@@ -480,3 +478,69 @@ window.startGame = function (difficulty) {
 
   loadEmail();
 };
+
+/* =========================
+   ANSWER LOGIC
+========================= */
+window.answer = function (isCorrect) {
+  if (locked) return;
+  locked = true;
+
+  const email = current[index];
+
+  if (isCorrect !== email.correct) {
+    strikes++;
+    document.getElementById("strikes").innerText = `Strikes: ${strikes} / 3`;
+  }
+
+  setTimeout(nextEmail, 400);
+};
+
+/* =========================
+   LOAD EMAIL
+========================= */
+function loadEmail() {
+  const email = current[index];
+
+  if (!email) {
+    endGame();
+    return;
+  }
+
+  locked = false;
+
+  document.getElementById("email-subject").innerText = email.subject;
+
+  document.getElementById("email-body").innerText =
+`From: ${email.from}
+Time: ${email.time}
+
+${email.body}`;
+
+  document.getElementById("actions").classList.remove("hidden");
+}
+
+/* =========================
+   NEXT EMAIL
+========================= */
+function nextEmail() {
+  index++;
+
+  if (strikes >= 3 || index >= current.length) {
+    endGame();
+    return;
+  }
+
+  loadEmail();
+}
+
+/* =========================
+   END GAME
+========================= */
+function endGame() {
+  document.getElementById("app").classList.add("hidden");
+  document.getElementById("end-screen").classList.remove("hidden");
+
+  document.getElementById("end-message").innerText =
+    strikes >= 3 ? "Game Over" : "Completed!";
+}
