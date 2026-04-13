@@ -7,7 +7,6 @@
 </head>
 <body>
 
-<!-- START SCREEN -->
 <div id="start-screen">
   <h1>Email Etiquette Simulator</h1>
   <p>Select Difficulty:</p>
@@ -15,11 +14,10 @@
   <button onclick="startGame('intermediate')">Intermediate</button>
   <button onclick="startGame('expert')">Expert</button>
 
-  <button id="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+  <button onclick="toggleTheme()">Dark Mode</button>
 </div>
 
-<!-- GAME UI -->
-<div id="app" class="hidden">
+<div id="app" style="display:none;">
 
   <div id="topbar">
     <span id="strikes">Strikes: 0 / 3</span>
@@ -36,19 +34,18 @@
       <h2 id="email-subject">Select an email</h2>
       <pre id="email-body"></pre>
 
-      <div id="actions" class="hidden">
+      <div id="actions">
         <button onclick="answer(true)">Appropriate</button>
         <button onclick="answer(false)">Inappropriate</button>
       </div>
 
-      <div id="feedback" class="hidden"></div>
+      <div id="feedback"></div>
     </div>
 
   </div>
 </div>
 
-<!-- END SCREEN -->
-<div id="end-screen" class="hidden">
+<div id="end-screen" style="display:none;">
   <h1 id="end-message"></h1>
   <button onclick="location.reload()">Play Again</button>
 </div>
