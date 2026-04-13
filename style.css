@@ -23,7 +23,7 @@ body {
   color: var(--text);
 }
 
-/* SCREEN CONTROL (FIXED) */
+/* START SCREEN */
 #start-screen {
   display: flex;
   justify-content: center;
@@ -31,12 +31,14 @@ body {
   height: 100vh;
 }
 
+/* GAME */
 #app {
   display: none;
   height: 100vh;
   flex-direction: column;
 }
 
+/* END SCREEN */
 #end-screen {
   display: none;
   justify-content: center;
@@ -48,9 +50,15 @@ body {
 .card {
   background: var(--panel);
   padding: 30px;
-  border-radius: 12px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  max-width: 600px;
   text-align: center;
-  max-width: 650px;
+}
+
+/* END CARD UPGRADE */
+.end-card {
+  min-width: 320px;
 }
 
 /* TEXT */
@@ -58,10 +66,14 @@ body {
   text-align: left;
   font-size: 14px;
   margin: 10px 0;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
-/* BUTTON */
+.subtext {
+  opacity: 0.7;
+}
+
+/* BUTTONS */
 button {
   padding: 10px 14px;
   border: none;
@@ -72,16 +84,35 @@ button {
   margin: 5px;
 }
 
+/* TOPBAR FIX (RIGHT ALIGN TOGGLE) */
+#topbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+}
+
 /* LAYOUT */
 #main {
   display: flex;
   flex: 1;
+  overflow: hidden;
 }
 
+/* SIDEBAR CLEAN (NO BULLETS) */
 #sidebar {
   width: 280px;
   background: var(--panel);
   border-right: 1px solid var(--border);
+  padding: 10px;
+}
+
+#email-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 #email-list li {
@@ -90,6 +121,7 @@ button {
   border-bottom: 1px solid var(--border);
 }
 
+/* CONTENT */
 #content {
   flex: 1;
   padding: 15px;
@@ -103,11 +135,12 @@ button {
   border-radius: 8px;
 }
 
-/* FEEDBACK BOX */
+/* FEEDBACK (FIXED FORMATTING) */
 .feedback-box {
   padding: 12px;
   border-radius: 10px;
   border: 2px solid;
+  margin-top: 10px;
 }
 
 .good-box {
@@ -118,6 +151,11 @@ button {
 .bad-box {
   border-color: var(--bad);
   background: rgba(220,38,38,0.08);
+}
+
+.feedback-title {
+  font-weight: bold;
+  margin-bottom: 6px;
 }
 
 .hidden {
