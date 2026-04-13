@@ -65,6 +65,7 @@ ${e.body}`;
   document.getElementById("feedback").innerHTML = "";
 }
 
+/* ✅ FIXED FUNCTION (THIS IS THE ONLY CHANGE THAT MATTERS) */
 function answer(choice) {
   const e = current[index];
   const correct = choice === e.correct;
@@ -75,13 +76,29 @@ function answer(choice) {
 
   const fb = document.getElementById("feedback");
   fb.className = correct ? "good" : "bad";
-  fb.innerHTML = e.explanation;
+
+  fb.innerHTML = `
+    ${e.explanation}
+    <br><br>
+    <button onclick="nextEmail()">Next</button>
+  `;
 
   document.getElementById("strikes").textContent = `Strikes: ${strikes} / 3`;
 
   renderInbox();
 
   if(strikes >= 3) gameOver(false);
+}
+
+function nextEmail() {
+  const next = answered.findIndex(a => a === false);
+
+  if(next === -1) {
+    gameOver(true);
+    return;
+  }
+
+  openEmail(next);
 }
 
 function gameOver(win) {
