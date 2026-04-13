@@ -131,3 +131,29 @@ button:hover {
   border-radius: 12px;
   text-align: center;
 }
+
+.feedback-box {
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid;
+}
+
+.good-box {
+  border-color: #16a34a;
+  background: rgba(22,163,74,0.08);
+}
+
+.bad-box {
+  border-color: #dc2626;
+  background: rgba(220,38,38,0.08);
+}
+
+.feedback-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.feedback-text {
+  line-height: 1.4;
+}
