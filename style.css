@@ -253,9 +253,18 @@ button:hover {
   padding: 0 16px;
   background: #ffffff;
   border-bottom: 1px solid #d6dde8;
+  box-sizing: border-box;
 }
 
+/* forces title left, button right */
 #menu-topbar h1 {
-  font-size: 18px;
   margin: 0;
+  font-size: 18px;
+  flex: 1;
+}
+
+/* ensures button stays right aligned */
+#menu-topbar div {
+  display: flex;
+  align-items: center;
 }
