@@ -268,3 +268,15 @@ button:hover {
   display: flex;
   align-items: center;
 }
+
+
+#menu-topbar {
+  display: flex;
+  align-items: center;
+}
+
+#theme-toggle {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
