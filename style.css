@@ -1,8 +1,8 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #eef1f6;
-  color: #1a1a1a;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f3f6fb;
+  color: #1f1f1f;
 }
 
 /* ================= START SCREEN ================= */
@@ -12,7 +12,38 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  gap: 10px;
+  gap: 12px;
+}
+
+#start-screen h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  background: #2563eb;
+  color: white;
+  transition: 0.15s ease;
+}
+
+button:hover {
+  background: #1e4fd6;
+}
+
+/* Theme toggle */
+#theme-toggle {
+  margin-top: 10px;
+  background: #444;
+}
+
+#theme-toggle:hover {
+  background: #222;
 }
 
 /* ================= APP LAYOUT ================= */
@@ -22,40 +53,41 @@ body {
   height: 100vh;
 }
 
-/* TOP BAR (RESTORED LOOK) */
+/* TOP BAR (modern Outlook feel) */
 #topbar {
-  height: 50px;
-  background: #ffffff;
-  border-bottom: 1px solid #d9d9d9;
+  height: 52px;
+  background: linear-gradient(to right, #ffffff, #f7f9fc);
+  border-bottom: 1px solid #d9e1ec;
   display: flex;
   align-items: center;
-  padding: 0 20px;
-  font-weight: bold;
+  padding: 0 18px;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
-/* ================= MAIN LAYOUT ================= */
+/* ================= MAIN ================= */
 #main {
   display: flex;
   flex: 1;
   overflow: hidden;
 }
 
-/* SIDEBAR (INBOX STYLE RESTORED) */
+/* ================= SIDEBAR ================= */
 #sidebar {
-  width: 280px;
+  width: 300px;
   background: #ffffff;
-  border-right: 1px solid #d9d9d9;
+  border-right: 1px solid #e3e8f0;
   overflow-y: auto;
 }
 
 #sidebar h3 {
   margin: 0;
-  padding: 15px;
-  border-bottom: 1px solid #eee;
-  font-size: 14px;
-  text-transform: uppercase;
+  padding: 14px;
+  font-size: 12px;
   letter-spacing: 1px;
-  color: #666;
+  text-transform: uppercase;
+  color: #6b7280;
+  border-bottom: 1px solid #eef2f7;
 }
 
 #email-list {
@@ -65,78 +97,85 @@ body {
 }
 
 #email-list li {
-  padding: 12px 15px;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 12px 14px;
+  border-bottom: 1px solid #f1f5f9;
   cursor: pointer;
-  transition: background 0.15s ease;
   font-size: 14px;
+  transition: 0.15s ease;
 }
 
 #email-list li:hover {
-  background: #f5f7fb;
+  background: #f0f6ff;
 }
 
-/* ================= CONTENT PANEL ================= */
+/* ================= CONTENT ================= */
 #content {
   flex: 1;
-  padding: 20px;
+  padding: 22px;
   overflow-y: auto;
+  background: #f9fbff;
 }
 
 #email-subject {
   margin-top: 0;
+  font-size: 20px;
 }
 
 #email-body {
   white-space: pre-wrap;
-  background: #ffffff;
-  padding: 15px;
-  border-radius: 6px;
-  border: 1px solid #e5e5e5;
-  min-height: 200px;
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e6ebf2;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  min-height: 220px;
+  line-height: 1.5;
 }
 
-/* ================= ACTION BUTTONS ================= */
+/* ================= ACTIONS ================= */
 #actions {
-  margin-top: 15px;
+  margin-top: 14px;
 }
 
 #actions button {
-  padding: 10px 14px;
   margin-right: 10px;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-  font-weight: bold;
 }
 
 #actions button:first-child {
-  background: #2ecc71;
-  color: white;
+  background: #22c55e;
+}
+
+#actions button:first-child:hover {
+  background: #16a34a;
 }
 
 #actions button:last-child {
-  background: #e74c3c;
-  color: white;
+  background: #ef4444;
 }
 
-/* ================= FEEDBACK BOX ================= */
+#actions button:last-child:hover {
+  background: #dc2626;
+}
+
+/* ================= FEEDBACK ================= */
 #feedback {
-  margin-top: 15px;
-  padding: 12px;
-  border-radius: 6px;
-  background: #fff;
-  border: 1px solid #ddd;
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 8px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  line-height: 1.4;
 }
 
 .good-box {
-  border-left: 5px solid #2ecc71;
-  color: #1e7e34;
+  border-left: 5px solid #22c55e;
+  color: #15803d;
 }
 
 .bad-box {
-  border-left: 5px solid #e74c3c;
-  color: #c0392b;
+  border-left: 5px solid #ef4444;
+  color: #b91c1c;
 }
 
 /* ================= END SCREEN ================= */
@@ -147,29 +186,47 @@ body {
   justify-content: center;
   height: 100vh;
   text-align: center;
-  background: #eef1f6;
+  background: #f3f6fb;
 }
 
-#final-score {
-  margin-top: 10px;
-  font-size: 18px;
+#end-screen h1 {
+  font-size: 32px;
 }
 
-/* ================= DARK MODE (RESTORED COMPATIBILITY) ================= */
+/* ================= DARK MODE ================= */
 .dark-mode {
-  background: #1c1c1c;
-  color: #eaeaea;
+  background: #0f172a;
+  color: #e5e7eb;
 }
 
-.dark-mode #topbar,
-.dark-mode #sidebar,
-.dark-mode #email-body,
-.dark-mode #feedback {
-  background: #2a2a2a;
-  color: #eaeaea;
-  border-color: #444;
+.dark-mode #topbar {
+  background: #111827;
+  border-color: #1f2937;
+}
+
+.dark-mode #sidebar {
+  background: #111827;
+  border-color: #1f2937;
+}
+
+.dark-mode #email-list li {
+  border-color: #1f2937;
 }
 
 .dark-mode #email-list li:hover {
-  background: #333;
+  background: #1e293b;
+}
+
+.dark-mode #content {
+  background: #0f172a;
+}
+
+.dark-mode #email-body {
+  background: #111827;
+  border-color: #1f2937;
+}
+
+.dark-mode #feedback {
+  background: #111827;
+  border-color: #1f2937;
 }
