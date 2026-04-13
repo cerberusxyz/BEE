@@ -11,16 +11,16 @@ emails = {
     {
       from: "Emily Carter <ecarter@northironridge.com>",
       subject: "Request to Schedule Meeting",
-      body: "Dear Mr. Thompson,\n\nI would like to schedule a meeting this week to discuss the project timeline.\n\nBest regards,\nEmily Carter",
+      body: "Dear Mr. Thompson,\n\nI would like to schedule a meeting this week.\n\nBest regards,\nEmily Carter",
       correct: true,
-      explanation: "This email is professional, polite, and clearly communicates intent with proper structure."
+      explanation: "Professional tone, clear structure, and appropriate closing."
     },
     {
       from: "unknown@unknown.com",
       subject: "meeting",
       body: "hey can we meet",
       correct: false,
-      explanation: "This email is too informal and lacks structure, greeting, and professional tone."
+      explanation: "Too informal and missing basic business email structure."
     }
   ],
 
@@ -28,36 +28,45 @@ emails = {
     {
       from: "Karen Mitchell <kmitchell@bluecorefinance.com>",
       subject: "Weekly Update",
-      body: "Dear Team,\n\nWe are on track with the project timeline.\n\nBest regards,\nKaren Mitchell",
+      body: "Dear Team,\n\nWe are on track with the project.\n\nBest regards,\nKaren Mitchell",
       correct: true,
-      explanation: "Clear, concise, and professional communication appropriate for team updates."
+      explanation: "Clear and professional update suitable for internal communication."
     },
     {
       from: "manager@halcyonlogistics.com",
       subject: "Update",
-      body: "I already told you this. Please check.",
+      body: "I already told you this.",
       correct: false,
-      explanation: "The tone is dismissive and unprofessional, which can harm workplace communication."
+      explanation: "Dismissive tone undermines professional communication."
     }
   ],
 
   expert: [
     {
       from: "Angela Foster <afoster@bluecorefinance.com>",
-      subject: "Quarterly Financial Summary",
-      body: "Dear Board Members,\n\nPlease review the quarterly summary below.\n\nKind regards,\nAngela Foster",
+      subject: "Quarterly Summary",
+      body: "Dear Board Members,\n\nPlease review the attached summary.\n\nKind regards,\nAngela Foster",
       correct: true,
-      explanation: "Appropriate executive-level communication: formal, concise, and structured."
+      explanation: "Appropriate executive-level clarity and tone."
     },
     {
       from: "exec@halcyonlogistics.com",
       subject: "Financials",
       body: "Here are the numbers.",
       correct: false,
-      explanation: "Too vague and lacks context required for executive decision-making."
+      explanation: "Too vague for executive communication."
     }
   ]
 };
+
+// ================= SCREEN CONTROLLER (FIX FOR OVERLAP) =================
+function showScreen(screen) {
+  document.getElementById("start-screen").style.display = "none";
+  document.getElementById("app").style.display = "none";
+  document.getElementById("end-screen").style.display = "none";
+
+  document.getElementById(screen).style.display = "block";
+}
 
 // ================= START GAME =================
 function startGame(level) {
@@ -66,9 +75,7 @@ function startGame(level) {
   answered = new Array(currentEmails.length).fill(false);
   awaitingNext = false;
 
-  document.getElementById("start-screen").classList.add("hidden");
-  document.getElementById("end-screen").classList.add("hidden");
-  document.getElementById("app").classList.remove("hidden");
+  showScreen("app");
 
   updateStrikes();
   renderInbox();
@@ -117,7 +124,7 @@ ${email.body}`;
 
 // ================= ANSWER =================
 function answer(choice) {
-  if (awaitingNext || currentIndex === -1) return;
+  if (awaitingNext) return;
 
   const email = currentEmails[currentIndex];
   const correct = choice === email.correct;
@@ -140,7 +147,7 @@ function answer(choice) {
   document.getElementById("actions").style.display = "none";
 }
 
-// ================= NEXT EMAIL =================
+// ================= NEXT =================
 function nextEmail() {
   awaitingNext = false;
   clearFeedback();
@@ -148,13 +155,11 @@ function nextEmail() {
 }
 
 function openNextEmail() {
-  const nextIndex = currentEmails.findIndex((e, i) => !answered[i]);
+  const next = currentEmails.findIndex((e, i) => !answered[i]);
 
-  if (nextIndex === -1) {
-    return gameOver(true);
-  }
+  if (next === -1) return gameOver(true);
 
-  openEmail(nextIndex);
+  openEmail(next);
 }
 
 // ================= FEEDBACK =================
@@ -162,11 +167,11 @@ function showFeedback(correct, explanation) {
   const box = document.getElementById("feedback");
 
   box.innerHTML = `
-    <div style="font-size:18px; font-weight:600; margin-bottom:10px;">
+    <div style="font-size:18px;font-weight:600;margin-bottom:8px;">
       ${correct ? "✅ Correct" : "❌ Incorrect"}
     </div>
 
-    <div style="margin-bottom:12px; line-height:1.5;">
+    <div style="line-height:1.5;">
       ${explanation}
     </div>
   `;
@@ -175,6 +180,7 @@ function showFeedback(correct, explanation) {
   btn.innerText = "Next Email";
   btn.onclick = nextEmail;
 
+  box.appendChild(document.createElement("br"));
   box.appendChild(btn);
 
   box.style.display = "block";
@@ -186,7 +192,7 @@ function clearFeedback() {
   box.style.display = "none";
 }
 
-// ================= UI HELPERS =================
+// ================= UI =================
 function updateStrikes() {
   document.getElementById("strikes").innerText = `Strikes: ${strikes} / 3`;
 }
@@ -199,21 +205,25 @@ function highlight(i) {
 
 // ================= GAME OVER =================
 function gameOver(win) {
-  document.getElementById("app").classList.add("hidden");
-  document.getElementById("end-screen").classList.remove("hidden");
+  showScreen("end-screen");
 
-  const total = currentEmails.length;
   const done = answered.filter(Boolean).length;
+  const total = currentEmails.length;
 
   document.getElementById("end-message").innerHTML = `
     <h2>${win ? "🎉 Inbox Cleared!" : "💀 Game Over"}</h2>
-    <p><b>Emails Reviewed:</b> ${done}/${total}</p>
+
+    <p><b>Emails Completed:</b> ${done}/${total}</p>
     <p><b>Strikes:</b> ${strikes}/3</p>
+
     <br>
-    <p style="max-width:500px;margin:auto;">
-      ${win
-        ? "Great job! You demonstrated strong business email etiquette and communication awareness."
-        : "You reached the maximum number of communication errors. Focus on tone, clarity, and professionalism in future business emails."}
+
+    <p style="max-width:520px;margin:auto;">
+      ${
+        win
+          ? "Excellent work. You demonstrated strong business email etiquette."
+          : "You exceeded the allowed number of communication errors. Focus on tone, clarity, and professionalism in business emails."
+      }
     </p>
   `;
 }
