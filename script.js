@@ -6,79 +6,81 @@ let answered = [];
 // ================= EMAIL DATA =================
 const emails = {
   novice: [
-    {subject:"Request to Schedule Meeting",body:"Dear Mr. Smith,\n\nI hope you're doing well. I would like to schedule a meeting this week to discuss the project.\n\nBest regards,\nJohn Doe",correct:true},
-    {subject:"Thank You",body:"Hello,\n\nThank you for your assistance today.\n\nSincerely,\nAnna",correct:true},
-    {subject:"Reminder: Deadline",body:"Dear Team,\n\nThis is a reminder that the deadline is tomorrow.\n\nBest,\nChris",correct:true},
-    {subject:"Request for Info",body:"Hello,\n\nCould you send the report when available?\n\nThanks,\nSam",correct:true},
-    {subject:"Meeting Update",body:"Dear Sarah,\n\nThe meeting has been moved to 3 PM.\n\nRegards,\nMike",correct:true},
-    {subject:"Introduction",body:"Hello,\n\nI look forward to working with you.\n\nBest,\nEmily",correct:true},
-    {subject:"Follow-Up",body:"Dear Team,\n\nFollowing up on the previous email.\n\nBest,\nAlex",correct:true},
-    {subject:"Clarification",body:"Hello,\n\nCould you clarify this point?\n\nThanks,\nJordan",correct:true},
-    {subject:"Confirmation",body:"Dear Client,\n\nThis confirms your appointment.\n\nSincerely,\nPat",correct:true},
-    {subject:"Appreciation",body:"Hello,\n\nThank you for your help.\n\nBest,\nTaylor",correct:true},
+    // GOOD
+    {
+      from: "Emily Carter <ecarter@company.com>",
+      subject: "Meeting Request",
+      body: "Dear Mr. Thompson,\n\nI hope you are doing well. I would like to schedule a meeting this week to discuss the current status of the project.\n\nPlease let me know your availability.\n\nBest regards,\nEmily Carter",
+      correct: true,
+      explanation: "This email is polite, clearly written, and uses a professional tone with a proper greeting and closing."
+    },
+    {
+      from: "Daniel Lee <dlee@company.com>",
+      subject: "Thank You",
+      body: "Hello Ms. Rivera,\n\nThank you for your assistance earlier today. I appreciate your time and support.\n\nSincerely,\nDaniel Lee",
+      correct: true,
+      explanation: "This message uses a respectful tone and expresses gratitude appropriately."
+    },
 
-    {subject:"meeting",body:"hey can we meet",correct:false},
-    {subject:"URGENT",body:"WHY HAVENT YOU SENT THIS",correct:false},
-    {subject:"",body:"send file",correct:false},
-    {subject:"Hi",body:"need this asap",correct:false},
-    {subject:"Update",body:"this is wrong fix it",correct:false},
-    {subject:"Hello",body:"???",correct:false},
-    {subject:"Check",body:"did u do this",correct:false},
-    {subject:"Important",body:"DO THIS NOW",correct:false},
-    {subject:"Hey",body:"whats up",correct:false},
-    {subject:"Stuff",body:"idk what this is",correct:false}
+    // BAD
+    {
+      from: "unknown",
+      subject: "meeting",
+      body: "hey can we meet sometime",
+      correct: false,
+      explanation: "This email is too informal, lacks a greeting, proper capitalization, and a professional tone."
+    },
+    {
+      from: "manager@company.com",
+      subject: "URGENT",
+      body: "WHY HAVENT YOU RESPONDED",
+      correct: false,
+      explanation: "Using all caps comes across as aggressive and unprofessional."
+    }
   ],
 
   intermediate: [
-    {subject:"Project Update",body:"Dear Team,\n\nPlease find the weekly update below.\n\nBest regards,\nManager",correct:true},
-    {subject:"Client Follow-Up",body:"Dear Ms. Lee,\n\nFollowing up on our discussion.\n\nBest,\nDavid",correct:true},
-    {subject:"Meeting Minutes",body:"Hello,\n\nAttached are the meeting notes.\n\nBest,\nRachel",correct:true},
-    {subject:"Deadline Reminder",body:"Reminder that deliverables are due Friday.\n\nThanks,\nTom",correct:true},
-    {subject:"Proposal Submission",body:"Dear Client,\n\nPlease review the attached proposal.\n\nRegards,\nFirm",correct:true},
-    {subject:"Interview Thank You",body:"Thank you for your time today.\n\nBest,\nCandidate",correct:true},
-    {subject:"Feedback Request",body:"Could you provide feedback when possible?\n\nThanks,\nEmployee",correct:true},
-    {subject:"Status Update",body:"All tasks are on track.\n\nBest,\nIntern",correct:true},
-    {subject:"Correction",body:"Please note the correction below.\n\nBest,\nAdmin",correct:true},
-    {subject:"Reschedule",body:"Can we reschedule our meeting?\n\nBest,\nLisa",correct:true},
+    // GOOD
+    {
+      from: "Karen Mitchell <kmitchell@company.com>",
+      subject: "Weekly Project Update",
+      body: "Dear Team,\n\nI wanted to provide a brief update on the project. We are currently on track and progressing as scheduled.\n\nPlease let me know if you have any questions.\n\nBest regards,\nKaren Mitchell",
+      correct: true,
+      explanation: "This email is clear, professional, and maintains a neutral and informative tone."
+    },
 
-    {subject:"Update",body:"I already told you this",correct:false},
-    {subject:"Meeting",body:"You missed again",correct:false},
-    {subject:"Report",body:"This makes no sense",correct:false},
-    {subject:"Hi",body:"Sent from my iPhone lol",correct:false},
-    {subject:"Reminder",body:"Don't forget again",correct:false},
-    {subject:"Client",body:"theyre mad fix it",correct:false},
-    {subject:"Important",body:"Read now",correct:false},
-    {subject:"Work",body:"do better",correct:false},
-    {subject:"Re:",body:"k",correct:false},
-    {subject:"Follow-Up",body:"why havent you responded",correct:false}
+    // BAD
+    {
+      from: "manager@company.com",
+      subject: "Update",
+      body: "I already explained this earlier. Please check.",
+      correct: false,
+      explanation: "The tone is dismissive and unhelpful. Professional emails should remain courteous and constructive."
+    }
   ],
 
   expert: [
-    {subject:"Financial Review",body:"Dear Board,\n\nAttached are the quarterly results.\n\nRegards,\nCFO",correct:true},
-    {subject:"Partnership Opportunity",body:"Dear Mr. Adams,\n\nWe would like to explore a partnership.\n\nBest,\nDirector",correct:true},
-    {subject:"Customer Response",body:"We apologize for the inconvenience.\n\nSupport Team",correct:true},
-    {subject:"Contract Clarification",body:"Please clarify clause 4.2.\n\nThanks,\nManager",correct:true},
-    {subject:"Executive Summary",body:"Please review the summary below.\n\nAnalyst",correct:true},
-    {subject:"Policy Update",body:"Please review updated policy.\n\nHR",correct:true},
-    {subject:"Vendor Inquiry",body:"Confirm pricing.\n\nProcurement",correct:true},
-    {subject:"Internal Memo",body:"See updates below.\n\nAdmin",correct:true},
-    {subject:"Apology",body:"We sincerely apologize.\n\nService Team",correct:true},
-    {subject:"Invitation",body:"You are invited to our event.\n\nOrganizer",correct:true},
+    // GOOD
+    {
+      from: "Angela Foster <afoster@company.com>",
+      subject: "Quarterly Financial Review",
+      body: "Dear Board Members,\n\nI hope you are doing well. Below is a summary of our financial performance for the past quarter.\n\nPlease let me know if you would like any additional details.\n\nKind regards,\nAngela Foster\nChief Financial Officer",
+      correct: true,
+      explanation: "This email demonstrates professionalism, clarity, and appropriate tone for a senior audience."
+    },
 
-    {subject:"Financials",body:"Here are numbers",correct:false},
-    {subject:"Partnership",body:"We should partner",correct:false},
-    {subject:"Client",body:"they misunderstood",correct:false},
-    {subject:"Contract",body:"this seems off",correct:false},
-    {subject:"Summary",body:"quick summary",correct:false},
-    {subject:"Policy",body:"read when u can",correct:false},
-    {subject:"Vendor",body:"too expensive??",correct:false},
-    {subject:"Update",body:"stuff changed",correct:false},
-    {subject:"Apology",body:"sorry",correct:false},
-    {subject:"Event",body:"come if u want",correct:false}
+    // BAD
+    {
+      from: "executive@company.com",
+      subject: "Financials",
+      body: "Here are the numbers. Let me know what you think.",
+      correct: false,
+      explanation: "The email is too vague and lacks professionalism for an executive-level communication."
+    }
   ]
 };
 
-// ================= GAME LOGIC =================
+// ================= GAME =================
 
 function startGame(level) {
   currentEmails = shuffle([...emails[level]]);
@@ -94,6 +96,7 @@ function startGame(level) {
   renderEmailList();
 }
 
+// ================= SIDEBAR =================
 function renderEmailList() {
   const list = document.getElementById("email-list");
   list.innerHTML = "";
@@ -112,32 +115,32 @@ function renderEmailList() {
   });
 }
 
+// ================= OPEN EMAIL =================
 function openEmail(index) {
   currentIndex = index;
-
   const email = currentEmails[index];
 
-  document.getElementById("email-subject").innerText = email.subject || "(No Subject)";
-  document.getElementById("email-body").innerText = email.body;
+  document.getElementById("email-subject").innerText = email.subject;
+  document.getElementById("email-body").innerText =
+    "From: " + email.from + "\n" +
+    "Subject: " + email.subject + "\n\n" +
+    email.body;
 
   document.getElementById("actions").classList.remove("hidden");
 
+  clearFeedback();
   highlightSelected(index);
 }
 
-function highlightSelected(index) {
-  const items = document.querySelectorAll("#email-list li");
-  items.forEach((li, i) => {
-    li.classList.toggle("selected", i === index);
-  });
-}
-
+// ================= ANSWER =================
 function answer(choice) {
   const email = currentEmails[currentIndex];
 
   if (answered[currentIndex]) return;
 
-  if (choice !== email.correct) {
+  let correct = (choice === email.correct);
+
+  if (!correct) {
     strikes++;
     document.getElementById("strikes").innerText = "Strikes: " + strikes + " / 3";
 
@@ -147,12 +150,48 @@ function answer(choice) {
     }
   }
 
+  showFeedback(correct, email.explanation);
+
   answered[currentIndex] = true;
 
   renderEmailList();
   document.getElementById("actions").classList.add("hidden");
 
   checkWin();
+}
+
+// ================= FEEDBACK =================
+function showFeedback(correct, explanation) {
+  const content = document.getElementById("content");
+
+  let feedback = document.getElementById("feedback");
+  if (!feedback) {
+    feedback = document.createElement("div");
+    feedback.id = "feedback";
+    content.appendChild(feedback);
+  }
+
+  feedback.innerHTML =
+    (correct ? "✅ Correct\n\n" : "❌ Incorrect\n\n") +
+    explanation;
+
+  feedback.style.marginTop = "20px";
+  feedback.style.padding = "15px";
+  feedback.style.borderRadius = "6px";
+  feedback.style.background = correct ? "#d4edda" : "#f8d7da";
+}
+
+function clearFeedback() {
+  const feedback = document.getElementById("feedback");
+  if (feedback) feedback.remove();
+}
+
+// ================= OTHER =================
+function highlightSelected(index) {
+  const items = document.querySelectorAll("#email-list li");
+  items.forEach((li, i) => {
+    li.classList.toggle("selected", i === index);
+  });
 }
 
 function checkWin() {
