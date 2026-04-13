@@ -1,68 +1,84 @@
 let emails = {};
 let currentEmails = [];
 let currentIndex = -1;
+
 let strikes = 0;
+let score = 0;
+
 let answered = [];
 let awaitingNext = false;
+let darkMode = false;
 
-/* ================= DATA ================= */
+/* ================= EMAIL DATA ================= */
+function randomDomain() {
+  const domains = [
+    "northironridge.com",
+    "valewoodtech.net",
+    "bluecorefinance.org",
+    "halcyonlogistics.io",
+    "evercrestsolutions.com"
+  ];
+  return domains[Math.floor(Math.random() * domains.length)];
+}
+
 emails = {
   novice: [
     {
-      from: "Emily Carter <ecarter@northironridge.com>",
+      from: `Emily Carter <ecarter@${randomDomain()}>`,
       subject: "Meeting Request",
-      body: "Dear Mr. Thompson,\n\nI would like to schedule a meeting this week.\n\nBest regards,\nEmily Carter",
+      body: "Dear Team,\n\nI would like to schedule a meeting this week.\n\nBest regards,\nEmily Carter",
       correct: true,
-      explanation: "Clear, polite, and properly structured business email."
+      explanation: "Professional tone, clear intent, and proper structure."
     },
     {
-      from: "unknown@unknown.com",
+      from: `unknown@${randomDomain()}`,
       subject: "meeting",
       body: "hey can we meet",
       correct: false,
-      explanation: "Too informal and missing professional structure."
+      explanation: "Too informal and lacks professional communication standards."
     }
   ],
 
   intermediate: [
     {
-      from: "Karen Mitchell <kmitchell@bluecorefinance.com>",
+      from: `Karen Mitchell <kmitchell@${randomDomain()}>`,
       subject: "Weekly Update",
-      body: "Dear Team,\n\nWe are on track with the project timeline.\n\nBest regards,\nKaren Mitchell",
+      body: "Dear Team,\n\nProject is on track.\n\nRegards,\nKaren",
       correct: true,
-      explanation: "Professional, concise, and appropriate tone."
+      explanation: "Clear, concise, and appropriate for workplace communication."
     },
     {
-      from: "manager@company.com",
+      from: `manager@${randomDomain()}`,
       subject: "Update",
       body: "I already told you this.",
       correct: false,
-      explanation: "Dismissive tone is unprofessional in workplace communication."
+      explanation: "Dismissive tone is unprofessional."
     }
   ],
 
   expert: [
     {
-      from: "Angela Foster <afoster@bluecorefinance.com>",
-      subject: "Quarterly Summary",
-      body: "Dear Board Members,\n\nPlease review the quarterly report.\n\nKind regards,\nAngela Foster",
+      from: `Angela Foster <afoster@${randomDomain()}>`,
+      subject: "Quarterly Report",
+      body: "Dear Board Members,\n\nPlease review attached summary.\n\nKind regards,\nAngela Foster",
       correct: true,
-      explanation: "Appropriate executive-level clarity and tone."
+      explanation: "Executive-level clarity and professional structure."
     },
     {
-      from: "exec@company.com",
+      from: `exec@${randomDomain()}`,
       subject: "Financials",
       body: "Here are the numbers.",
       correct: false,
-      explanation: "Too vague and lacks executive-level communication detail."
+      explanation: "Too vague for executive communication."
     }
   ]
 };
 
-/* ================= START ================= */
+/* ================= GAME ================= */
 function startGame(level) {
   currentEmails = shuffle([...emails[level]]);
   strikes = 0;
+  score = 0;
   answered = new Array(currentEmails.length).fill(false);
   awaitingNext = false;
 
@@ -70,7 +86,7 @@ function startGame(level) {
   document.getElementById("end-screen").classList.add("hidden");
   document.getElementById("app").classList.remove("hidden");
 
-  updateStrikes();
+  updateUI();
   renderInbox();
   openNextEmail();
 }
@@ -84,24 +100,19 @@ function renderInbox() {
     const li = document.createElement("li");
     li.textContent = email.subject;
 
-    if (answered[i]) {
-      li.style.opacity = "0.4";
-    } else {
-      li.onclick = () => openEmail(i);
-    }
+    if (!answered[i]) li.onclick = () => openEmail(i);
+    else li.style.opacity = "0.4";
 
     list.appendChild(li);
   });
 }
 
-/* ================= OPEN EMAIL ================= */
+/* ================= OPEN ================= */
 function openEmail(i) {
   if (awaitingNext || answered[i]) return;
 
   currentIndex = i;
   const email = currentEmails[i];
-
-  document.getElementById("email-subject").textContent = email.subject;
 
   document.getElementById("email-body").textContent =
 `From: ${email.from}
@@ -109,9 +120,12 @@ Subject: ${email.subject}
 
 ${email.body}`;
 
+  document.getElementById("email-subject").textContent = email.subject;
+
   document.getElementById("actions").classList.remove("hidden");
-  clearFeedback();
+
   highlight(i);
+  clearFeedback();
 }
 
 /* ================= ANSWER ================= */
@@ -121,9 +135,9 @@ function answer(choice) {
   const email = currentEmails[currentIndex];
   const correct = choice === email.correct;
 
-  if (!correct) {
+  if (correct) score += 10;
+  else {
     strikes++;
-    updateStrikes();
     if (strikes >= 3) return gameOver(false);
   }
 
@@ -131,9 +145,10 @@ function answer(choice) {
   awaitingNext = true;
 
   showFeedback(correct, email.explanation);
+  updateUI();
 
-  renderInbox();
   document.getElementById("actions").classList.add("hidden");
+  renderInbox();
 }
 
 /* ================= NEXT ================= */
@@ -150,13 +165,15 @@ function openNextEmail() {
 }
 
 /* ================= FEEDBACK ================= */
-function showFeedback(correct, explanation) {
+function showFeedback(correct, text) {
   const box = document.getElementById("feedback");
   box.classList.remove("hidden");
 
   box.innerHTML = `
-    <b>${correct ? "Correct" : "Incorrect"}</b>
-    <p>${explanation}</p>
+    <div class="${correct ? "good" : "bad"}">
+      ${correct ? "Correct" : "Incorrect"}
+    </div>
+    <p>${text}</p>
   `;
 
   const btn = document.createElement("button");
@@ -166,14 +183,22 @@ function showFeedback(correct, explanation) {
 }
 
 function clearFeedback() {
-  const box = document.getElementById("feedback");
-  box.classList.add("hidden");
-  box.innerHTML = "";
+  document.getElementById("feedback").classList.add("hidden");
+  document.getElementById("feedback").innerHTML = "";
 }
 
 /* ================= UI ================= */
-function updateStrikes() {
+function updateUI() {
   document.getElementById("strikes").textContent = `Strikes: ${strikes} / 3`;
+  document.getElementById("score").textContent = `Score: ${score}`;
+
+  const grade =
+    score >= 90 ? "A" :
+    score >= 80 ? "B" :
+    score >= 70 ? "C" :
+    score >= 50 ? "D" : "F";
+
+  document.getElementById("grade").textContent = `Grade: ${grade}`;
 }
 
 function highlight(i) {
@@ -182,21 +207,30 @@ function highlight(i) {
   });
 }
 
+/* ================= DARK MODE ================= */
+function toggleMode() {
+  darkMode = !darkMode;
+  document.body.classList.toggle("dark", darkMode);
+  document.getElementById("modeToggle").textContent =
+    darkMode ? "☀️ Light Mode" : "🌙 Dark Mode";
+}
+
 /* ================= GAME OVER ================= */
 function gameOver(win) {
   document.getElementById("app").classList.add("hidden");
   document.getElementById("end-screen").classList.remove("hidden");
 
-  const done = answered.filter(Boolean).length;
-  const total = currentEmails.length;
+  const grade =
+    score >= 90 ? "A" :
+    score >= 80 ? "B" :
+    score >= 70 ? "C" :
+    score >= 50 ? "D" : "F";
 
   document.getElementById("end-message").innerHTML =
-    `${win ? "🎉 Inbox Cleared!" : "💀 Game Over"}<br><br>
-     Completed: ${done}/${total}<br>
-     Strikes: ${strikes}/3<br><br>
-     ${win
-       ? "Excellent business email etiquette."
-       : "Too many communication errors. Focus on tone, clarity, and professionalism."}`;
+    win ? "🎉 Inbox Cleared!" : "💀 Game Over";
+
+  document.getElementById("final-score").innerHTML =
+    `Score: ${score}<br>Grade: ${grade}<br>Strikes: ${strikes}/3`;
 }
 
 /* ================= UTIL ================= */
