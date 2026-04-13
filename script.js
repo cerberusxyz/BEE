@@ -22,7 +22,7 @@ function shuffle(array) {
 
 emails = {
 
-/* ================= NOVICE ================= */
+/* ===== NOVICE ===== */
 novice: [
 {
 subject: "Team Meeting Reminder",
@@ -35,8 +35,7 @@ Reminder that we have a meeting tomorrow at 10 AM to discuss project updates.
 
 Best regards,
 Laura Bennett`,
-correct: true,
-explanation: { points: ["Clear and polite.", "Standard workplace tone.", "Simple structure."] }
+correct: true
 },
 {
 subject: "Weekly Update",
@@ -49,8 +48,7 @@ Project is progressing as expected this week.
 
 Regards,
 James Carter`,
-correct: true,
-explanation: { points: ["Clear status update.", "Neutral tone.", "Professional format."] }
+correct: true
 },
 {
 subject: "Office Hours",
@@ -63,8 +61,7 @@ Office hours are 9 AM to 5 PM, Monday through Friday.
 
 Thanks,
 HR Team`,
-correct: true,
-explanation: { points: ["Clear information.", "Standard HR communication.", "No ambiguity."] }
+correct: true
 },
 {
 subject: "Meeting Confirmation",
@@ -77,8 +74,7 @@ Confirming our meeting on Thursday at 2 PM.
 
 Best,
 Sophie Turner`,
-correct: true,
-explanation: { points: ["Direct confirmation.", "Professional tone.", "Clear intent."] }
+correct: true
 },
 {
 subject: "Monthly Reports",
@@ -91,11 +87,10 @@ Please send monthly reports by Friday.
 
 Regards,
 Daniel Scott`,
-correct: true,
-explanation: { points: ["Clear request.", "Normal tone.", "Direct instruction."] }
+correct: true
 },
 
-/* INAPPROPRIATE (CLEAR BUT NOT OBVIOUS) */
+/* incorrect */
 {
 subject: "Project update",
 from: "operations@northfieldadmin.net",
@@ -103,12 +98,11 @@ time: "Mon 9:20 AM",
 body:
 `Hi team,
 
-Just checking in—do we have an updated timeline for completion? We may need it for planning next steps.
+Just checking in—do we have an updated timeline for completion?
 
 Thanks,
 Operations`,
-correct: false,
-explanation: { points: ["Premature request for updates.", "Assumes uncertainty.", "No clear reason provided."] }
+correct: false
 },
 {
 subject: "Quick question",
@@ -121,8 +115,7 @@ Are we still on track for delivery this week?
 
 Regards,
 Manager`,
-correct: false,
-explanation: { points: ["Assumes possible delay.", "No context.", "Creates unnecessary pressure."] }
+correct: false
 },
 {
 subject: "Follow-up",
@@ -131,12 +124,11 @@ time: "Mon 11:30 AM",
 body:
 `Hello,
 
-Just following up on the current status of the task.
+Just following up on the current status.
 
 Best,
 Lead`,
-correct: false,
-explanation: { points: ["Redundant follow-up.", "No added value.", "Slight impatience implied."] }
+correct: false
 },
 {
 subject: "Update request",
@@ -149,8 +141,7 @@ Can you send a quick update when you have time?
 
 Thanks,
 HR`,
-correct: false,
-explanation: { points: ["Unnecessary interruption.", "No urgency context.", "Poor timing."] }
+correct: false
 },
 {
 subject: "Checking in",
@@ -159,16 +150,15 @@ time: "Mon 2:30 PM",
 body:
 `Hello,
 
-Just checking in on progress.
+Just checking in.
 
 Regards,
 Support Team`,
-correct: false,
-explanation: { points: ["Too vague.", "No purpose.", "Unhelpful request."] }
+correct: false
 }
 ],
 
-/* ================= INTERMEDIATE ================= */
+/* ===== INTERMEDIATE ===== */
 intermediate: [
 {
 subject: "Deployment Update",
@@ -181,8 +171,7 @@ Deployment was completed successfully and everything is running normally.
 
 Kind regards,
 Daniel Reed`,
-correct: true,
-explanation: { points: ["Clear update.", "No ambiguity.", "Professional tone."] }
+correct: true
 },
 {
 subject: "Milestone Update",
@@ -195,8 +184,7 @@ We have completed milestone 2 and are moving into testing.
 
 Regards,
 Emily Carter`,
-correct: true,
-explanation: { points: ["Clear progress.", "Simple structure.", "Professional tone."] }
+correct: true
 },
 {
 subject: "Client Follow-Up",
@@ -205,12 +193,11 @@ time: "Tue 1:00 PM",
 body:
 `Dear client,
 
-Following up on our previous discussion about project scope.
+Following up on our previous discussion.
 
 Best regards,
 Mark Evans`,
-correct: true,
-explanation: { points: ["Standard follow-up.", "Clear intent.", "Neutral tone."] }
+correct: true
 },
 {
 subject: "Meeting Notes",
@@ -219,12 +206,11 @@ time: "Tue 3:00 PM",
 body:
 `Hi all,
 
-Please see attached notes from today’s meeting.
+Please see attached meeting notes.
 
 Regards,
 Olivia Grant`,
-correct: true,
-explanation: { points: ["Clear summary.", "Professional tone.", "Normal structure."] }
+correct: true
 },
 {
 subject: "Task Update",
@@ -237,11 +223,10 @@ Tasks have been updated based on workload.
 
 Thanks,
 HR`,
-correct: true,
-explanation: { points: ["Simple HR update.", "Clear meaning.", "No issues."] }
+correct: true
 },
 
-/* INAPPROPRIATE */
+/* incorrect */
 {
 subject: "Progress check",
 from: "operations@brightwave-solutions.com",
@@ -249,12 +234,11 @@ time: "Tue 9:10 AM",
 body:
 `Hi,
 
-Can you confirm everything is still on schedule? Just want to make sure nothing has changed.
+Can you confirm everything is still on track?
 
 Regards,
 Operations`,
-correct: false,
-explanation: { points: ["Premature check-in.", "Assumes instability.", "No reason for concern provided."] }
+correct: false
 },
 {
 subject: "Status question",
@@ -263,12 +247,11 @@ time: "Tue 10:20 AM",
 body:
 `Hello,
 
-What is the current status of this task?
+What is the current status?
 
 Best,
 Lead`,
-correct: false,
-explanation: { points: ["Too vague.", "No context.", "No clear purpose."] }
+correct: false
 },
 {
 subject: "Update request",
@@ -277,12 +260,11 @@ time: "Tue 11:40 AM",
 body:
 `Hi team,
 
-Can someone provide an update when possible?
+Can someone provide an update?
 
 Regards,
 Manager`,
-correct: false,
-explanation: { points: ["Unnecessary interruption.", "No urgency.", "No specificity."] }
+correct: false
 },
 {
 subject: "Milestone check",
@@ -291,12 +273,11 @@ time: "Tue 1:30 PM",
 body:
 `Hello,
 
-Are we aligned on milestone completion?
+Are we aligned on milestones?
 
 Thanks,
 PM`,
-correct: false,
-explanation: { points: ["Assumes misalignment.", "No evidence.", "Unneeded doubt."] }
+correct: false
 },
 {
 subject: "Execution question",
@@ -305,16 +286,15 @@ time: "Tue 3:15 PM",
 body:
 `Hi,
 
-Is everything being handled correctly so far?
+Is everything okay?
 
 Regards,
 Strategy Team`,
-correct: false,
-explanation: { points: ["Implied suspicion.", "No context.", "Vague concern."] }
+correct: false
 }
 ],
 
-/* ================= EXPERT ================= */
+/* ===== EXPERT ===== */
 expert: [
 {
 subject: "Q3 Update",
@@ -323,12 +303,11 @@ time: "Wed 8:00 AM",
 body:
 `Dear Team,
 
-Q3 results are stable and within expected range.
+Q3 results are stable.
 
 Sincerely,
 Olivia Bennett`,
-correct: true,
-explanation: { points: ["Neutral report.", "Clear tone.", "No ambiguity."] }
+correct: true
 },
 {
 subject: "Strategy Update",
@@ -337,26 +316,24 @@ time: "Wed 9:00 AM",
 body:
 `Dear colleagues,
 
-We will proceed with updated Q4 priorities.
+We will proceed with updated priorities.
 
 Regards,
 Henry Collins`,
-correct: true,
-explanation: { points: ["Clear direction.", "Simple tone.", "No issues."] }
+correct: true
 },
 {
 subject: "Board Summary",
 from: "Executive Office <exec@aurorafinancialgroup.com>",
 time: "Wed 10:00 AM",
 body:
-`Dear Board Members,
+`Dear Board,
 
-Please review today’s summary.
+Please review summary.
 
 Sincerely,
 Executive Office`,
-correct: true,
-explanation: { points: ["Formal message.", "Clear intent.", "Concise."] }
+correct: true
 },
 {
 subject: "Risk Update",
@@ -365,12 +342,11 @@ time: "Wed 11:00 AM",
 body:
 `Hello,
 
-Risk data has been updated.
+Risk data updated.
 
 Regards,
 Rachel Moore`,
-correct: true,
-explanation: { points: ["Neutral update.", "Clear message.", "No issues."] }
+correct: true
 },
 {
 subject: "Annual Review",
@@ -379,15 +355,14 @@ time: "Wed 1:00 PM",
 body:
 `Dear colleagues,
 
-Please prepare annual review materials.
+Please prepare review materials.
 
 Regards,
 HR Executive`,
-correct: true,
-explanation: { points: ["Clear instruction.", "Professional tone.", "Standard message."] }
+correct: true
 },
 
-/* INAPPROPRIATE */
+/* incorrect */
 {
 subject: "Performance update",
 from: "exec@aurorafinancialgroup.com",
@@ -395,11 +370,10 @@ time: "Wed 8:20 AM",
 body:
 `Team,
 
-Some areas are not meeting expectations and may need review.
+Some areas need review.
 
 Executive Office`,
-correct: false,
-explanation: { points: ["Negative generalization.", "No detail.", "Unfair grouping."] }
+correct: false
 },
 {
 subject: "Strategy concern",
@@ -408,12 +382,11 @@ time: "Wed 9:40 AM",
 body:
 `Hello,
 
-I think we should reconsider the current strategy.
+We should reconsider strategy.
 
 Regards,
 Strategy`,
-correct: false,
-explanation: { points: ["No reasoning.", "Undermines plan.", "Unhelpful tone."] }
+correct: false
 },
 {
 subject: "Execution issue",
@@ -422,12 +395,11 @@ time: "Wed 10:20 AM",
 body:
 `Hi,
 
-There seems to be an issue with execution.
+There may be an issue.
 
 Regards,
 PM`,
-correct: false,
-explanation: { points: ["Too vague.", "No specifics.", "Unhelpful feedback."] }
+correct: false
 },
 {
 subject: "Process review",
@@ -436,12 +408,11 @@ time: "Wed 11:50 AM",
 body:
 `Dear team,
 
-We may need to review our current processes.
+We may need to review processes.
 
 Sincerely,
 Board`,
-correct: false,
-explanation: { points: ["Unnecessary doubt.", "No trigger provided.", "Too generic."] }
+correct: false
 },
 {
 subject: "Decision question",
@@ -454,14 +425,13 @@ Why was this decision made?
 
 Regards,
 CEO`,
-correct: false,
-explanation: { points: ["Implied criticism.", "No context.", "Poor framing."] }
+correct: false
 }
 ]
 };
 
 /* =========================
-   GAME START
+   START GAME (FIXED SAFE)
 ========================= */
 window.startGame = function (difficulty) {
   current = shuffle([...emails[difficulty]]);
@@ -470,17 +440,23 @@ window.startGame = function (difficulty) {
   answered = [];
   locked = false;
 
-  document.getElementById("start-screen").classList.add("hidden");
-  document.getElementById("app").classList.remove("hidden");
+  const startScreen = document.getElementById("start-screen");
+  const app = document.getElementById("app");
 
-  document.getElementById("difficulty").innerText = difficulty.toUpperCase();
-  document.getElementById("strikes").innerText = "Strikes: 0 / 3";
+  if (startScreen) startScreen.classList.add("hidden");
+  if (app) app.classList.remove("hidden");
+
+  const diffEl = document.getElementById("difficulty");
+  const strikeEl = document.getElementById("strikes");
+
+  if (diffEl) diffEl.innerText = difficulty.toUpperCase();
+  if (strikeEl) strikeEl.innerText = "Strikes: 0 / 3";
 
   loadEmail();
 };
 
 /* =========================
-   ANSWER LOGIC
+   ANSWER
 ========================= */
 window.answer = function (isCorrect) {
   if (locked) return;
@@ -490,7 +466,8 @@ window.answer = function (isCorrect) {
 
   if (isCorrect !== email.correct) {
     strikes++;
-    document.getElementById("strikes").innerText = `Strikes: ${strikes} / 3`;
+    const strikeEl = document.getElementById("strikes");
+    if (strikeEl) strikeEl.innerText = `Strikes: ${strikes} / 3`;
   }
 
   setTimeout(nextEmail, 400);
@@ -521,7 +498,7 @@ ${email.body}`;
 }
 
 /* =========================
-   NEXT EMAIL
+   NEXT
 ========================= */
 function nextEmail() {
   index++;
@@ -535,12 +512,9 @@ function nextEmail() {
 }
 
 /* =========================
-   END GAME
+   END
 ========================= */
 function endGame() {
   document.getElementById("app").classList.add("hidden");
   document.getElementById("end-screen").classList.remove("hidden");
-
-  document.getElementById("end-message").innerText =
-    strikes >= 3 ? "Game Over" : "Completed!";
 }
