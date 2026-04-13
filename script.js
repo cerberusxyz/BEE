@@ -5,18 +5,7 @@ let strikes = 0;
 let locked = false;
 
 /* =========================
-   SHUFFLE
-========================= */
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
-/* =========================
-   GOOD BALANCED DATASET (CLEAN VERSION)
+   DATASET (WITH EXPLANATIONS RESTORED)
 ========================= */
 
 emails = {
@@ -34,7 +23,8 @@ Reminder that we have a meeting tomorrow at 10 AM to discuss project updates.
 
 Best regards,
 Laura Bennett`,
-correct: true
+correct: true,
+explanation: "Clear, polite, and professionally structured communication with a specific time and purpose."
 },
 {
 subject: "Weekly Update",
@@ -47,7 +37,8 @@ Project is progressing as expected this week.
 
 Regards,
 James Carter`,
-correct: true
+correct: true,
+explanation: "Concise progress update with neutral tone and no ambiguity or unnecessary detail."
 },
 {
 subject: "Office Hours",
@@ -60,7 +51,8 @@ Office hours are 9 AM to 5 PM, Monday through Friday.
 
 Thanks,
 HR Team`,
-correct: true
+correct: true,
+explanation: "Straightforward informational message with clear structure and no informal language."
 },
 {
 subject: "Meeting Confirmation",
@@ -73,7 +65,8 @@ Confirming our meeting on Thursday at 2 PM.
 
 Best,
 Sophie Turner`,
-correct: true
+correct: true,
+explanation: "Direct confirmation email with proper tone and no extraneous content."
 },
 {
 subject: "Monthly Reports",
@@ -86,10 +79,11 @@ Please send monthly reports by Friday.
 
 Regards,
 Daniel Scott`,
-correct: true
+correct: true,
+explanation: "Clear instruction with deadline and professional phrasing."
 },
 
-/* INAPPROPRIATE (SUBTLE, REALISTIC) */
+/* INAPPROPRIATE */
 {
 subject: "Project update",
 from: "operations@northfieldadmin.net",
@@ -101,7 +95,8 @@ Just checking if there are any updates to the project timeline for planning purp
 
 Thanks,
 Operations`,
-correct: false
+correct: false,
+explanation: "Unnecessary check-in that assumes uncertainty and pressures for updates without cause."
 },
 {
 subject: "Quick question",
@@ -114,7 +109,8 @@ Are we still aligned with delivery expectations for this week?
 
 Regards,
 Manager`,
-correct: false
+correct: false,
+explanation: "Introduces doubt about delivery without context, creating unnecessary concern."
 },
 {
 subject: "Follow-up",
@@ -127,7 +123,8 @@ Just following up on current progress when you have a moment.
 
 Best,
 Lead`,
-correct: false
+correct: false,
+explanation: "Generic follow-up that adds no value or actionable information."
 },
 {
 subject: "Update request",
@@ -140,7 +137,8 @@ Could you share a brief status update when available?
 
 Thanks,
 HR`,
-correct: false
+correct: false,
+explanation: "Redundant request lacking urgency or justification for interruption."
 },
 {
 subject: "Checking in",
@@ -153,280 +151,11 @@ Checking in on current progress.
 
 Regards,
 Support Team`,
-correct: false
-}
-],
-
-/* ================= INTERMEDIATE ================= */
-intermediate: [
-{
-subject: "Deployment Update",
-from: "Daniel Reed <daniel.reed@corelinksystems.io>",
-time: "Tue 2:30 PM",
-body:
-`Hello team,
-
-Deployment was completed successfully and all systems are operating normally.
-
-Kind regards,
-Daniel Reed`,
-correct: true
-},
-{
-subject: "Milestone Update",
-from: "Emily Carter <emily.carter@brightwave-solutions.com>",
-time: "Tue 11:00 AM",
-body:
-`Hello,
-
-We have completed milestone 2 and are moving into testing.
-
-Regards,
-Emily Carter`,
-correct: true
-},
-{
-subject: "Client Follow-Up",
-from: "Mark Evans <mark.evans@northbridgeconsulting.net>",
-time: "Tue 1:00 PM",
-body:
-`Dear client,
-
-Following up on our previous discussion regarding scope.
-
-Best regards,
-Mark Evans`,
-correct: true
-},
-{
-subject: "Meeting Notes",
-from: "Olivia Grant <olivia.grant@clearviewops.com>",
-time: "Tue 3:00 PM",
-body:
-`Hi all,
-
-Please find attached notes from today’s meeting.
-
-Regards,
-Olivia Grant`,
-correct: true
-},
-{
-subject: "Task Update",
-from: "HR Ops <hr.ops@silverlinecorp.net>",
-time: "Tue 4:00 PM",
-body:
-`Hello team,
-
-Tasks have been updated based on workload.
-
-Thanks,
-HR`,
-correct: true
-},
-
-/* INAPPROPRIATE */
-{
-subject: "Progress check",
-from: "operations@brightwave-solutions.com",
-time: "Tue 9:10 AM",
-body:
-`Hi,
-
-Can you confirm everything is still on track?
-
-Regards,
-Operations`,
-correct: false
-},
-{
-subject: "Status question",
-from: "lead@northbridgeconsulting.net",
-time: "Tue 10:20 AM",
-body:
-`Hello,
-
-What is the current status of this task?
-
-Best,
-Lead`,
-correct: false
-},
-{
-subject: "Update request",
-from: "manager@clearviewops.com",
-time: "Tue 11:40 AM",
-body:
-`Hi team,
-
-Can someone provide an update?
-
-Regards,
-Manager`,
-correct: false
-},
-{
-subject: "Milestone check",
-from: "pm@corelinksystems.io",
-time: "Tue 1:30 PM",
-body:
-`Hello,
-
-Are we aligned on milestone completion?
-
-Thanks,
-PM`,
-correct: false
-},
-{
-subject: "Execution question",
-from: "strategy@brightwave-solutions.com",
-time: "Tue 3:15 PM",
-body:
-`Hi,
-
-Is everything being handled correctly so far?
-
-Regards,
-Strategy Team`,
-correct: false
-}
-],
-
-/* ================= EXPERT ================= */
-expert: [
-{
-subject: "Q3 Update",
-from: "Olivia Bennett <olivia.bennett@aurorafinancialgroup.com>",
-time: "Wed 8:00 AM",
-body:
-`Dear Team,
-
-Q3 results are stable and within expected range.
-
-Sincerely,
-Olivia Bennett`,
-correct: true
-},
-{
-subject: "Strategy Update",
-from: "Henry Collins <henry.collins@northfieldstrategy.com>",
-time: "Wed 9:00 AM",
-body:
-`Dear colleagues,
-
-We will proceed with updated Q4 priorities.
-
-Regards,
-Henry Collins`,
-correct: true
-},
-{
-subject: "Board Summary",
-from: "Executive Office <exec@aurorafinancialgroup.com>",
-time: "Wed 10:00 AM",
-body:
-`Dear Board Members,
-
-Please review today’s summary.
-
-Sincerely,
-Executive Office`,
-correct: true
-},
-{
-subject: "Risk Update",
-from: "Rachel Moore <rachel.moore@corelinksystems.io>",
-time: "Wed 11:00 AM",
-body:
-`Hello,
-
-Risk data has been updated.
-
-Regards,
-Rachel Moore`,
-correct: true
-},
-{
-subject: "Annual Review",
-from: "HR Executive <hr.exec@silverlinecorp.net>",
-time: "Wed 1:00 PM",
-body:
-`Dear colleagues,
-
-Please prepare annual review materials.
-
-Regards,
-HR Executive`,
-correct: true
-},
-
-/* INAPPROPRIATE */
-{
-subject: "Performance update",
-from: "exec@aurorafinancialgroup.com",
-time: "Wed 8:20 AM",
-body:
-`Team,
-
-Some areas are not meeting expectations and may need review.
-
-Executive Office`,
-correct: false
-},
-{
-subject: "Strategy concern",
-from: "strategy@northfieldstrategy.com",
-time: "Wed 9:40 AM",
-body:
-`Hello,
-
-I think we should reconsider the current strategy.
-
-Regards,
-Strategy`,
-correct: false
-},
-{
-subject: "Execution issue",
-from: "pm@corelinksystems.io",
-time: "Wed 10:20 AM",
-body:
-`Hi,
-
-There seems to be an issue with execution.
-
-Regards,
-PM`,
-correct: false
-},
-{
-subject: "Process review",
-from: "board@aurorafinancialgroup.com",
-time: "Wed 11:50 AM",
-body:
-`Dear team,
-
-We may need to review our current processes.
-
-Sincerely,
-Board`,
-correct: false
-},
-{
-subject: "Decision question",
-from: "ceo@northfieldstrategy.com",
-time: "Wed 2:10 PM",
-body:
-`Team,
-
-Why was this decision made?
-
-Regards,
-CEO`,
-correct: false
+correct: false,
+explanation: "Vague and non-actionable message that does not specify what is needed."
 }
 ]
+
 };
 
 /* =========================
@@ -447,7 +176,7 @@ window.startGame = function (difficulty) {
 };
 
 /* =========================
-   RENDER INBOX
+   INBOX
 ========================= */
 function renderInbox() {
   const list = document.getElementById("email-list");
@@ -467,7 +196,7 @@ function renderInbox() {
 }
 
 /* =========================
-   LOAD EMAIL
+   LOAD EMAIL + EXPLANATION BOX RESET
 ========================= */
 function loadEmail(email) {
   document.getElementById("email-subject").innerText = email.subject;
@@ -478,33 +207,48 @@ Time: ${email.time}
 
 ${email.body}`;
 
+  const feedback = document.getElementById("feedback");
+  if (feedback) {
+    feedback.innerHTML = "";
+    feedback.className = "";
+  }
+
   document.getElementById("actions").style.display = "block";
 }
 
 /* =========================
-   ANSWER
+   ANSWER + EXPLANATION BOX
 ========================= */
 window.answer = function (isCorrect) {
   if (!selectedEmail || locked) return;
   locked = true;
 
-  if (isCorrect !== selectedEmail.correct) {
+  const feedback = document.getElementById("feedback");
+
+  const correct = isCorrect === selectedEmail.correct;
+
+  if (!correct) {
     strikes++;
     document.getElementById("strikes").innerText = `Strikes: ${strikes} / 3`;
   }
 
+  if (feedback) {
+    feedback.className = correct ? "correct-box" : "incorrect-box";
+    feedback.innerHTML = `
+      <strong>${correct ? "Correct" : "Incorrect"}</strong><br><br>
+      ${selectedEmail.explanation}
+    `;
+  }
+
   currentEmails = currentEmails.filter(e => e !== selectedEmail);
   selectedEmail = null;
-
-  document.getElementById("email-subject").innerText = "Select an email";
-  document.getElementById("email-body").innerText = "";
 
   renderInbox();
 
   locked = false;
 
   if (strikes >= 3 || currentEmails.length === 0) {
-    endGame();
+    setTimeout(endGame, 800);
   }
 };
 
