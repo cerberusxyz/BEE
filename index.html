@@ -7,38 +7,26 @@
 </head>
 <body>
 
-<!-- ================= START SCREEN ================= -->
+<!-- START -->
 <div id="start-screen">
   <div class="card">
 
     <h1>📧 Email Etiquette Simulator</h1>
 
-    <p><strong>Corporate Training Overview</strong></p>
+    <p class="subtext">Corporate Communication Training Module</p>
 
     <div class="text-block">
-      You are being trained to evaluate professional workplace communication.
+      Review emails and determine if they follow professional business etiquette.
     </div>
 
-    <p><strong>How to Play</strong></p>
-
+    <h3>How to Play</h3>
     <div class="text-block">
-      • Open emails from your inbox<br>
-      • Decide if each message is appropriate or inappropriate<br>
-      • 3 strikes ends the simulation<br>
-      • Final score (0–100) and grade (A–F) shown at the end
+      • Select a difficulty<br>
+      • Open emails in your inbox<br>
+      • Choose Appropriate or Inappropriate<br>
+      • Avoid 3 strikes<br>
+      • Earn a final grade (A–F)
     </div>
-
-    <p><strong>Tutorial</strong></p>
-
-    <div class="text-block">
-      Step 1: Click an email in the inbox<br>
-      Step 2: Read the message carefully<br>
-      Step 3: Choose Appropriate or Inappropriate<br>
-      Step 4: Review feedback explanation<br>
-      Step 5: Complete all emails or reach 3 strikes
-    </div>
-
-    <p><strong>Select Difficulty</strong></p>
 
     <button onclick="startGame('novice')">Novice</button>
     <button onclick="startGame('intermediate')">Intermediate</button>
@@ -47,12 +35,12 @@
   </div>
 </div>
 
-<!-- ================= GAME ================= -->
+<!-- GAME -->
 <div id="app">
 
   <div id="topbar">
     <span id="strikes">Strikes: 0 / 3</span>
-    <button onclick="toggleMode()">🌙 Dark Mode</button>
+    <button id="modeToggle" onclick="toggleMode()">🌙 Dark Mode</button>
   </div>
 
   <div id="main">
@@ -63,7 +51,6 @@
     </div>
 
     <div id="content">
-
       <h2 id="email-subject">Select an email</h2>
       <div id="email-body"></div>
 
@@ -73,17 +60,16 @@
       </div>
 
       <div id="feedback" class="hidden"></div>
-
     </div>
 
   </div>
 </div>
 
-<!-- ================= END SCREEN ================= -->
+<!-- END -->
 <div id="end-screen">
-  <div class="card">
+  <div class="card end-card">
     <h1 id="end-message"></h1>
-    <p id="final-score"></p>
+    <div id="final-score"></div>
     <button onclick="location.reload()">Restart Training</button>
   </div>
 </div>
