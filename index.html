@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<!-- START SCREEN -->
+<!-- START -->
 <div id="start-screen">
   <div class="card">
     <h1>📧 Email Etiquette Simulator</h1>
@@ -18,23 +18,27 @@
   </div>
 </div>
 
-<!-- GAME APP -->
+<!-- APP -->
 <div id="app" class="hidden">
 
   <div id="topbar">
-    <div id="difficulty"></div>
-    <div id="strikes">Strikes: 0 / 3</div>
+    <div>
+      <span id="difficulty"></span> |
+      <span id="strikes"></span> |
+      <span id="score"></span> |
+      <span id="grade"></span>
+    </div>
+
+    <button id="modeToggle" onclick="toggleMode()">🌙 Dark Mode</button>
   </div>
 
   <div id="main">
 
-    <!-- INBOX -->
     <div id="sidebar">
       <h3>Inbox</h3>
       <ul id="email-list"></ul>
     </div>
 
-    <!-- READER -->
     <div id="content">
       <h2 id="email-subject">Select an email</h2>
 
@@ -51,10 +55,11 @@
   </div>
 </div>
 
-<!-- END SCREEN -->
+<!-- END -->
 <div id="end-screen" class="hidden">
   <div class="card">
     <h1 id="end-message"></h1>
+    <p id="final-score"></p>
     <button onclick="location.reload()">Play Again</button>
   </div>
 </div>
