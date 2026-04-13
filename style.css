@@ -1,66 +1,49 @@
+/* ================= THEME ================= */
+:root {
+  --bg: #eef2f7;
+  --card: white;
+  --text: #111827;
+  --accent: #2563eb;
+  --border: #e5e7eb;
+  --good: #16a34a;
+  --bad: #dc2626;
+}
+
+body.dark {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --text: #e5e7eb;
+  --accent: #60a5fa;
+  --border: #334155;
+}
+
+/* ================= BASE ================= */
 body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
-  background: #eef2f7;
-  color: #111827;
+  background: var(--bg);
+  color: var(--text);
 }
 
-/* SCREEN SYSTEM */
-.hidden {
-  display: none !important;
-}
+.hidden { display: none !important; }
 
-/* CARDS */
-.card {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-
-/* START + END */
-#start-screen,
-#end-screen {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* BUTTONS */
-button {
-  padding: 10px 14px;
-  margin: 6px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  background: #2563eb;
-  color: white;
-  font-weight: 600;
-}
-
-button:hover {
-  background: #1d4ed8;
-}
-
-/* APP */
+/* ================= LAYOUT ================= */
 #app {
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* TOP BAR */
+/* TOPBAR */
 #topbar {
   display: flex;
   justify-content: space-between;
   padding: 10px 15px;
-  background: white;
-  border-bottom: 1px solid #ddd;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
 }
 
-/* MAIN LAYOUT */
+/* MAIN */
 #main {
   flex: 1;
   display: flex;
@@ -70,51 +53,81 @@ button:hover {
 /* SIDEBAR */
 #sidebar {
   width: 280px;
-  background: white;
-  border-right: 1px solid #ddd;
-  overflow-y: auto;
+  background: var(--card);
+  border-right: 1px solid var(--border);
 }
 
 #email-list {
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 #email-list li {
   padding: 10px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--border);
   cursor: pointer;
 }
 
 #email-list li:hover {
-  background: #f3f4f6;
+  background: rgba(0,0,0,0.05);
 }
 
 #email-list li.selected {
-  background: #dbeafe;
+  background: rgba(37,99,235,0.2);
 }
 
 /* CONTENT */
 #content {
   flex: 1;
   padding: 16px;
-  overflow-y: auto;
 }
 
 #email-body {
   white-space: pre-wrap;
-  background: white;
+  background: var(--card);
   padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+/* BUTTONS */
+button {
+  padding: 8px 12px;
+  border: none;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  cursor: pointer;
+  background: var(--accent);
+  color: white;
+  margin: 5px;
+}
+
+button:hover {
+  opacity: 0.9;
 }
 
 /* FEEDBACK */
 #feedback {
   margin-top: 15px;
   padding: 12px;
-  background: #fff7ed;
-  border: 1px solid #fdba74;
-  border-radius: 8px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+.good {
+  color: var(--good);
+  font-weight: bold;
+}
+
+.bad {
+  color: var(--bad);
+  font-weight: bold;
+}
+
+/* CARD */
+.card {
+  background: var(--card);
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
 }
