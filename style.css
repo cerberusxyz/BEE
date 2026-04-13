@@ -1,33 +1,73 @@
-/* ================= THEME ================= */
 :root {
   --bg: #eef2f7;
-  --card: white;
+  --panel: #ffffff;
   --text: #111827;
-  --accent: #2563eb;
   --border: #e5e7eb;
+  --accent: #2563eb;
+
   --good: #16a34a;
   --bad: #dc2626;
+
+  --shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
+/* ================= DARK MODE ================= */
 body.dark {
   --bg: #0f172a;
-  --card: #1e293b;
+  --panel: #1e293b;
   --text: #e5e7eb;
-  --accent: #60a5fa;
   --border: #334155;
+  --accent: #60a5fa;
 }
 
 /* ================= BASE ================= */
 body {
   margin: 0;
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Segoe UI", system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
 }
 
-.hidden { display: none !important; }
+.hidden {
+  display: none !important;
+}
 
-/* ================= LAYOUT ================= */
+/* ================= BUTTONS ================= */
+button {
+  padding: 9px 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: var(--accent);
+  color: white;
+  font-weight: 600;
+  transition: 0.15s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+/* ================= SCREENS ================= */
+#start-screen,
+#end-screen {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  background: var(--panel);
+  padding: 32px;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  min-width: 280px;
+}
+
+/* ================= APP LAYOUT ================= */
 #app {
   height: 100vh;
   display: flex;
@@ -38,35 +78,43 @@ body {
 #topbar {
   display: flex;
   justify-content: space-between;
-  padding: 10px 15px;
-  background: var(--card);
+  align-items: center;
+  padding: 10px 14px;
+  background: var(--panel);
   border-bottom: 1px solid var(--border);
+  font-size: 14px;
 }
 
-/* MAIN */
+/* MAIN AREA */
 #main {
   flex: 1;
   display: flex;
   overflow: hidden;
 }
 
-/* SIDEBAR */
+/* ================= SIDEBAR ================= */
 #sidebar {
-  width: 280px;
-  background: var(--card);
+  width: 300px;
+  background: var(--panel);
   border-right: 1px solid var(--border);
+  overflow-y: auto;
+}
+
+#sidebar h3 {
+  margin: 12px;
 }
 
 #email-list {
   list-style: none;
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
 
 #email-list li {
-  padding: 10px;
+  padding: 12px;
   border-bottom: 1px solid var(--border);
   cursor: pointer;
+  transition: 0.15s ease;
 }
 
 #email-list li:hover {
@@ -74,86 +122,76 @@ body {
 }
 
 #email-list li.selected {
-  background: rgba(37,99,235,0.2);
+  background: rgba(37,99,235,0.15);
 }
 
-/* CONTENT */
+/* ================= CONTENT ================= */
 #content {
   flex: 1;
-  padding: 16px;
+  padding: 18px;
+  overflow-y: auto;
+}
+
+#email-subject {
+  margin-top: 0;
 }
 
 #email-body {
   white-space: pre-wrap;
-  background: var(--card);
-  padding: 12px;
-  border-radius: 10px;
+  background: var(--panel);
   border: 1px solid var(--border);
+  padding: 14px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  margin-bottom: 15px;
 }
 
-/* BUTTONS */
-button {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  background: var(--accent);
-  color: white;
-  margin: 5px;
+/* ================= ACTIONS ================= */
+#actions {
+  margin-bottom: 10px;
 }
 
-button:hover {
-  opacity: 0.9;
-}
-
-/* FEEDBACK */
+/* ================= FEEDBACK ================= */
 #feedback {
   margin-top: 15px;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
 }
 
-.good {
-  color: var(--good);
-  font-weight: bold;
-}
-
-.bad {
-  color: var(--bad);
-  font-weight: bold;
-}
-
-/* CARD */
-.card {
-  background: var(--card);
-  padding: 30px;
-  border-radius: 12px;
-  text-align: center;
-}
-
+/* BASE FEEDBACK BOX */
 .feedback-box {
-  padding: 12px;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  padding: 14px;
+  border-radius: 12px;
   border: 2px solid;
+  margin-bottom: 10px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
 }
 
+/* CORRECT */
 .good-box {
-  border-color: #16a34a;
+  border-color: var(--good);
   background: rgba(22,163,74,0.08);
 }
 
+/* INCORRECT */
 .bad-box {
-  border-color: #dc2626;
+  border-color: var(--bad);
   background: rgba(220,38,38,0.08);
 }
 
+/* FEEDBACK TEXT */
 .feedback-title {
   font-weight: 700;
   margin-bottom: 6px;
 }
 
 .feedback-text {
-  line-height: 1.4;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+/* ================= END SCREEN ================= */
+#final-score {
+  margin-top: 10px;
+  font-size: 16px;
+  opacity: 0.9;
 }
