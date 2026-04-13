@@ -1,135 +1,89 @@
 let emails = {};
-let currentEmails = [];
-let currentIndex = -1;
-
+let current = [];
+let index = 0;
 let strikes = 0;
 let answered = [];
 
-/* INIT */
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("start-screen").style.display = "flex";
-  document.getElementById("app").style.display = "none";
-  document.getElementById("end-screen").style.display = "none";
-});
-
-/* DARK MODE */
 function toggleTheme() {
-  document.body.classList.toggle("dark-mode");
+  document.body.classList.toggle("dark");
 }
 
-/* DATA */
 emails = {
   novice: [
-    { subject: "Meeting Request", from: "A", body: "text", correct: true, explanation: "Good structure." },
-    { subject: "Fix this asap", from: "B", body: "text", correct: false, explanation: "Too aggressive." },
-    { subject: "Update", from: "C", body: "text", correct: true, explanation: "Clear update." }
+    { subject:"Meeting", from:"A", body:"Let’s meet tomorrow.", correct:true, explanation:"Clear and polite." },
+    { subject:"Fix it", from:"B", body:"do it asap", correct:false, explanation:"Too aggressive." },
+    { subject:"Update", from:"C", body:"Project is on track.", correct:true, explanation:"Professional update." }
   ],
   intermediate: [
-    { subject: "System Update", from: "A", body: "text", correct: true, explanation: "Professional update." },
-    { subject: "??", from: "B", body: "text", correct: false, explanation: "Unclear." }
+    { subject:"System Update", from:"A", body:"Completed.", correct:true, explanation:"Clear status update." },
+    { subject:"??", from:"B", body:"why not done", correct:false, explanation:"Unclear tone." }
   ],
   expert: [
-    { subject: "Q3 Report", from: "A", body: "text", correct: true, explanation: "Executive clarity." },
-    { subject: "why late", from: "B", body: "text", correct: false, explanation: "Unprofessional." }
+    { subject:"Q3 Report", from:"A", body:"Revenue stable.", correct:true, explanation:"Executive summary." },
+    { subject:"late", from:"B", body:"why late", correct:false, explanation:"Unprofessional." }
   ]
 };
 
-/* START GAME */
 function startGame(level) {
-  currentEmails = [...emails[level]];
-
+  current = [...emails[level]];
   strikes = 0;
-  answered = new Array(currentEmails.length).fill(false);
-  currentIndex = -1;
+  answered = new Array(current.length).fill(false);
+  index = 0;
 
   document.getElementById("start-screen").style.display = "none";
-  document.getElementById("app").style.display = "flex";
+  document.getElementById("app").style.display = "block";
 
   renderInbox();
-  openNext();
+  openEmail(0);
 }
 
-/* INBOX */
 function renderInbox() {
   const list = document.getElementById("email-list");
   list.innerHTML = "";
 
-  currentEmails.forEach((email, i) => {
+  current.forEach((e,i)=>{
     const li = document.createElement("li");
-    li.textContent = email.subject;
+    li.textContent = e.subject;
 
-    if (answered[i]) {
-      li.classList.add("completed-email");
-    } else {
-      li.onclick = () => openEmail(i);
-    }
+    if(answered[i]) li.style.opacity = "0.4";
 
+    li.onclick = () => openEmail(i);
     list.appendChild(li);
   });
 }
 
-/* OPEN EMAIL */
 function openEmail(i) {
-  currentIndex = i;
+  index = i;
+  const e = current[i];
 
-  const email = currentEmails[i];
-
-  document.getElementById("email-subject").textContent = email.subject;
+  document.getElementById("email-subject").textContent = e.subject;
   document.getElementById("email-body").textContent =
-`From: ${email.from}
+`From: ${e.from}
 
-${email.body}`;
+${e.body}`;
 
-  document.getElementById("actions").classList.remove("hidden");
-  document.getElementById("feedback").classList.add("hidden");
+  document.getElementById("feedback").innerHTML = "";
 }
 
-/* ANSWER */
 function answer(choice) {
-  const email = currentEmails[currentIndex];
+  const e = current[index];
+  const correct = choice === e.correct;
 
-  const correct = choice === email.correct;
+  if(!correct) strikes++;
 
-  if (!correct) strikes++;
+  answered[index] = true;
 
-  answered[currentIndex] = true;
+  const fb = document.getElementById("feedback");
+  fb.className = correct ? "good" : "bad";
+  fb.innerHTML = e.explanation;
 
-  showFeedback(correct, email.explanation);
-
-  document.getElementById("actions").classList.add("hidden");
-
-  updateUI();
-
-  renderInbox();
-}
-
-/* FEEDBACK */
-function showFeedback(correct, text) {
-  const box = document.getElementById("feedback");
-
-  box.className = correct ? "good-box" : "bad-box";
-  box.classList.remove("hidden");
-
-  box.innerHTML = text + `<br><br><button onclick="openNext()">Next Email</button>`;
-}
-
-/* NEXT */
-function openNext() {
-  const next = answered.findIndex(a => a === false);
-
-  if (next === -1) return gameOver(true);
-
-  openEmail(next);
-}
-
-/* UI */
-function updateUI() {
   document.getElementById("strikes").textContent = `Strikes: ${strikes} / 3`;
 
-  if (strikes >= 3) gameOver(false);
+  renderInbox();
+
+  if(strikes >= 3) gameOver(false);
 }
 
-/* GAME OVER */
 function gameOver(win) {
   document.getElementById("app").style.display = "none";
   document.getElementById("end-screen").style.display = "flex";
