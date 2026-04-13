@@ -1,11 +1,11 @@
 body {
   margin: 0;
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: #f3f6fb;
-  color: #1f1f1f;
+  font-family: "Segoe UI", system-ui, Arial, sans-serif;
+  background: #eef3f9;
+  color: #1a1a1a;
 }
 
-/* START SCREEN */
+/* ================= START SCREEN ================= */
 #start-screen {
   display: flex;
   flex-direction: column;
@@ -15,28 +15,51 @@ body {
   gap: 12px;
 }
 
-/* TOP BAR */
+#start-screen h1 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+/* Buttons */
+button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  background: #2563eb;
+  color: white;
+  transition: 0.15s ease;
+}
+
+button:hover {
+  background: #1e4fd6;
+  transform: translateY(-1px);
+}
+
+/* ================= TOP BAR ================= */
 #topbar {
-  height: 52px;
-  background: linear-gradient(to right, #ffffff, #f7f9fc);
-  border-bottom: 1px solid #d9e1ec;
+  height: 56px;
+  background: #ffffff;
+  border-bottom: 1px solid #d9e2ef;
   display: flex;
   align-items: center;
   padding: 0 18px;
   font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
-/* MAIN LAYOUT */
+/* ================= LAYOUT ================= */
 #main {
   display: flex;
-  height: calc(100vh - 52px);
+  height: calc(100vh - 56px);
 }
 
-/* SIDEBAR */
+/* ================= INBOX ================= */
 #sidebar {
-  width: 300px;
-  background: #fff;
-  border-right: 1px solid #e3e8f0;
+  width: 320px;
+  background: #ffffff;
+  border-right: 1px solid #e5eaf3;
   overflow-y: auto;
 }
 
@@ -44,6 +67,7 @@ body {
   margin: 0;
   padding: 14px;
   font-size: 12px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: #6b7280;
   border-bottom: 1px solid #eef2f7;
@@ -56,101 +80,138 @@ body {
 }
 
 #email-list li {
-  padding: 12px 14px;
+  padding: 14px 16px;
   border-bottom: 1px solid #f1f5f9;
   cursor: pointer;
   font-size: 14px;
+  transition: 0.15s ease;
 }
 
 #email-list li:hover {
   background: #f0f6ff;
 }
 
-/* COMPLETED EMAILS */
-.completed-email {
-  opacity: 0.4;
-  text-decoration: line-through;
-  pointer-events: none;
+/* completed emails */
+#email-list li[style*="opacity"] {
+  background: #f8fafc;
 }
 
-/* CONTENT */
+/* ================= EMAIL VIEW ================= */
 #content {
   flex: 1;
-  padding: 22px;
-  background: #f9fbff;
+  padding: 26px;
+  background: #f6f9ff;
 }
 
+#email-subject {
+  font-size: 22px;
+  margin-bottom: 14px;
+}
+
+/* email card */
 #email-body {
   white-space: pre-wrap;
-  background: #fff;
-  padding: 16px;
-  border-radius: 8px;
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 12px;
   border: 1px solid #e6ebf2;
-  min-height: 220px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+  min-height: 240px;
+  line-height: 1.5;
 }
 
-/* ACTIONS */
+/* ================= ACTIONS ================= */
 #actions {
-  margin-top: 14px;
+  margin-top: 16px;
 }
 
 #actions button {
   margin-right: 10px;
-  padding: 10px 14px;
-}
-
-/* FEEDBACK */
-#feedback {
-  margin-top: 14px;
-  padding: 14px;
   border-radius: 8px;
-  background: #fff;
 }
 
-.good-box {
-  border: 2px solid #22c55e;
-  color: #15803d;
+#actions button:first-child {
+  background: #22c55e;
 }
 
-.bad-box {
-  border: 2px solid #ef4444;
-  color: #b91c1c;
+#actions button:first-child:hover {
+  background: #16a34a;
 }
 
-/* END SCREEN */
+#actions button:last-child {
+  background: #ef4444;
+}
+
+#actions button:last-child:hover {
+  background: #dc2626;
+}
+
+/* ================= FEEDBACK ================= */
+#feedback {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  line-height: 1.4;
+}
+
+.good {
+  border-left: 6px solid #22c55e;
+  color: #166534;
+}
+
+.bad {
+  border-left: 6px solid #ef4444;
+  color: #991b1b;
+}
+
+/* ================= END SCREEN ================= */
 #end-screen {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
+  text-align: center;
 }
 
-/* DARK MODE */
-.dark-mode {
+#end-message {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/* ================= DARK MODE ================= */
+.dark {
   background: #0f172a;
   color: #e5e7eb;
 }
 
-.dark-mode #topbar {
+.dark #topbar {
   background: #111827;
   border-color: #1f2937;
 }
 
-.dark-mode #sidebar {
+.dark #sidebar {
   background: #111827;
   border-color: #1f2937;
 }
 
-.dark-mode #email-body {
+.dark #email-body {
   background: #111827;
   border-color: #1f2937;
+  color: #e5e7eb;
 }
 
-.dark-mode #email-list li:hover {
+.dark #content {
+  background: #0b1220;
+}
+
+.dark #email-list li:hover {
   background: #1e293b;
 }
 
-.dark-mode #content {
-  background: #0f172a;
+.dark #feedback {
+  background: #111827;
+  color: #e5e7eb;
 }
