@@ -1,8 +1,10 @@
 body {
   margin: 0;
-  font-family: "Segoe UI", system-ui, Arial, sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
   background: #eef3f9;
   color: #1a1a1a;
+  height: 100vh;
+  overflow: hidden;
 }
 
 /* ================= START SCREEN ================= */
@@ -15,52 +17,34 @@ body {
   gap: 12px;
 }
 
-#start-screen h1 {
-  font-size: 28px;
-  font-weight: 700;
-}
-
-/* Buttons */
-button {
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  background: #2563eb;
-  color: white;
-  transition: 0.15s ease;
-}
-
-button:hover {
-  background: #1e4fd6;
-  transform: translateY(-1px);
-}
-
-/* ================= TOP BAR ================= */
+/* ================= TOP BAR (FIXED SEPARATION) ================= */
 #topbar {
   height: 56px;
   background: #ffffff;
-  border-bottom: 1px solid #d9e2ef;
+  border-bottom: 2px solid #d9e2ef;
   display: flex;
   align-items: center;
   padding: 0 18px;
   font-weight: 600;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  position: relative;
+  z-index: 10;
 }
 
-/* ================= LAYOUT ================= */
+/* ================= MAIN WRAPPER (CRITICAL FIX) ================= */
 #main {
   display: flex;
   height: calc(100vh - 56px);
+  width: 100%;
 }
 
-/* ================= INBOX ================= */
+/* ================= INBOX (FULL HEIGHT FIX) ================= */
 #sidebar {
   width: 320px;
   background: #ffffff;
   border-right: 1px solid #e5eaf3;
   overflow-y: auto;
+  height: 100%;
 }
 
 #sidebar h3 {
@@ -73,6 +57,7 @@ button:hover {
   border-bottom: 1px solid #eef2f7;
 }
 
+/* EMAIL LIST */
 #email-list {
   list-style: none;
   margin: 0;
@@ -84,7 +69,6 @@ button:hover {
   border-bottom: 1px solid #f1f5f9;
   cursor: pointer;
   font-size: 14px;
-  transition: 0.15s ease;
 }
 
 #email-list li:hover {
@@ -93,14 +77,17 @@ button:hover {
 
 /* completed emails */
 #email-list li[style*="opacity"] {
-  background: #f8fafc;
+  opacity: 0.4;
+  text-decoration: line-through;
 }
 
-/* ================= EMAIL VIEW ================= */
+/* ================= CONTENT ================= */
 #content {
   flex: 1;
   padding: 26px;
   background: #f6f9ff;
+  overflow-y: auto;
+  height: 100%;
 }
 
 #email-subject {
@@ -108,7 +95,7 @@ button:hover {
   margin-bottom: 14px;
 }
 
-/* email card */
+/* EMAIL CARD */
 #email-body {
   white-space: pre-wrap;
   background: #ffffff;
@@ -128,41 +115,33 @@ button:hover {
 #actions button {
   margin-right: 10px;
   border-radius: 8px;
+  padding: 10px 14px;
 }
 
-#actions button:first-child {
-  background: #22c55e;
-}
-
-#actions button:first-child:hover {
-  background: #16a34a;
-}
-
-#actions button:last-child {
-  background: #ef4444;
-}
-
-#actions button:last-child:hover {
-  background: #dc2626;
-}
-
-/* ================= FEEDBACK ================= */
+/* ================= FEEDBACK (FIXED COLOR BOXES) ================= */
 #feedback {
   margin-top: 16px;
-  padding: 14px;
+  padding: 16px;
   border-radius: 12px;
   background: #ffffff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  line-height: 1.4;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  line-height: 1.5;
+  font-size: 14px;
 }
 
+/* GREEN BOX (CORRECT) */
 .good {
-  border-left: 6px solid #22c55e;
+  border: 2px solid #22c55e;
+  border-left: 8px solid #22c55e;
+  background: #ecfdf5;
   color: #166534;
 }
 
+/* RED BOX (INCORRECT) */
 .bad {
-  border-left: 6px solid #ef4444;
+  border: 2px solid #ef4444;
+  border-left: 8px solid #ef4444;
+  background: #fef2f2;
   color: #991b1b;
 }
 
@@ -176,11 +155,6 @@ button:hover {
   text-align: center;
 }
 
-#end-message {
-  font-size: 32px;
-  font-weight: 700;
-}
-
 /* ================= DARK MODE ================= */
 .dark {
   background: #0f172a;
@@ -189,7 +163,7 @@ button:hover {
 
 .dark #topbar {
   background: #111827;
-  border-color: #1f2937;
+  border-bottom: 2px solid #1f2937;
 }
 
 .dark #sidebar {
@@ -197,14 +171,14 @@ button:hover {
   border-color: #1f2937;
 }
 
+.dark #content {
+  background: #0b1220;
+}
+
 .dark #email-body {
   background: #111827;
   border-color: #1f2937;
   color: #e5e7eb;
-}
-
-.dark #content {
-  background: #0b1220;
 }
 
 .dark #email-list li:hover {
