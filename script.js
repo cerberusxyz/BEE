@@ -459,3 +459,24 @@ explanation: { points: ["Implied criticism.", "No context.", "Poor framing."] }
 }
 ]
 };
+
+
+
+/* =========================
+   GAME START (FIXED GLOBAL)
+========================= */
+window.startGame = function (difficulty) {
+  current = shuffle([...emails[difficulty]]);
+  index = 0;
+  strikes = 0;
+  answered = [];
+  locked = false;
+
+  document.getElementById("start-screen").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+
+  document.getElementById("difficulty").innerText = difficulty.toUpperCase();
+  document.getElementById("strikes").innerText = "Strikes: 0 / 3";
+
+  loadEmail();
+};
