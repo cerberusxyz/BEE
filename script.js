@@ -4,6 +4,7 @@ let currentIndex = -1;
 
 let strikes = 0;
 let score = 0;
+let pointsPerQuestion = 10;
 
 let answered = [];
 let awaitingNext = false;
@@ -26,61 +27,31 @@ emails = {
     {
       from: `Emily Carter <ecarter@${randomDomain()}>`,
       subject: "Meeting Request",
-      body: "Dear Team,\n\nI would like to schedule a meeting this week.\n\nBest regards,\nEmily Carter",
+      body: "Dear Team,\n\nPlease schedule a meeting.\n\nBest regards,\nEmily Carter",
       correct: true,
-      explanation: "Professional tone, clear intent, and proper structure."
+      explanation: "This email is professional, polite, and clearly structured."
     },
     {
       from: `unknown@${randomDomain()}`,
       subject: "meeting",
       body: "hey can we meet",
       correct: false,
-      explanation: "Too informal and lacks professional communication standards."
-    }
-  ],
-
-  intermediate: [
-    {
-      from: `Karen Mitchell <kmitchell@${randomDomain()}>`,
-      subject: "Weekly Update",
-      body: "Dear Team,\n\nProject is on track.\n\nRegards,\nKaren",
-      correct: true,
-      explanation: "Clear, concise, and appropriate for workplace communication."
-    },
-    {
-      from: `manager@${randomDomain()}`,
-      subject: "Update",
-      body: "I already told you this.",
-      correct: false,
-      explanation: "Dismissive tone is unprofessional."
-    }
-  ],
-
-  expert: [
-    {
-      from: `Angela Foster <afoster@${randomDomain()}>`,
-      subject: "Quarterly Report",
-      body: "Dear Board Members,\n\nPlease review attached summary.\n\nKind regards,\nAngela Foster",
-      correct: true,
-      explanation: "Executive-level clarity and professional structure."
-    },
-    {
-      from: `exec@${randomDomain()}`,
-      subject: "Financials",
-      body: "Here are the numbers.",
-      correct: false,
-      explanation: "Too vague for executive communication."
+      explanation: "This email is too informal and lacks professional structure."
     }
   ]
 };
 
-/* ================= GAME ================= */
+/* ================= START GAME ================= */
 function startGame(level) {
   currentEmails = shuffle([...emails[level]]);
+
   strikes = 0;
   score = 0;
   answered = new Array(currentEmails.length).fill(false);
   awaitingNext = false;
+
+  // IMPORTANT: dynamic scoring system
+  pointsPerQuestion = Math.floor(100 / currentEmails.length);
 
   document.getElementById("start-screen").classList.add("hidden");
   document.getElementById("end-screen").classList.add("hidden");
@@ -107,20 +78,20 @@ function renderInbox() {
   });
 }
 
-/* ================= OPEN ================= */
+/* ================= OPEN EMAIL ================= */
 function openEmail(i) {
   if (awaitingNext || answered[i]) return;
 
   currentIndex = i;
   const email = currentEmails[i];
 
+  document.getElementById("email-subject").textContent = email.subject;
+
   document.getElementById("email-body").textContent =
 `From: ${email.from}
 Subject: ${email.subject}
 
 ${email.body}`;
-
-  document.getElementById("email-subject").textContent = email.subject;
 
   document.getElementById("actions").classList.remove("hidden");
 
@@ -135,8 +106,9 @@ function answer(choice) {
   const email = currentEmails[currentIndex];
   const correct = choice === email.correct;
 
-  if (correct) score += 10;
-  else {
+  if (correct) {
+    score += pointsPerQuestion;
+  } else {
     strikes++;
     if (strikes >= 3) return gameOver(false);
   }
@@ -145,10 +117,11 @@ function answer(choice) {
   awaitingNext = true;
 
   showFeedback(correct, email.explanation);
+
   updateUI();
+  renderInbox();
 
   document.getElementById("actions").classList.add("hidden");
-  renderInbox();
 }
 
 /* ================= NEXT ================= */
@@ -164,21 +137,26 @@ function openNextEmail() {
   openEmail(next);
 }
 
-/* ================= FEEDBACK ================= */
+/* ================= FEEDBACK (GREEN / RED BOX FIX) ================= */
 function showFeedback(correct, text) {
   const box = document.getElementById("feedback");
   box.classList.remove("hidden");
 
   box.innerHTML = `
-    <div class="${correct ? "good" : "bad"}">
-      ${correct ? "Correct" : "Incorrect"}
+    <div class="feedback-box ${correct ? "good-box" : "bad-box"}">
+      <div class="feedback-title">
+        ${correct ? "✔ Correct" : "✖ Incorrect"}
+      </div>
+      <div class="feedback-text">
+        ${text}
+      </div>
     </div>
-    <p>${text}</p>
   `;
 
   const btn = document.createElement("button");
   btn.textContent = "Next Email";
   btn.onclick = nextEmail;
+
   box.appendChild(btn);
 }
 
@@ -190,7 +168,7 @@ function clearFeedback() {
 /* ================= UI ================= */
 function updateUI() {
   document.getElementById("strikes").textContent = `Strikes: ${strikes} / 3`;
-  document.getElementById("score").textContent = `Score: ${score}`;
+  document.getElementById("score").textContent = `Score: ${score}/100`;
 
   const grade =
     score >= 90 ? "A" :
@@ -205,14 +183,6 @@ function highlight(i) {
   document.querySelectorAll("#email-list li").forEach((el, idx) => {
     el.classList.toggle("selected", idx === i);
   });
-}
-
-/* ================= DARK MODE ================= */
-function toggleMode() {
-  darkMode = !darkMode;
-  document.body.classList.toggle("dark", darkMode);
-  document.getElementById("modeToggle").textContent =
-    darkMode ? "☀️ Light Mode" : "🌙 Dark Mode";
 }
 
 /* ================= GAME OVER ================= */
@@ -230,7 +200,7 @@ function gameOver(win) {
     win ? "🎉 Inbox Cleared!" : "💀 Game Over";
 
   document.getElementById("final-score").innerHTML =
-    `Score: ${score}<br>Grade: ${grade}<br>Strikes: ${strikes}/3`;
+    `Score: ${score}/100<br>Grade: ${grade}<br>Strikes: ${strikes}/3`;
 }
 
 /* ================= UTIL ================= */
