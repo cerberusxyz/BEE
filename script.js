@@ -4,6 +4,9 @@ let index = 0;
 let strikes = 0;
 let answered = [];
 
+/* ✅ ADDED: lock state */
+let locked = false;
+
 function toggleTheme() {
   document.body.classList.toggle("dark");
 }
@@ -63,10 +66,17 @@ function openEmail(i) {
 ${e.body}`;
 
   document.getElementById("feedback").innerHTML = "";
+
+  /* ✅ RESET LOCK ON NEW EMAIL */
+  locked = false;
 }
 
-/* ✅ FIXED FUNCTION (THIS IS THE ONLY CHANGE THAT MATTERS) */
+/* ✅ ONLY CHANGE: LOCK ADDED */
 function answer(choice) {
+
+  if (locked) return; // prevent changing answer
+  locked = true;      // lock immediately after first click
+
   const e = current[index];
   const correct = choice === e.correct;
 
