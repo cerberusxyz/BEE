@@ -23,7 +23,6 @@ Best regards,
 Sarah Mitchell`,
       correct: true,
       explanation: {
-        title: "Appropriate Email",
         points: [
           "Clear subject line and professional tone.",
           "Proper greeting and closing included.",
@@ -38,31 +37,10 @@ Sarah Mitchell`,
 `do this asap. it's not working and i need it fixed immediately`,
       correct: false,
       explanation: {
-        title: "Inappropriate Email",
         points: [
           "Unprofessional tone and aggressive language.",
           "No greeting or structured formatting.",
           "Lacks clarity and proper business etiquette."
-        ]
-      }
-    },
-    {
-      subject: "Weekly Status Update",
-      from: "Emily Carter <emily.carter@brightwave-solutions.com>",
-      body:
-`Hello,
-
-The project is currently on track. We have completed the initial planning phase and are moving into implementation.
-
-Regards,
-Emily Carter`,
-      correct: true,
-      explanation: {
-        title: "Appropriate Email",
-        points: [
-          "Professional and concise status update.",
-          "Uses structured business communication format.",
-          "Maintains neutral and respectful tone."
         ]
       }
     }
@@ -81,7 +59,6 @@ Kind regards,
 Daniel Reed`,
       correct: true,
       explanation: {
-        title: "Appropriate Email",
         points: [
           "Clear operational update with timestamp.",
           "Professional tone and formatting.",
@@ -96,11 +73,10 @@ Daniel Reed`,
 `why is this still not finished. i asked yesterday.`,
       correct: false,
       explanation: {
-        title: "Inappropriate Email",
         points: [
           "Aggressive and accusatory tone.",
-          "Lacks professionalism and structure.",
-          "No context or clear request provided."
+          "Lacks professional structure.",
+          "Not suitable for workplace communication."
         ]
       }
     }
@@ -113,17 +89,16 @@ Daniel Reed`,
       body:
 `Dear Executive Team,
 
-Attached is the Q3 financial summary. Revenue remains stable with a 3% increase in operational efficiency.
+Revenue remains stable with a 3% increase in operational efficiency.
 
 Sincerely,
 Olivia Bennett`,
       correct: true,
       explanation: {
-        title: "Appropriate Email",
         points: [
-          "Executive-level formal tone and structure.",
-          "Concise financial reporting language.",
-          "Professional closing and formatting."
+          "Executive-level formal communication.",
+          "Concise and structured financial reporting.",
+          "Professional tone throughout."
         ]
       }
     },
@@ -134,11 +109,10 @@ Olivia Bennett`,
 `this report is late. explain now.`,
       correct: false,
       explanation: {
-        title: "Inappropriate Email",
         points: [
           "Unprofessional and demanding tone.",
-          "Missing formal structure and greeting.",
-          "Not suitable for executive communication."
+          "Missing formal structure.",
+          "Not appropriate for executive communication."
         ]
       }
     }
@@ -146,7 +120,7 @@ Olivia Bennett`,
 };
 
 /* =========================
-   GAME LOGIC (UNCHANGED)
+   GAME LOGIC
    ========================= */
 
 function toggleTheme() {
@@ -194,7 +168,7 @@ function openEmail(i) {
 }
 
 /* =========================
-   ANSWER FLOW (LOCKED)
+   ANSWER LOGIC
    ========================= */
 
 function answer(choice) {
@@ -211,13 +185,11 @@ function answer(choice) {
   const fb = document.getElementById("feedback");
   fb.className = correct ? "good" : "bad";
 
-  fb.innerHTML = `
-    <div style="font-weight:600; margin-bottom:8px;">
-      ${e.explanation.title}
-    </div>
+  const title = correct ? "CORRECT" : "INCORRECT";
 
-    <div style="margin-bottom:8px;">
-      <strong>Key Points:</strong>
+  fb.innerHTML = `
+    <div style="font-weight:700; font-size:14px; margin-bottom:10px;">
+      ${title}
     </div>
 
     <ul style="margin:0; padding-left:18px;">
