@@ -7,445 +7,27 @@ let awaitingNext = false;
 // ================= EMAIL DATA =================
 const emails = {
   novice: [
-    // ✅ GOOD (10)
-    {
-      from: "Emily Carter <ecarter@northironridge.com>",
-      subject: "Request to Schedule Meeting",
-      body: "Dear Mr. Thompson,\n\nI hope you are doing well. I would like to schedule a meeting this week to discuss the current project timeline.\n\nPlease let me know your availability.\n\nBest regards,\nEmily Carter",
-      correct: true,
-      explanation: "Professional tone, clear purpose, and polite closing."
-    },
-    {
-      from: "Daniel Lee <dlee@valewoodtech.com>",
-      subject: "Thank You",
-      body: "Hello Ms. Rivera,\n\nThank you for your assistance earlier today. I appreciate your support.\n\nSincerely,\nDaniel Lee",
-      correct: true,
-      explanation: "Polite and appropriately structured."
-    },
-    {
-      from: "Alex Johnson <ajohnson@crestpointsolutions.com>",
-      subject: "Reminder: Deadline Tomorrow",
-      body: "Dear Team,\n\nThis is a reminder that the project deadline is tomorrow at 5 PM.\n\nBest regards,\nAlex Johnson",
-      correct: true,
-      explanation: "Clear, polite, and informative."
-    },
-    {
-      from: "Samantha Green <sgreen@halcyonlogistics.com>",
-      subject: "Request for Sales Data",
-      body: "Hello,\n\nCould you please provide the latest sales data when you have a moment?\n\nThank you,\nSamantha Green",
-      correct: true,
-      explanation: "Respectful request with proper tone."
-    },
-    {
-      from: "Michael Brown <mbrown@bluecorefinance.com>",
-      subject: "Meeting Time Update",
-      body: "Dear Sarah,\n\nOur meeting has been rescheduled to 3:00 PM tomorrow.\n\nKind regards,\nMichael Brown",
-      correct: true,
-      explanation: "Concise and professional."
-    },
-    {
-      from: "Jason Kim <jkim@stratospherehr.com>",
-      subject: "Introduction",
-      body: "Hello Mr. Patel,\n\nMy name is Jason Kim, and I will be your point of contact moving forward.\n\nI look forward to working with you.\n\nBest regards,\nJason Kim",
-      correct: true,
-      explanation: "Proper introduction with professional tone."
-    },
-    {
-      from: "Chris Walker <cwalker@northironridge.com>",
-      subject: "Follow-Up",
-      body: "Dear Team,\n\nI wanted to follow up on my previous message regarding the project updates.\n\nBest,\nChris Walker",
-      correct: true,
-      explanation: "Appropriate follow-up wording."
-    },
-    {
-      from: "Jordan Smith <jsmith@valewoodtech.com>",
-      subject: "Clarification Needed",
-      body: "Hello,\n\nCould you please clarify the requirements for section 2?\n\nThank you,\nJordan Smith",
-      correct: true,
-      explanation: "Clear and polite question."
-    },
-    {
-      from: "Pat Morgan <pmorgan@crestpointsolutions.com>",
-      subject: "Appointment Confirmation",
-      body: "Dear Client,\n\nThis email confirms your appointment scheduled for Monday at 10 AM.\n\nSincerely,\nPat Morgan",
-      correct: true,
-      explanation: "Professional confirmation email."
-    },
-    {
-      from: "Taylor Adams <tadams@halcyonlogistics.com>",
-      subject: "Appreciation",
-      body: "Hello,\n\nI appreciate your assistance with this task.\n\nBest regards,\nTaylor Adams",
-      correct: true,
-      explanation: "Appropriate expression of appreciation."
-    },
+    {from:"Emily Carter <ecarter@northironridge.com>",subject:"Request to Schedule Meeting",body:"Dear Mr. Thompson,\n\nI hope you are doing well. I would like to schedule a meeting this week to discuss the project timeline.\n\nPlease let me know your availability.\n\nBest regards,\nEmily Carter",correct:true,explanation:"The email uses a polite tone and clearly states its purpose. It includes a proper greeting and professional closing."},
+    {from:"Daniel Lee <dlee@valewoodtech.com>",subject:"Thank You",body:"Hello Ms. Rivera,\n\nThank you for your assistance earlier today. I appreciate your support.\n\nSincerely,\nDaniel Lee",correct:true,explanation:"This message expresses appreciation clearly and maintains a professional tone. It is concise and well-structured."},
 
-    // ❌ BAD (10)
-    {
-      from: "unknown@unknown.com",
-      subject: "meeting",
-      body: "hey can we meet",
-      correct: false,
-      explanation: "Too informal and lacks structure."
-    },
-    {
-      from: "manager@northironridge.com",
-      subject: "URGENT",
-      body: "WHY HAVENT YOU DONE THIS",
-      correct: false,
-      explanation: "All caps appears aggressive and unprofessional."
-    },
-    {
-      from: "employee@valewoodtech.com",
-      subject: "",
-      body: "send file",
-      correct: false,
-      explanation: "Missing subject and lacks professionalism."
-    },
-    {
-      from: "staff@crestpointsolutions.com",
-      subject: "Hi",
-      body: "need this asap",
-      correct: false,
-      explanation: "Too vague and informal."
-    },
-    {
-      from: "boss@halcyonlogistics.com",
-      subject: "Update",
-      body: "this is wrong fix it",
-      correct: false,
-      explanation: "Tone is harsh and unprofessional."
-    },
-    {
-      from: "colleague@bluecorefinance.com",
-      subject: "Hello",
-      body: "???",
-      correct: false,
-      explanation: "No meaningful communication."
-    },
-    {
-      from: "employee@stratospherehr.com",
-      subject: "Check",
-      body: "did u do this",
-      correct: false,
-      explanation: "Improper grammar and tone."
-    },
-    {
-      from: "manager@northironridge.com",
-      subject: "Important",
-      body: "DO THIS NOW",
-      correct: false,
-      explanation: "Too aggressive."
-    },
-    {
-      from: "team@valewoodtech.com",
-      subject: "Hey",
-      body: "whats up with this",
-      correct: false,
-      explanation: "Too casual."
-    },
-    {
-      from: "staff@crestpointsolutions.com",
-      subject: "Stuff",
-      body: "idk what this is",
-      correct: false,
-      explanation: "Unclear and unprofessional."
-    }
+    {from:"unknown@unknown.com",subject:"meeting",body:"hey can we meet",correct:false,explanation:"The message is too informal and lacks proper capitalization. It does not follow basic professional email structure."},
+    {from:"manager@northironridge.com",subject:"URGENT",body:"WHY HAVENT YOU DONE THIS",correct:false,explanation:"Using all caps makes the message appear aggressive. Professional emails should maintain a calm and respectful tone."}
   ],
 
   intermediate: [
-    // ✅ GOOD (10)
-    {
-      from: "Karen Mitchell <kmitchell@bluecorefinance.com>",
-      subject: "Weekly Project Update",
-      body: "Dear Team,\n\nI wanted to provide a brief update on the project. We are currently on track and progressing as scheduled.\n\nPlease let me know if you have any questions.\n\nBest regards,\nKaren Mitchell",
-      correct: true,
-      explanation: "Clear, neutral, and professional tone."
-    },
-    {
-      from: "David Park <dpark@northironridge.com>",
-      subject: "Client Follow-Up",
-      body: "Dear Ms. Chen,\n\nI hope you are doing well. I wanted to follow up regarding our recent discussion.\n\nPlease let me know if you need any additional information.\n\nKind regards,\nDavid Park",
-      correct: true,
-      explanation: "Polite and client-appropriate tone."
-    },
-    {
-      from: "Rachel Evans <revans@valewoodtech.com>",
-      subject: "Meeting Summary",
-      body: "Hello Team,\n\nThank you for attending the meeting earlier today. Below is a summary of key points discussed.\n\nBest,\nRachel Evans",
-      correct: true,
-      explanation: "Professional recap email."
-    },
-    {
-      from: "Tom Wilson <twilson@crestpointsolutions.com>",
-      subject: "Deadline Reminder",
-      body: "Dear Team,\n\nThis is a reminder that all deliverables are due by Friday at 3 PM.\n\nThank you,\nTom Wilson",
-      correct: true,
-      explanation: "Clear and respectful reminder."
-    },
-    {
-      from: "Olivia Reed <oreed@halcyonlogistics.com>",
-      subject: "Proposal Follow-Up",
-      body: "Dear Mr. Grant,\n\nI wanted to follow up regarding our proposal and see if you had any questions.\n\nBest regards,\nOlivia Reed",
-      correct: true,
-      explanation: "Appropriate client follow-up."
-    },
-    {
-      from: "James Carter <jcarter@stratospherehr.com>",
-      subject: "Interview Thank You",
-      body: "Dear Hiring Manager,\n\nThank you for your time today. I appreciate the opportunity.\n\nBest regards,\nJames Carter",
-      correct: true,
-      explanation: "Professional gratitude email."
-    },
-    {
-      from: "Laura Bennett <lbennett@bluecorefinance.com>",
-      subject: "Request for Feedback",
-      body: "Hello,\n\nCould you please provide feedback on the draft when convenient?\n\nThank you,\nLaura Bennett",
-      correct: true,
-      explanation: "Polite and clear request."
-    },
-    {
-      from: "Ethan Brooks <ebrooks@northironridge.com>",
-      subject: "Weekly Status Update",
-      body: "Dear Supervisor,\n\nAll assigned tasks are on track for completion.\n\nBest,\nEthan Brooks",
-      correct: true,
-      explanation: "Concise and professional."
-    },
-    {
-      from: "Admin <admin@valewoodtech.com>",
-      subject: "Correction Notice",
-      body: "Dear Team,\n\nPlease note that the correct deadline is Thursday.\n\nBest regards,\nAdmin",
-      correct: true,
-      explanation: "Clear correction."
-    },
-    {
-      from: "Lisa Turner <lturner@crestpointsolutions.com>",
-      subject: "Meeting Reschedule Request",
-      body: "Dear John,\n\nI would like to request rescheduling our meeting due to a scheduling conflict.\n\nBest,\nLisa Turner",
-      correct: true,
-      explanation: "Professional request."
-    },
+    {from:"Karen Mitchell <kmitchell@bluecorefinance.com>",subject:"Weekly Project Update",body:"Dear Team,\n\nI wanted to provide a brief update. We are currently on track and progressing as scheduled.\n\nBest regards,\nKaren Mitchell",correct:true,explanation:"The email is clear, neutral, and informative. It communicates updates professionally without unnecessary detail."},
 
-    // ❌ BAD (10)
-    {
-      from: "manager@halcyonlogistics.com",
-      subject: "Update",
-      body: "I already explained this earlier. Please check.",
-      correct: false,
-      explanation: "Dismissive tone."
-    },
-    {
-      from: "manager@bluecorefinance.com",
-      subject: "Meeting",
-      body: "You missed the meeting again.",
-      correct: false,
-      explanation: "Too accusatory."
-    },
-    {
-      from: "review@northironridge.com",
-      subject: "Report Feedback",
-      body: "This report doesn't make sense.",
-      correct: false,
-      explanation: "Unconstructive criticism."
-    },
-    {
-      from: "staff@valewoodtech.com",
-      subject: "Hi",
-      body: "Sent from my phone",
-      correct: false,
-      explanation: "No content."
-    },
-    {
-      from: "manager@crestpointsolutions.com",
-      subject: "Reminder",
-      body: "Don't forget again.",
-      correct: false,
-      explanation: "Passive-aggressive tone."
-    },
-    {
-      from: "employee@halcyonlogistics.com",
-      subject: "Client Issue",
-      body: "The client is upset because of your mistake.",
-      correct: false,
-      explanation: "Blaming tone."
-    },
-    {
-      from: "boss@stratospherehr.com",
-      subject: "Important",
-      body: "Read this immediately.",
-      correct: false,
-      explanation: "Too abrupt."
-    },
-    {
-      from: "manager@bluecorefinance.com",
-      subject: "Work Quality",
-      body: "You need to do better.",
-      correct: false,
-      explanation: "Unprofessional tone."
-    },
-    {
-      from: "staff@northironridge.com",
-      subject: "Re:",
-      body: "k",
-      correct: false,
-      explanation: "Too informal."
-    },
-    {
-      from: "team@valewoodtech.com",
-      subject: "Follow-Up",
-      body: "Why haven't you responded yet?",
-      correct: false,
-      explanation: "Aggressive phrasing."
-    }
+    {from:"manager@halcyonlogistics.com",subject:"Update",body:"I already explained this earlier. Please check.",correct:false,explanation:"The tone is dismissive and may frustrate the recipient. Professional emails should remain courteous and helpful."}
   ],
 
   expert: [
-    // ✅ GOOD (10)
-    {
-      from: "Angela Foster <afoster@bluecorefinance.com>",
-      subject: "Quarterly Financial Summary",
-      body: "Dear Board Members,\n\nI hope you are doing well. Below is a summary of our financial performance for the past quarter.\n\nPlease let me know if you have any questions.\n\nKind regards,\nAngela Foster\nChief Financial Officer",
-      correct: true,
-      explanation: "Appropriate tone for executive audience."
-    },
-    {
-      from: "Daniel Hughes <dhughes@northironridge.com>",
-      subject: "Strategic Partnership Discussion",
-      body: "Dear Mr. Alvarez,\n\nI would like to explore a potential partnership opportunity between our organizations.\n\nPlease let me know a convenient time to connect.\n\nBest regards,\nDaniel Hughes",
-      correct: true,
-      explanation: "Professional and diplomatic."
-    },
-    {
-      from: "Support Team <support@valewoodtech.com>",
-      subject: "Response to Your Concern",
-      body: "Dear Customer,\n\nThank you for bringing this to our attention. We are working to resolve the issue promptly.\n\nSincerely,\nSupport Team",
-      correct: true,
-      explanation: "Professional and empathetic."
-    },
-    {
-      from: "Michael Grant <mgrant@crestpointsolutions.com>",
-      subject: "Contract Clarification",
-      body: "Dear Legal Team,\n\nCould you please clarify clause 4.2 at your convenience?\n\nBest regards,\nMichael Grant",
-      correct: true,
-      explanation: "Clear and respectful."
-    },
-    {
-      from: "Sophia Turner <sturner@halcyonlogistics.com>",
-      subject: "Executive Summary",
-      body: "Dear Executive Team,\n\nPlease find a summary of key findings below.\n\nI welcome your feedback.\n\nRegards,\nSophia Turner",
-      correct: true,
-      explanation: "Appropriate executive communication."
-    },
-    {
-      from: "HR Department <hr@stratospherehr.com>",
-      subject: "Policy Update Notification",
-      body: "Dear Employees,\n\nPlease review the updated company policy at your convenience.\n\nBest regards,\nHR Department",
-      correct: true,
-      explanation: "Clear and professional."
-    },
-    {
-      from: "Procurement <procurement@bluecorefinance.com>",
-      subject: "Vendor Pricing Inquiry",
-      body: "Dear Mr. Singh,\n\nCould you please confirm your current pricing?\n\nThank you,\nProcurement Team",
-      correct: true,
-      explanation: "Professional inquiry."
-    },
-    {
-      from: "Operations <ops@northironridge.com>",
-      subject: "Process Update",
-      body: "Dear Staff,\n\nPlease note the following updates to our internal processes.\n\nBest regards,\nOperations Team",
-      correct: true,
-      explanation: "Professional internal communication."
-    },
-    {
-      from: "Service Team <service@valewoodtech.com>",
-      subject: "Formal Apology",
-      body: "Dear Client,\n\nWe sincerely apologize for the inconvenience and appreciate your patience.\n\nKind regards,\nService Team",
-      correct: true,
-      explanation: "Professional apology."
-    },
-    {
-      from: "Events <events@crestpointsolutions.com>",
-      subject: "Conference Invitation",
-      body: "Dear Dr. Reynolds,\n\nYou are cordially invited to attend our upcoming conference.\n\nSincerely,\nEvents Team",
-      correct: true,
-      explanation: "Formal and appropriate."
-    },
+    {from:"Angela Foster <afoster@bluecorefinance.com>",subject:"Quarterly Financial Summary",body:"Dear Board Members,\n\nBelow is a summary of our financial performance for the past quarter.\n\nKind regards,\nAngela Foster\nChief Financial Officer",correct:true,explanation:"This email is appropriately formal for an executive audience. It is concise while maintaining professionalism."},
 
-    // ❌ BAD (10)
-    {
-      from: "exec@halcyonlogistics.com",
-      subject: "Financials",
-      body: "Here are the numbers.",
-      correct: false,
-      explanation: "Too vague."
-    },
-    {
-      from: "biz@bluecorefinance.com",
-      subject: "Partnership",
-      body: "We should partner.",
-      correct: false,
-      explanation: "Too informal."
-    },
-    {
-      from: "support@northironridge.com",
-      subject: "Client Issue",
-      body: "The client misunderstood.",
-      correct: false,
-      explanation: "Dismissive."
-    },
-    {
-      from: "legal@valewoodtech.com",
-      subject: "Contract",
-      body: "This seems off.",
-      correct: false,
-      explanation: "Too vague."
-    },
-    {
-      from: "analyst@crestpointsolutions.com",
-      subject: "Summary",
-      body: "Quick summary.",
-      correct: false,
-      explanation: "Too informal."
-    },
-    {
-      from: "hr@halcyonlogistics.com",
-      subject: "Policy",
-      body: "Read when you can.",
-      correct: false,
-      explanation: "Lacks importance."
-    },
-    {
-      from: "procurement@stratospherehr.com",
-      subject: "Vendor",
-      body: "Your pricing is high.",
-      correct: false,
-      explanation: "Too blunt."
-    },
-    {
-      from: "ops@bluecorefinance.com",
-      subject: "Update",
-      body: "Stuff changed.",
-      correct: false,
-      explanation: "Unclear."
-    },
-    {
-      from: "service@northironridge.com",
-      subject: "Apology",
-      body: "Sorry.",
-      correct: false,
-      explanation: "Too brief."
-    },
-    {
-      from: "events@valewoodtech.com",
-      subject: "Conference",
-      body: "Come if you want.",
-      correct: false,
-      explanation: "Too casual."
-    }
+    {from:"exec@halcyonlogistics.com",subject:"Financials",body:"Here are the numbers.",correct:false,explanation:"The message is too vague and lacks context. Executive communication should be more detailed and structured."}
   ]
 };
 
-// ================= GAME LOGIC (UNCHANGED) =================
+// ================= GAME LOGIC =================
 
 function startGame(level) {
   currentEmails = shuffle([...emails[level]]);
@@ -522,6 +104,7 @@ function answer(choice) {
   document.getElementById("actions").classList.add("hidden");
 }
 
+// ================= IMPROVED FEEDBACK =================
 function showFeedback(correct, explanation) {
   const content = document.getElementById("content");
 
@@ -532,9 +115,17 @@ function showFeedback(correct, explanation) {
     content.appendChild(feedback);
   }
 
-  feedback.innerHTML =
-    (correct ? "✅ Correct\n\n" : "❌ Incorrect\n\n") +
-    explanation + "\n\n";
+  feedback.innerHTML = `
+    <div style="font-weight:bold; font-size:18px; margin-bottom:10px;">
+      ${correct ? "✅ Correct" : "❌ Incorrect"}
+    </div>
+
+    <hr style="margin:10px 0;">
+
+    <div style="line-height:1.5; margin-bottom:15px;">
+      ${explanation}
+    </div>
+  `;
 
   const nextBtn = document.createElement("button");
   nextBtn.innerText = "Next Email";
@@ -543,9 +134,10 @@ function showFeedback(correct, explanation) {
   feedback.appendChild(nextBtn);
 
   feedback.style.marginTop = "20px";
-  feedback.style.padding = "15px";
-  feedback.style.borderRadius = "6px";
-  feedback.style.background = correct ? "#d4edda" : "#f8d7da";
+  feedback.style.padding = "20px";
+  feedback.style.borderRadius = "8px";
+  feedback.style.background = correct ? "#e6f4ea" : "#fdecea";
+  feedback.style.border = correct ? "1px solid #b7e1cd" : "1px solid #f5c6cb";
 }
 
 function nextEmail() {
