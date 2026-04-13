@@ -17,7 +17,7 @@ function shuffle(array) {
 }
 
 /* =========================
-   EMAIL DATASET (30 EMAILS)
+   EMAIL DATASET (IMPROVED DIFFICULTY SCALING)
    ========================= */
 
 emails = {
@@ -38,63 +38,63 @@ Please join us tomorrow at 10 AM for a brief introduction meeting to review proj
 Best regards,
 Laura Bennett`,
 correct: true,
-explanation: { points: ["Clear and polite introduction.", "Professional structure.", "Proper greeting and closing."] }
+explanation: { points: ["Clear purpose and structure.", "Professional tone throughout.", "Appropriate greeting and closing."] }
 },
 {
-subject: "Weekly Update",
+subject: "Weekly Status Update",
 from: "James Carter <james.carter@clearviewops.com>",
 time: "Mon 10:00 AM",
 body:
 `Hello,
 
-The project is progressing as planned and remains on schedule.
+Project progress remains on track and milestones are being met.
 
 Regards,
 James Carter`,
 correct: true,
-explanation: { points: ["Concise status update.", "Neutral tone.", "Professional format."] }
+explanation: { points: ["Concise and neutral update.", "No emotional language.", "Appropriate workplace tone."] }
 },
 {
-subject: "Office Schedule Reminder",
+subject: "Office Hours Reminder",
 from: "HR Team <hr@silverlinecorp.net>",
 time: "Mon 11:00 AM",
 body:
 `Hi all,
 
-Office hours are 9 AM to 5 PM Monday through Friday.
+Office hours are 9 AM to 5 PM, Monday through Friday.
 
 Thank you,
 HR Team`,
 correct: true,
-explanation: { points: ["Clear informational message.", "Professional tone.", "No unnecessary wording."] }
+explanation: { points: ["Clear informational message.", "No unnecessary detail.", "Professional formatting."] }
 },
 {
-subject: "Client Meeting Confirmation",
+subject: "Meeting Confirmation",
 from: "Sophie Turner <sophie.turner@brightpathconsulting.io>",
 time: "Mon 1:00 PM",
 body:
 `Hello,
 
-Confirming our client meeting scheduled for Thursday at 2 PM.
+Confirming our meeting scheduled for Thursday at 2 PM.
 
 Best,
 Sophie Turner`,
 correct: true,
-explanation: { points: ["Clear confirmation.", "Professional tone.", "Proper structure."] }
+explanation: { points: ["Simple confirmation.", "Appropriate tone.", "Professional clarity."] }
 },
 {
-subject: "Monthly Report Submission",
+subject: "Monthly Reports",
 from: "Daniel Scott <daniel.scott@northbridgeconsulting.net>",
 time: "Mon 3:00 PM",
 body:
 `Dear team,
 
-Please submit your monthly reports by end of week.
+Please submit monthly reports by end of week.
 
 Regards,
 Daniel Scott`,
 correct: true,
-explanation: { points: ["Clear request.", "Professional tone.", "Respectful wording."] }
+explanation: { points: ["Clear instruction.", "Respectful tone.", "No ambiguity."] }
 },
 
 /* INAPPROPRIATE (5) */
@@ -104,7 +104,7 @@ from: "unknown@temp-mail.xyz",
 time: "Mon 9:15 AM",
 body:`fix this immediately`,
 correct: false,
-explanation: { points: ["Aggressive tone.", "No structure.", "Unprofessional communication."] }
+explanation: { points: ["Aggressive tone.", "No greeting or structure.", "Unprofessional workplace behavior."] }
 },
 {
 subject: "why not done yet",
@@ -112,7 +112,7 @@ from: "boss@randommail.biz",
 time: "Mon 10:30 AM",
 body:`this should already be finished`,
 correct: false,
-explanation: { points: ["Demanding tone.", "No greeting.", "Unprofessional phrasing."] }
+explanation: { points: ["Blaming tone.", "No context.", "Missing professionalism."] }
 },
 {
 subject: "FIX IT",
@@ -120,7 +120,7 @@ from: "admin@spamdomain.xyz",
 time: "Mon 11:45 AM",
 body:`its broken fix it now`,
 correct: false,
-explanation: { points: ["No professionalism.", "Commanding tone.", "No structure."] }
+explanation: { points: ["Commanding tone.", "No structure.", "Not appropriate communication."] }
 },
 {
 subject: "???",
@@ -128,7 +128,7 @@ from: "user@unknown.io",
 time: "Mon 1:30 PM",
 body:`why is this wrong`,
 correct: false,
-explanation: { points: ["Unclear communication.", "No context.", "Unprofessional tone."] }
+explanation: { points: ["Unclear message.", "No context.", "Informal complaint style."] }
 },
 {
 subject: "send it now!!!!",
@@ -136,7 +136,7 @@ from: "manager@fakecorp.net",
 time: "Mon 2:00 PM",
 body:`send it now`,
 correct: false,
-explanation: { points: ["Excessive urgency.", "No formatting.", "Aggressive tone."] }
+explanation: { points: ["Excessive urgency.", "No formatting.", "Unprofessional tone."] }
 }
 ],
 
@@ -145,32 +145,32 @@ intermediate: [
 
 /* APPROPRIATE (5) */
 {
-subject: "System Deployment Update",
+subject: "System Deployment Summary",
 from: "Daniel Reed <daniel.reed@corelinksystems.io>",
 time: "Tue 2:30 PM",
 body:
 `Hello team,
 
-Deployment completed successfully. All systems operational.
+Deployment completed successfully and all services are stable.
 
 Kind regards,
 Daniel Reed`,
 correct: true,
-explanation: { points: ["Clear technical update.", "Professional tone.", "Concise format."] }
+explanation: { points: ["Professional technical summary.", "Clear and concise.", "Neutral tone maintained."] }
 },
 {
-subject: "Project Milestone Review",
+subject: "Milestone Progress Update",
 from: "Emily Carter <emily.carter@brightwave-solutions.com>",
 time: "Tue 11:00 AM",
 body:
 `Hello,
 
-Milestone 2 is complete and we are entering testing phase.
+We have completed milestone 2 and are moving into testing.
 
 Regards,
 Emily Carter`,
 correct: true,
-explanation: { points: ["Clear progress update.", "Professional tone.", "Structured message."] }
+explanation: { points: ["Clear project status.", "Structured communication.", "Professional tone."] }
 },
 {
 subject: "Client Follow-Up",
@@ -179,12 +179,12 @@ time: "Tue 1:00 PM",
 body:
 `Dear client,
 
-Following up on our previous discussion regarding scope.
+Following up on our previous discussion regarding project scope.
 
 Best regards,
 Mark Evans`,
 correct: true,
-explanation: { points: ["Professional follow-up.", "Clear intent.", "Respectful tone."] }
+explanation: { points: ["Professional follow-up.", "Appropriate tone.", "Clear intent."] }
 },
 {
 subject: "Meeting Summary",
@@ -193,186 +193,186 @@ time: "Tue 3:00 PM",
 body:
 `Hi all,
 
-Summary of meeting and action items attached.
+Please find a summary of today's discussion and action items.
 
 Regards,
 Olivia Grant`,
 correct: true,
-explanation: { points: ["Clear summary.", "Professional tone.", "Concise writing."] }
+explanation: { points: ["Clear summary format.", "Professional tone.", "Structured communication."] }
 },
 {
-subject: "Task Allocation Update",
+subject: "Task Redistribution Notice",
 from: "HR Ops <hr.ops@silverlinecorp.net>",
 time: "Tue 4:00 PM",
 body:
 `Hello team,
 
-Tasks have been redistributed based on workload.
+Tasks have been redistributed based on current workload and availability.
 
 Thanks,
 HR`,
 correct: true,
-explanation: { points: ["Clear internal update.", "Professional tone.", "Concise message."] }
+explanation: { points: ["Neutral HR communication.", "Clear intent.", "Professional structure."] }
 },
 
-/* INAPPROPRIATE (5) */
+/* INAPPROPRIATE (SUBTLE / PASSIVE AGGRESSIVE) */
 {
-subject: "WHY IS THIS STILL BROKEN",
+subject: "Quick question about timeline",
 from: "unknown@tempmail.xyz",
 time: "Tue 9:00 AM",
-body:`fix this now`,
+body:`this is taking longer than expected`,
 correct: false,
-explanation: { points: ["Aggressive tone.", "No structure.", "Unprofessional communication."] }
+explanation: { points: ["Passive-aggressive tone.", "Lacks context.", "Unclear request intent."] }
 },
 {
-subject: "explain yourself",
+subject: "Follow-up on previous work",
 from: "user@random.biz",
 time: "Tue 10:00 AM",
-body:`this makes no sense`,
+body:`just checking why this is delayed`,
 correct: false,
-explanation: { points: ["Vague complaint.", "No context.", "Unprofessional tone."] }
+explanation: { points: ["Implied blame.", "No constructive framing.", "Unprofessional undertone."] }
 },
 {
-subject: "fix or else",
+subject: "Urgent clarification needed",
 from: "boss@fakecorp.io",
 time: "Tue 11:30 AM",
-body:`you need to fix this immediately`,
+body:`you need to respond immediately`,
 correct: false,
-explanation: { points: ["Threatening tone.", "No structure.", "Inappropriate workplace behavior."] }
+explanation: { points: ["Commanding tone.", "Pressure-based wording.", "Lacks diplomacy."] }
 },
 {
-subject: "this is unacceptable",
+subject: "Project concern",
 from: "admin@spamcorp.net",
 time: "Tue 1:15 PM",
-body:`redo everything`,
+body:`this is not going as planned`,
 correct: false,
-explanation: { points: ["Harsh tone.", "No constructive feedback.", "Unprofessional."] }
+explanation: { points: ["Vague dissatisfaction.", "No actionable detail.", "Unclear expectation."] }
 },
 {
-subject: "??? URGENT",
+subject: "Response required",
 from: "unknown@trashmail.io",
 time: "Tue 2:45 PM",
-body:`answer me`,
+body:`answer this now`,
 correct: false,
-explanation: { points: ["No clarity.", "Aggressive urgency.", "Unprofessional tone."] }
+explanation: { points: ["Demanding tone.", "No context.", "Unprofessional brevity."] }
 }
 ],
 
 /* ================= EXPERT ================= */
 expert: [
 
-/* APPROPRIATE (5) */
+/* APPROPRIATE (REALISTIC CORPORATE AMBIGUITY) */
 {
-subject: "Q3 Financial Summary",
+subject: "Q3 Performance Overview",
 from: "Olivia Bennett <olivia.bennett@aurorafinancialgroup.com>",
 time: "Wed 8:00 AM",
 body:
-`Dear Executive Team,
+`Dear Team,
 
-Revenue remains stable with a 3% increase in efficiency.
+Q3 performance remains within expected variance, with modest efficiency gains observed in select departments.
 
 Sincerely,
 Olivia Bennett`,
 correct: true,
-explanation: { points: ["Executive tone.", "Concise reporting.", "Professional structure."] }
+explanation: { points: ["Executive neutrality.", "Appropriate ambiguity.", "Professional tone maintained."] }
 },
 {
-subject: "Strategic Planning Update",
+subject: "Strategic Direction Update",
 from: "Henry Collins <henry.collins@northfieldstrategy.com>",
 time: "Wed 9:00 AM",
 body:
-`Dear team,
+`Dear colleagues,
 
-Proceeding with revised Q4 objectives.
+We will proceed with revised Q4 priorities aligned to current market conditions.
 
 Regards,
 Henry Collins`,
 correct: true,
-explanation: { points: ["Strategic tone.", "Formal structure.", "Clear intent."] }
+explanation: { points: ["Strategic framing.", "Corporate tone.", "No informal language."] }
 },
 {
-subject: "Board Meeting Notes",
+subject: "Board Summary Notes",
 from: "Executive Office <exec@aurorafinancialgroup.com>",
 time: "Wed 10:00 AM",
 body:
 `Dear Board Members,
 
-Please find meeting notes attached.
+Please find summarized outcomes from today's session for your review.
 
 Sincerely,
 Executive Office`,
 correct: true,
-explanation: { points: ["Formal executive communication.", "Concise summary.", "Proper tone."] }
+explanation: { points: ["Formal executive communication.", "Appropriate vagueness.", "Concise structure."] }
 },
 {
-subject: "Risk Assessment Update",
+subject: "Risk Review Update",
 from: "Rachel Moore <rachel.moore@corelinksystems.io>",
 time: "Wed 11:00 AM",
 body:
 `Hello,
 
-Risk analysis updated based on market changes.
+Risk indicators have been updated to reflect recent market adjustments.
 
 Regards,
 Rachel Moore`,
 correct: true,
-explanation: { points: ["Professional analysis.", "Clear structure.", "Concise tone."] }
+explanation: { points: ["Professional analytical tone.", "Neutral wording.", "Appropriate abstraction level."] }
 },
 {
-subject: "Annual Review Preparation",
+subject: "Annual Review Guidance",
 from: "HR Executive <hr.exec@silverlinecorp.net>",
 time: "Wed 1:00 PM",
 body:
 `Dear colleagues,
 
-Please prepare annual review documentation.
+Please proceed with preparing annual review materials as outlined in the internal guidelines.
 
 Regards,
 HR Executive`,
 correct: true,
-explanation: { points: ["Formal HR communication.", "Clear directive.", "Professional tone."] }
+explanation: { points: ["Formal HR communication.", "Indirect instruction style.", "Professional tone."] }
 },
 
-/* INAPPROPRIATE (5) */
+/* INAPPROPRIATE (SUBTLE EXECUTIVE MISSTEPS) */
 {
-subject: "late report??",
+subject: "FYI on performance notes",
 from: "staff@internal-temp-mail.net",
 time: "Wed 8:10 AM",
-body:`this report is late. explain now.`,
+body:`some teams are underperforming based on recent metrics`,
 correct: false,
-explanation: { points: ["Unprofessional tone.", "Demanding language.", "Not executive appropriate."] }
+explanation: { points: ["Unstructured internal critique.", "No proper escalation context.", "Risk of inappropriate informal reporting."] }
 },
 {
-subject: "FIX THIS IMMEDIATELY",
+subject: "Quick alignment check",
 from: "exec@randommail.xyz",
 time: "Wed 9:30 AM",
-body:`unacceptable behavior`,
+body:`this direction doesn't seem optimal anymore`,
 correct: false,
-explanation: { points: ["Aggressive tone.", "No structure.", "Poor executive communication."] }
+explanation: { points: ["Undermines prior decisions indirectly.", "No constructive alternative.", "Weak executive framing."] }
 },
 {
-subject: "??? URGENT RESPONSE",
+subject: "Need clarity on this",
 from: "unknown@spam.io",
 time: "Wed 10:15 AM",
-body:`answer now`,
+body:`this approach is questionable`,
 correct: false,
-explanation: { points: ["No context.", "Aggressive tone.", "Unprofessional."] }
+explanation: { points: ["Vague criticism.", "No actionable request.", "Unprofessional framing."] }
 },
 {
-subject: "this is a disaster",
+subject: "Concerns raised",
 from: "manager@fakecorp.net",
 time: "Wed 11:45 AM",
-body:`redo everything immediately`,
+body:`this may not be the best direction`,
 correct: false,
-explanation: { points: ["Emotional tone.", "No structure.", "Unprofessional."] }
+explanation: { points: ["Passive disagreement.", "Lacks justification.", "No clear recommendation."] }
 },
 {
-subject: "explain NOW",
+subject: "Follow-up required",
 from: "ceo@tempmail.biz",
 time: "Wed 2:00 PM",
-body:`why is this wrong`,
+body:`why was this approach chosen`,
 correct: false,
-explanation: { points: ["Commanding tone.", "No detail.", "Unprofessional communication."] }
+explanation: { points: ["Interrogative executive tone.", "Implied criticism.", "Lacks diplomatic framing."] }
 }
 ]
 };
@@ -380,7 +380,6 @@ explanation: { points: ["Commanding tone.", "No detail.", "Unprofessional commun
 /* =========================
    SHUFFLE FUNCTION
    ========================= */
-
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -459,11 +458,9 @@ function answer(choice) {
   const fb = document.getElementById("feedback");
   fb.className = correct ? "good" : "bad";
 
-  const title = correct ? "CORRECT" : "INCORRECT";
-
   fb.innerHTML = `
     <div style="font-weight:700; margin-bottom:10px;">
-      ${title}
+      ${correct ? "CORRECT" : "INCORRECT"}
     </div>
     <ul style="margin:0; padding-left:18px;">
       ${e.explanation.points.map(p => `<li>${p}</li>`).join("")}
@@ -481,12 +478,7 @@ function answer(choice) {
 
 function nextEmail() {
   const next = answered.findIndex(a => a === false);
-
-  if (next === -1) {
-    gameOver(true);
-    return;
-  }
-
+  if (next === -1) return gameOver(true);
   openEmail(next);
 }
 
