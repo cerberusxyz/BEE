@@ -34,7 +34,7 @@ emails = {
   ]
 };
 
-/* START */
+/* START GAME */
 function startGame(level) {
   currentEmails = [...emails[level]];
 
@@ -68,7 +68,7 @@ function renderInbox() {
   });
 }
 
-/* OPEN */
+/* OPEN EMAIL */
 function openEmail(i) {
   currentIndex = i;
 
