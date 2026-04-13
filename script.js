@@ -1,168 +1,114 @@
-let emails = {};
+let emails = [];
 let currentEmails = [];
 let selectedEmail = null;
 let strikes = 0;
 let locked = false;
 
 /* =========================
-   DATASET (WITH EXPLANATIONS RESTORED)
+   SHUFFLE
+========================= */
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+/* =========================
+   FULL EMAIL POOL (NO DIFFICULTY SPLIT)
 ========================= */
 
-emails = {
-
-/* ================= NOVICE ================= */
-novice: [
+emails = [
 {
 subject: "Team Meeting Reminder",
 from: "Laura Bennett <laura.bennett@northfieldadmin.net>",
 time: "Mon 9:00 AM",
-body:
-`Hello team,
-
-Reminder that we have a meeting tomorrow at 10 AM to discuss project updates.
-
-Best regards,
-Laura Bennett`,
+body: `Hello team,\n\nReminder that we have a meeting tomorrow at 10 AM.\n\nBest regards,\nLaura Bennett`,
 correct: true,
-explanation: "Clear, polite, and professionally structured communication with a specific time and purpose."
+explanation: "Clear, professional meeting reminder with appropriate tone and structure."
 },
 {
 subject: "Weekly Update",
 from: "James Carter <james.carter@clearviewops.com>",
 time: "Mon 10:00 AM",
-body:
-`Hello,
-
-Project is progressing as expected this week.
-
-Regards,
-James Carter`,
+body: `Hello,\n\nProject is progressing as expected.\n\nRegards,\nJames Carter`,
 correct: true,
-explanation: "Concise progress update with neutral tone and no ambiguity or unnecessary detail."
+explanation: "Concise and professional status update with no ambiguity."
 },
 {
 subject: "Office Hours",
 from: "HR Team <hr@silverlinecorp.net>",
 time: "Mon 11:00 AM",
-body:
-`Hi all,
-
-Office hours are 9 AM to 5 PM, Monday through Friday.
-
-Thanks,
-HR Team`,
+body: `Hi all,\n\nOffice hours are 9 AM to 5 PM.\n\nThanks,\nHR`,
 correct: true,
-explanation: "Straightforward informational message with clear structure and no informal language."
+explanation: "Clear informational HR communication."
 },
 {
 subject: "Meeting Confirmation",
 from: "Sophie Turner <sophie.turner@brightpathconsulting.io>",
 time: "Mon 1:00 PM",
-body:
-`Hello,
-
-Confirming our meeting on Thursday at 2 PM.
-
-Best,
-Sophie Turner`,
+body: `Hello,\n\nConfirming our meeting on Thursday at 2 PM.\n\nBest,\nSophie`,
 correct: true,
-explanation: "Direct confirmation email with proper tone and no extraneous content."
+explanation: "Direct confirmation with professional tone."
 },
 {
 subject: "Monthly Reports",
 from: "Daniel Scott <daniel.scott@northbridgeconsulting.net>",
 time: "Mon 3:00 PM",
-body:
-`Hi team,
-
-Please send monthly reports by Friday.
-
-Regards,
-Daniel Scott`,
+body: `Hi team,\n\nPlease send reports by Friday.\n\nRegards,\nDaniel`,
 correct: true,
-explanation: "Clear instruction with deadline and professional phrasing."
+explanation: "Clear instruction with deadline."
 },
 
-/* INAPPROPRIATE */
 {
-subject: "Project update",
-from: "operations@northfieldadmin.net",
+subject: "Project update?",
+from: "ops@northfieldadmin.net",
 time: "Mon 9:20 AM",
-body:
-`Hi team,
-
-Just checking if there are any updates to the project timeline for planning purposes.
-
-Thanks,
-Operations`,
+body: `Hi team,\n\nAny updates on timeline?\n\nThanks`,
 correct: false,
-explanation: "Unnecessary check-in that assumes uncertainty and pressures for updates without cause."
+explanation: "Unnecessary check-in without context or justification."
 },
 {
 subject: "Quick question",
 from: "manager@clearviewops.com",
 time: "Mon 10:40 AM",
-body:
-`Hi,
-
-Are we still aligned with delivery expectations for this week?
-
-Regards,
-Manager`,
+body: `Hi,\n\nAre we still on track this week?\n\nRegards`,
 correct: false,
-explanation: "Introduces doubt about delivery without context, creating unnecessary concern."
+explanation: "Creates doubt without evidence or context."
 },
 {
 subject: "Follow-up",
 from: "lead@northbridgeconsulting.net",
 time: "Mon 11:30 AM",
-body:
-`Hello,
-
-Just following up on current progress when you have a moment.
-
-Best,
-Lead`,
+body: `Hello,\n\nFollowing up on progress.\n\nBest`,
 correct: false,
-explanation: "Generic follow-up that adds no value or actionable information."
+explanation: "Generic follow-up with no actionable detail."
 },
 {
 subject: "Update request",
 from: "hr@silverlinecorp.net",
 time: "Mon 1:45 PM",
-body:
-`Hi,
-
-Could you share a brief status update when available?
-
-Thanks,
-HR`,
+body: `Hi,\n\nSend status update when possible.\n\nThanks`,
 correct: false,
-explanation: "Redundant request lacking urgency or justification for interruption."
+explanation: "Vague and unnecessary interruption."
 },
 {
 subject: "Checking in",
 from: "support@clearviewops.com",
 time: "Mon 2:30 PM",
-body:
-`Hello,
-
-Checking in on current progress.
-
-Regards,
-Support Team`,
+body: `Hello,\n\nChecking in on progress.\n\nRegards`,
 correct: false,
-explanation: "Vague and non-actionable message that does not specify what is needed."
+explanation: "Non-specific and redundant request."
 }
-]
-
-};
+];
 
 /* =========================
    START GAME
 ========================= */
-window.startGame = function (difficulty) {
-  currentEmails = shuffle([...emails[difficulty]]);
+window.startGame = function () {
+
+  currentEmails = shuffle([...emails]);
   strikes = 0;
   locked = false;
   selectedEmail = null;
@@ -176,7 +122,7 @@ window.startGame = function (difficulty) {
 };
 
 /* =========================
-   INBOX
+   INBOX RENDER
 ========================= */
 function renderInbox() {
   const list = document.getElementById("email-list");
@@ -196,7 +142,7 @@ function renderInbox() {
 }
 
 /* =========================
-   LOAD EMAIL + EXPLANATION BOX RESET
+   LOAD EMAIL
 ========================= */
 function loadEmail(email) {
   document.getElementById("email-subject").innerText = email.subject;
@@ -217,7 +163,7 @@ ${email.body}`;
 }
 
 /* =========================
-   ANSWER + EXPLANATION BOX
+   ANSWER
 ========================= */
 window.answer = function (isCorrect) {
   if (!selectedEmail || locked) return;
@@ -248,7 +194,7 @@ window.answer = function (isCorrect) {
   locked = false;
 
   if (strikes >= 3 || currentEmails.length === 0) {
-    setTimeout(endGame, 800);
+    setTimeout(endGame, 700);
   }
 };
 
