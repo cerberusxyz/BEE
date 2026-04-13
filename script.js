@@ -1,8 +1,7 @@
 let emails = {};
-let current = [];
-let index = 0;
+let currentEmails = [];
+let selectedEmail = null;
 let strikes = 0;
-let answered = [];
 let locked = false;
 
 /* =========================
@@ -17,12 +16,12 @@ function shuffle(array) {
 }
 
 /* =========================
-   EMAIL DATASET
+   GOOD BALANCED DATASET (CLEAN VERSION)
 ========================= */
 
 emails = {
 
-/* ===== NOVICE ===== */
+/* ================= NOVICE ================= */
 novice: [
 {
 subject: "Team Meeting Reminder",
@@ -90,7 +89,7 @@ Daniel Scott`,
 correct: true
 },
 
-/* incorrect */
+/* INAPPROPRIATE (SUBTLE, REALISTIC) */
 {
 subject: "Project update",
 from: "operations@northfieldadmin.net",
@@ -98,7 +97,7 @@ time: "Mon 9:20 AM",
 body:
 `Hi team,
 
-Just checking in—do we have an updated timeline for completion?
+Just checking if there are any updates to the project timeline for planning purposes.
 
 Thanks,
 Operations`,
@@ -111,7 +110,7 @@ time: "Mon 10:40 AM",
 body:
 `Hi,
 
-Are we still on track for delivery this week?
+Are we still aligned with delivery expectations for this week?
 
 Regards,
 Manager`,
@@ -124,7 +123,7 @@ time: "Mon 11:30 AM",
 body:
 `Hello,
 
-Just following up on the current status.
+Just following up on current progress when you have a moment.
 
 Best,
 Lead`,
@@ -137,7 +136,7 @@ time: "Mon 1:45 PM",
 body:
 `Hi,
 
-Can you send a quick update when you have time?
+Could you share a brief status update when available?
 
 Thanks,
 HR`,
@@ -150,7 +149,7 @@ time: "Mon 2:30 PM",
 body:
 `Hello,
 
-Just checking in.
+Checking in on current progress.
 
 Regards,
 Support Team`,
@@ -158,7 +157,7 @@ correct: false
 }
 ],
 
-/* ===== INTERMEDIATE ===== */
+/* ================= INTERMEDIATE ================= */
 intermediate: [
 {
 subject: "Deployment Update",
@@ -167,7 +166,7 @@ time: "Tue 2:30 PM",
 body:
 `Hello team,
 
-Deployment was completed successfully and everything is running normally.
+Deployment was completed successfully and all systems are operating normally.
 
 Kind regards,
 Daniel Reed`,
@@ -193,7 +192,7 @@ time: "Tue 1:00 PM",
 body:
 `Dear client,
 
-Following up on our previous discussion.
+Following up on our previous discussion regarding scope.
 
 Best regards,
 Mark Evans`,
@@ -206,7 +205,7 @@ time: "Tue 3:00 PM",
 body:
 `Hi all,
 
-Please see attached meeting notes.
+Please find attached notes from today’s meeting.
 
 Regards,
 Olivia Grant`,
@@ -226,7 +225,7 @@ HR`,
 correct: true
 },
 
-/* incorrect */
+/* INAPPROPRIATE */
 {
 subject: "Progress check",
 from: "operations@brightwave-solutions.com",
@@ -247,7 +246,7 @@ time: "Tue 10:20 AM",
 body:
 `Hello,
 
-What is the current status?
+What is the current status of this task?
 
 Best,
 Lead`,
@@ -273,7 +272,7 @@ time: "Tue 1:30 PM",
 body:
 `Hello,
 
-Are we aligned on milestones?
+Are we aligned on milestone completion?
 
 Thanks,
 PM`,
@@ -286,7 +285,7 @@ time: "Tue 3:15 PM",
 body:
 `Hi,
 
-Is everything okay?
+Is everything being handled correctly so far?
 
 Regards,
 Strategy Team`,
@@ -294,7 +293,7 @@ correct: false
 }
 ],
 
-/* ===== EXPERT ===== */
+/* ================= EXPERT ================= */
 expert: [
 {
 subject: "Q3 Update",
@@ -303,7 +302,7 @@ time: "Wed 8:00 AM",
 body:
 `Dear Team,
 
-Q3 results are stable.
+Q3 results are stable and within expected range.
 
 Sincerely,
 Olivia Bennett`,
@@ -316,7 +315,7 @@ time: "Wed 9:00 AM",
 body:
 `Dear colleagues,
 
-We will proceed with updated priorities.
+We will proceed with updated Q4 priorities.
 
 Regards,
 Henry Collins`,
@@ -327,9 +326,9 @@ subject: "Board Summary",
 from: "Executive Office <exec@aurorafinancialgroup.com>",
 time: "Wed 10:00 AM",
 body:
-`Dear Board,
+`Dear Board Members,
 
-Please review summary.
+Please review today’s summary.
 
 Sincerely,
 Executive Office`,
@@ -342,7 +341,7 @@ time: "Wed 11:00 AM",
 body:
 `Hello,
 
-Risk data updated.
+Risk data has been updated.
 
 Regards,
 Rachel Moore`,
@@ -355,14 +354,14 @@ time: "Wed 1:00 PM",
 body:
 `Dear colleagues,
 
-Please prepare review materials.
+Please prepare annual review materials.
 
 Regards,
 HR Executive`,
 correct: true
 },
 
-/* incorrect */
+/* INAPPROPRIATE */
 {
 subject: "Performance update",
 from: "exec@aurorafinancialgroup.com",
@@ -370,7 +369,7 @@ time: "Wed 8:20 AM",
 body:
 `Team,
 
-Some areas need review.
+Some areas are not meeting expectations and may need review.
 
 Executive Office`,
 correct: false
@@ -382,7 +381,7 @@ time: "Wed 9:40 AM",
 body:
 `Hello,
 
-We should reconsider strategy.
+I think we should reconsider the current strategy.
 
 Regards,
 Strategy`,
@@ -395,7 +394,7 @@ time: "Wed 10:20 AM",
 body:
 `Hi,
 
-There may be an issue.
+There seems to be an issue with execution.
 
 Regards,
 PM`,
@@ -408,7 +407,7 @@ time: "Wed 11:50 AM",
 body:
 `Dear team,
 
-We may need to review processes.
+We may need to review our current processes.
 
 Sincerely,
 Board`,
@@ -431,61 +430,46 @@ correct: false
 };
 
 /* =========================
-   START GAME (FIXED SAFE)
+   START GAME
 ========================= */
 window.startGame = function (difficulty) {
-  current = shuffle([...emails[difficulty]]);
-  index = 0;
+  currentEmails = shuffle([...emails[difficulty]]);
   strikes = 0;
-  answered = [];
   locked = false;
+  selectedEmail = null;
 
-  const startScreen = document.getElementById("start-screen");
-  const app = document.getElementById("app");
+  document.getElementById("start-screen").style.display = "none";
+  document.getElementById("app").style.display = "block";
 
-  if (startScreen) startScreen.classList.add("hidden");
-  if (app) app.classList.remove("hidden");
+  document.getElementById("strikes").innerText = "Strikes: 0 / 3";
 
-  const diffEl = document.getElementById("difficulty");
-  const strikeEl = document.getElementById("strikes");
-
-  if (diffEl) diffEl.innerText = difficulty.toUpperCase();
-  if (strikeEl) strikeEl.innerText = "Strikes: 0 / 3";
-
-  loadEmail();
+  renderInbox();
 };
 
 /* =========================
-   ANSWER
+   RENDER INBOX
 ========================= */
-window.answer = function (isCorrect) {
-  if (locked) return;
-  locked = true;
+function renderInbox() {
+  const list = document.getElementById("email-list");
+  list.innerHTML = "";
 
-  const email = current[index];
+  currentEmails.forEach((email) => {
+    const li = document.createElement("li");
+    li.textContent = email.subject;
 
-  if (isCorrect !== email.correct) {
-    strikes++;
-    const strikeEl = document.getElementById("strikes");
-    if (strikeEl) strikeEl.innerText = `Strikes: ${strikes} / 3`;
-  }
+    li.onclick = () => {
+      selectedEmail = email;
+      loadEmail(email);
+    };
 
-  setTimeout(nextEmail, 400);
-};
+    list.appendChild(li);
+  });
+}
 
 /* =========================
    LOAD EMAIL
 ========================= */
-function loadEmail() {
-  const email = current[index];
-
-  if (!email) {
-    endGame();
-    return;
-  }
-
-  locked = false;
-
+function loadEmail(email) {
   document.getElementById("email-subject").innerText = email.subject;
 
   document.getElementById("email-body").innerText =
@@ -494,27 +478,43 @@ Time: ${email.time}
 
 ${email.body}`;
 
-  document.getElementById("actions").classList.remove("hidden");
+  document.getElementById("actions").style.display = "block";
 }
 
 /* =========================
-   NEXT
+   ANSWER
 ========================= */
-function nextEmail() {
-  index++;
+window.answer = function (isCorrect) {
+  if (!selectedEmail || locked) return;
+  locked = true;
 
-  if (strikes >= 3 || index >= current.length) {
-    endGame();
-    return;
+  if (isCorrect !== selectedEmail.correct) {
+    strikes++;
+    document.getElementById("strikes").innerText = `Strikes: ${strikes} / 3`;
   }
 
-  loadEmail();
-}
+  currentEmails = currentEmails.filter(e => e !== selectedEmail);
+  selectedEmail = null;
+
+  document.getElementById("email-subject").innerText = "Select an email";
+  document.getElementById("email-body").innerText = "";
+
+  renderInbox();
+
+  locked = false;
+
+  if (strikes >= 3 || currentEmails.length === 0) {
+    endGame();
+  }
+};
 
 /* =========================
-   END
+   END GAME
 ========================= */
 function endGame() {
-  document.getElementById("app").classList.add("hidden");
-  document.getElementById("end-screen").classList.remove("hidden");
+  document.getElementById("app").style.display = "none";
+  document.getElementById("end-screen").style.display = "block";
+
+  document.getElementById("end-message").innerText =
+    strikes >= 3 ? "Game Over" : "Inbox Cleared!";
 }
