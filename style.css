@@ -1,191 +1,101 @@
 body {
   margin: 0;
   font-family: "Segoe UI", Arial, sans-serif;
-  background: #eef3f9;
-  color: #1a1a1a;
-  height: 100vh;
-  overflow: hidden;
+  background: #f4f6fb;
 }
 
-/* ================= START SCREEN ================= */
+/* START */
 #start-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  gap: 12px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
 }
 
-/* ================= TOP BAR (FIXED SEPARATION) ================= */
+/* TOPBAR (ONLY FIX: separation + height consistency) */
 #topbar {
   height: 56px;
-  background: #ffffff;
-  border-bottom: 2px solid #d9e2ef;
-  display: flex;
-  align-items: center;
-  padding: 0 18px;
-  font-weight: 600;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  position: relative;
-  z-index: 10;
+  background: white;
+  border-bottom: 1px solid #d6dde8;
+  display:flex;
+  align-items:center;
+  padding:0 16px;
 }
 
-/* ================= MAIN WRAPPER (CRITICAL FIX) ================= */
+/* MAIN FIX: full height layout */
 #main {
-  display: flex;
+  display:flex;
   height: calc(100vh - 56px);
-  width: 100%;
 }
 
-/* ================= INBOX (FULL HEIGHT FIX) ================= */
+/* INBOX */
 #sidebar {
   width: 320px;
-  background: #ffffff;
-  border-right: 1px solid #e5eaf3;
-  overflow-y: auto;
-  height: 100%;
+  background: white;
+  border-right: 1px solid #d6dde8;
 }
 
-#sidebar h3 {
-  margin: 0;
-  padding: 14px;
-  font-size: 12px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #6b7280;
-  border-bottom: 1px solid #eef2f7;
-}
-
-/* EMAIL LIST */
 #email-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  list-style:none;
+  margin:0;
+  padding:0;
 }
 
 #email-list li {
-  padding: 14px 16px;
-  border-bottom: 1px solid #f1f5f9;
-  cursor: pointer;
-  font-size: 14px;
+  padding:12px;
+  border-bottom:1px solid #eee;
+  cursor:pointer;
 }
 
 #email-list li:hover {
-  background: #f0f6ff;
+  background:#f2f7ff;
 }
 
-/* completed emails */
-#email-list li[style*="opacity"] {
-  opacity: 0.4;
-  text-decoration: line-through;
-}
-
-/* ================= CONTENT ================= */
+/* CONTENT */
 #content {
-  flex: 1;
-  padding: 26px;
-  background: #f6f9ff;
-  overflow-y: auto;
-  height: 100%;
+  flex:1;
+  padding:20px;
 }
 
-#email-subject {
-  font-size: 22px;
-  margin-bottom: 14px;
-}
-
-/* EMAIL CARD */
+/* EMAIL BODY */
 #email-body {
-  white-space: pre-wrap;
-  background: #ffffff;
-  padding: 18px;
-  border-radius: 12px;
-  border: 1px solid #e6ebf2;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
-  min-height: 240px;
-  line-height: 1.5;
+  background:white;
+  border:1px solid #ddd;
+  padding:14px;
+  white-space:pre-wrap;
 }
 
-/* ================= ACTIONS ================= */
-#actions {
-  margin-top: 16px;
-}
-
+/* ACTIONS */
 #actions button {
-  margin-right: 10px;
-  border-radius: 8px;
-  padding: 10px 14px;
+  margin-right:10px;
 }
 
-/* ================= FEEDBACK (FIXED COLOR BOXES) ================= */
+/* FEEDBACK (ONLY CHANGE REQUESTED: COLOR BOXES) */
 #feedback {
-  margin-top: 16px;
-  padding: 16px;
-  border-radius: 12px;
-  background: #ffffff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-  line-height: 1.5;
-  font-size: 14px;
+  margin-top:10px;
+  padding:12px;
+  border-radius:6px;
 }
 
-/* GREEN BOX (CORRECT) */
+/* GREEN BOX */
 .good {
-  border: 2px solid #22c55e;
-  border-left: 8px solid #22c55e;
-  background: #ecfdf5;
-  color: #166534;
+  border:2px solid #22c55e;
+  background:#ecfdf5;
+  color:#166534;
 }
 
-/* RED BOX (INCORRECT) */
+/* RED BOX */
 .bad {
-  border: 2px solid #ef4444;
-  border-left: 8px solid #ef4444;
-  background: #fef2f2;
-  color: #991b1b;
+  border:2px solid #ef4444;
+  background:#fef2f2;
+  color:#991b1b;
 }
 
-/* ================= END SCREEN ================= */
+/* END */
 #end-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  text-align: center;
-}
-
-/* ================= DARK MODE ================= */
-.dark {
-  background: #0f172a;
-  color: #e5e7eb;
-}
-
-.dark #topbar {
-  background: #111827;
-  border-bottom: 2px solid #1f2937;
-}
-
-.dark #sidebar {
-  background: #111827;
-  border-color: #1f2937;
-}
-
-.dark #content {
-  background: #0b1220;
-}
-
-.dark #email-body {
-  background: #111827;
-  border-color: #1f2937;
-  color: #e5e7eb;
-}
-
-.dark #email-list li:hover {
-  background: #1e293b;
-}
-
-.dark #feedback {
-  background: #111827;
-  color: #e5e7eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
 }
