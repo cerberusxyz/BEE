@@ -250,33 +250,15 @@ button:hover {
   height: 60px;
   display: flex;
   align-items: center;
-  padding: 0 16px;
+  justify-content: center;
   background: #ffffff;
   border-bottom: 1px solid #d6dde8;
   box-sizing: border-box;
 }
 
-/* forces title left, button right */
 #menu-topbar h1 {
   margin: 0;
-  font-size: 18px;
-  flex: 1;
-}
-
-/* ensures button stays right aligned */
-#menu-topbar div {
-  display: flex;
-  align-items: center;
-}
-
-
-#menu-topbar {
-  display: flex;
-  align-items: center;
-}
-
-#theme-toggle {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
 }
