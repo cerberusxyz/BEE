@@ -3,7 +3,6 @@ let currentEmails = [];
 let currentIndex = -1;
 
 let strikes = 0;
-let score = 0;
 let answered = [];
 let awaitingNext = false;
 
@@ -14,144 +13,137 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("end-screen").style.display = "none";
 });
 
-/* ================= DOMAINS ================= */
-function domain() {
-  const d = [
-    "northironridge.com",
-    "valewoodtech.net",
-    "bluecorefinance.org",
-    "halcyonlogistics.io",
-    "evercrestsolutions.com"
-  ];
-  return d[Math.floor(Math.random() * d.length)];
+/* ================= DARK MODE ================= */
+function toggleTheme() {
+  document.body.classList.toggle("dark-mode");
 }
 
 /* ================= DATA ================= */
 emails = {
   novice: [
     {
-      from: `Emily Carter <ecarter@northironridge.com>`,
+      from: "Emily Carter <ecarter@northironridge.com>",
       subject: "Meeting Request",
-      body: "Good morning,\n\nCould we schedule a brief meeting this week?\n\nKind regards,\nEmily Carter",
+      body: "Could we schedule a meeting this week?",
       correct: true,
-      explanation: "Professional tone, clear request, and appropriate structure."
+      explanation: "Clear and professional request."
     },
     {
-      from: `boss@valewoodtech.net`,
+      from: "boss@valewoodtech.net",
       subject: "do this",
       body: "fix it asap",
       correct: false,
-      explanation: "Too aggressive and lacks clarity or professionalism."
+      explanation: "Too aggressive and unclear."
     },
     {
-      from: `Daniel Brooks <dbrooks@valewoodtech.net>`,
-      subject: "Weekly Update",
-      body: "Hello team,\n\nProject is on track.\n\nRegards,\nDaniel",
+      from: "HR <hr@evercrestsolutions.com>",
+      subject: "Policy Reminder",
+      body: "Please review policy updates.",
       correct: true,
-      explanation: "Clear and concise professional update."
+      explanation: "Appropriate HR communication."
     },
     {
-      from: `team@halcyonlogistics.io`,
+      from: "team@halcyonlogistics.io",
       subject: "URGENT",
       body: "respond!!!",
       correct: false,
-      explanation: "Aggressive tone with no context."
+      explanation: "Unprofessional tone."
     },
     {
-      from: `HR Team <hr@evercrestsolutions.com>`,
-      subject: "Policy Reminder",
-      body: "Please review updated policy by Friday.",
+      from: "Daniel <db@valewoodtech.net>",
+      subject: "Update",
+      body: "Project is on track.",
       correct: true,
-      explanation: "Clear HR communication with proper tone."
+      explanation: "Clear update."
     }
   ],
 
   intermediate: [
     {
-      from: `Ops <ops@valewoodtech.net>`,
+      from: "Ops <ops@valewoodtech.net>",
       subject: "System Update",
-      body: "Maintenance completed successfully.",
+      body: "Maintenance complete.",
       correct: true,
-      explanation: "Professional operational update."
+      explanation: "Professional update."
     },
     {
-      from: `manager@northironridge.com`,
+      from: "manager@northironridge.com",
       subject: "Update",
       body: "I already told you this.",
       correct: false,
-      explanation: "Dismissive and unprofessional tone."
+      explanation: "Dismissive tone."
     },
     {
-      from: `Finance <finance@bluecorefinance.org>`,
+      from: "Finance <finance@bluecorefinance.org>",
       subject: "Budget Review",
-      body: "Please review before Friday deadline.",
+      body: "Please review before Friday.",
       correct: true,
-      explanation: "Clear instruction and professional tone."
+      explanation: "Clear instruction."
     },
     {
-      from: `staff@bluecorefinance.org`,
+      from: "staff@bluecorefinance.org",
       subject: "??",
       body: "why not done yet",
       correct: false,
-      explanation: "Confrontational and unclear."
+      explanation: "Unclear and confrontational."
     },
     {
-      from: `Support <support@evercrestsolutions.com>`,
+      from: "Support <support@evercrestsolutions.com>",
       subject: "Ticket Closed",
-      body: "Your issue has been resolved.",
+      body: "Your issue is resolved.",
       correct: true,
-      explanation: "Clear and professional closure message."
+      explanation: "Professional closure."
     }
   ],
 
   expert: [
     {
-      from: `CFO <cfo@bluecorefinance.org>`,
+      from: "CFO <cfo@bluecorefinance.org>",
       subject: "Q3 Report",
-      body: "Revenue shows steady growth across divisions.",
+      body: "Revenue is stable across divisions.",
       correct: true,
-      explanation: "Executive-level concise financial reporting."
+      explanation: "Executive-level clarity."
     },
     {
-      from: `ceo@valewoodtech.net`,
+      from: "ceo@valewoodtech.net",
       subject: "???",
       body: "why is this late",
       correct: false,
-      explanation: "Unprofessional and lacks constructive feedback."
+      explanation: "Unprofessional tone."
     },
     {
-      from: `Legal <legal@valewoodtech.net>`,
-      subject: "Compliance Update",
-      body: "Please review updated compliance requirements.",
+      from: "Legal <legal@valewoodtech.net>",
+      subject: "Compliance",
+      body: "Review updated requirements.",
       correct: true,
-      explanation: "Formal regulatory communication."
+      explanation: "Formal communication."
     },
     {
-      from: `board@bluecorefinance.org`,
+      from: "board@bluecorefinance.org",
       subject: "read this",
       body: "important",
       correct: false,
-      explanation: "Too vague for executive communication."
+      explanation: "Too vague."
     },
     {
-      from: `Strategy <strategy@halcyonlogistics.io>`,
-      subject: "Expansion Plan",
-      body: "Three regions identified for growth.",
+      from: "Strategy <strategy@halcyonlogistics.io>",
+      subject: "Expansion",
+      body: "Three regions identified.",
       correct: true,
-      explanation: "Clear strategic communication."
+      explanation: "Strategic clarity."
     }
   ]
 };
 
-/* ================= START GAME (FIXED FLOW) ================= */
+/* ================= GAME ================= */
 function startGame(level) {
-  currentEmails = shuffle([...emails[level]]);
+  currentEmails = [...emails[level]];
+  shuffle(currentEmails);
 
   strikes = 0;
-  score = 0;
   answered = new Array(currentEmails.length).fill(false);
-  awaitingNext = false;
   currentIndex = -1;
+  awaitingNext = false;
 
   document.getElementById("start-screen").style.display = "none";
   document.getElementById("end-screen").style.display = "none";
@@ -183,87 +175,59 @@ function renderInbox() {
 
 /* ================= OPEN EMAIL ================= */
 function openEmail(i) {
-  if (awaitingNext || answered[i]) return;
+  if (answered[i]) return;
 
   currentIndex = i;
   const email = currentEmails[i];
 
   document.getElementById("email-subject").textContent = email.subject;
-
   document.getElementById("email-body").textContent =
 `From: ${email.from}
-Subject: ${email.subject}
 
 ${email.body}`;
 
   document.getElementById("actions").classList.remove("hidden");
-  clearFeedback();
-}
-
-/* ================= NEXT EMAIL AUTO ================= */
-function openNextEmail() {
-  const next = currentEmails.findIndex((e, i) => !answered[i]);
-  if (next !== -1) openEmail(next);
+  document.getElementById("feedback").classList.add("hidden");
 }
 
 /* ================= ANSWER ================= */
 function answer(choice) {
-  if (awaitingNext || currentIndex === -1) return;
+  if (currentIndex === -1) return;
 
   const email = currentEmails[currentIndex];
   const correct = choice === email.correct;
 
-  if (correct) {
-    score += Math.floor(100 / currentEmails.length);
-  } else {
-    strikes++;
-    if (strikes >= 3) return gameOver(false);
-  }
+  if (!correct) strikes++;
 
   answered[currentIndex] = true;
-  awaitingNext = true;
 
   showFeedback(correct, email.explanation);
 
   document.getElementById("actions").classList.add("hidden");
-
-  renderInbox();
   updateUI();
+
+  if (strikes >= 3) {
+    setTimeout(() => gameOver(false), 800);
+  }
 }
 
 /* ================= FEEDBACK ================= */
 function showFeedback(correct, text) {
   const box = document.getElementById("feedback");
+
+  box.className = correct ? "good-box" : "bad-box";
   box.classList.remove("hidden");
 
-  box.innerHTML = `
-    <div class="feedback-box ${correct ? "good-box" : "bad-box"}">
-      <div class="feedback-title">${correct ? "Correct" : "Incorrect"}</div>
-      <div>${text}</div>
-    </div>
-  `;
-
-  const btn = document.createElement("button");
-  btn.textContent = "Next Email";
-
-  btn.onclick = () => {
-    awaitingNext = false;
-    clearFeedback();
-
-    const next = currentEmails.findIndex((e, i) => !answered[i]);
-    if (next === -1) return gameOver(true);
-
-    openEmail(next);
-  };
-
-  box.appendChild(btn);
+  box.innerHTML = text + `<br><br><button onclick="nextEmail()">Next Email</button>`;
 }
 
-/* ================= CLEAR ================= */
-function clearFeedback() {
-  const box = document.getElementById("feedback");
-  box.classList.add("hidden");
-  box.innerHTML = "";
+/* ================= NEXT ================= */
+function nextEmail() {
+  const next = answered.findIndex(a => a === false);
+
+  if (next === -1) return gameOver(true);
+
+  openEmail(next);
 }
 
 /* ================= UI ================= */
@@ -274,22 +238,16 @@ function updateUI() {
 /* ================= GAME OVER ================= */
 function gameOver(win) {
   document.getElementById("app").style.display = "none";
-  document.getElementById("end-screen").style.display = "flex";
-
-  const grade =
-    score >= 90 ? "A" :
-    score >= 80 ? "B" :
-    score >= 70 ? "C" :
-    score >= 60 ? "D" : "F";
+  document.getElementById("end-screen").style.display = "block";
 
   document.getElementById("end-message").textContent =
     win ? "Inbox Cleared!" : "Game Over";
-
-  document.getElementById("final-score").innerHTML =
-    `Score: ${score}/100<br>Grade: ${grade}`;
 }
 
 /* ================= UTIL ================= */
 function shuffle(arr) {
-  return arr.sort(() => Math.random() - 0.5);
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
 }
