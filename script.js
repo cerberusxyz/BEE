@@ -14,6 +14,7 @@ emails = {
     {
       subject: "Project Kickoff Meeting",
       from: "Sarah Mitchell <sarah.mitchell@northbridgeconsulting.net>",
+      time: "Mon 9:00 AM",
       body:
 `Hi team,
 
@@ -33,6 +34,7 @@ Sarah Mitchell`,
     {
       subject: "URGENT - Fix this now",
       from: "Mark <mark@fasttrackops.biz>",
+      time: "Mon 9:15 AM",
       body:
 `do this asap. it's not working and i need it fixed immediately`,
       correct: false,
@@ -50,6 +52,7 @@ Sarah Mitchell`,
     {
       subject: "System Deployment Update",
       from: "Daniel Reed <daniel.reed@corelinksystems.io>",
+      time: "Tue 2:30 PM",
       body:
 `Hello team,
 
@@ -69,6 +72,7 @@ Daniel Reed`,
     {
       subject: "WHY IS THIS NOT DONE",
       from: "Unknown Sender <unknown@randommail.xyz>",
+      time: "Tue 2:45 PM",
       body:
 `why is this still not finished. i asked yesterday.`,
       correct: false,
@@ -86,6 +90,7 @@ Daniel Reed`,
     {
       subject: "Q3 Financial Summary",
       from: "Olivia Bennett <olivia.bennett@aurorafinancialgroup.com>",
+      time: "Wed 8:00 AM",
       body:
 `Dear Executive Team,
 
@@ -105,6 +110,7 @@ Olivia Bennett`,
     {
       subject: "late report??",
       from: "Staff <staff@internal-temp-mail.net>",
+      time: "Wed 8:10 AM",
       body:
 `this report is late. explain now.`,
       correct: false,
@@ -161,10 +167,20 @@ function openEmail(i) {
 
   const e = current[i];
 
-  document.getElementById("email-subject").textContent = e.subject;
+  /* OUTLOOK-STYLE HEADER */
+  document.getElementById("email-subject").innerHTML = `
+    <div style="font-size:20px; font-weight:600;">${e.subject}</div>
+    <div style="font-size:13px; color:#666; margin-top:4px;">
+      From: ${e.from} | Time: ${e.time}
+    </div>
+  `;
+
   document.getElementById("email-body").textContent = e.body;
 
-  document.getElementById("feedback").innerHTML = "";
+  /* FIX: reset feedback completely (removes old color classes) */
+  const fb = document.getElementById("feedback");
+  fb.className = "";
+  fb.innerHTML = "";
 }
 
 /* =========================
@@ -183,12 +199,15 @@ function answer(choice) {
   answered[index] = true;
 
   const fb = document.getElementById("feedback");
-  fb.className = correct ? "good" : "bad";
+
+  /* FIX: ALWAYS reset before applying new color */
+  fb.className = "";
+  fb.classList.add(correct ? "good" : "bad");
 
   const title = correct ? "CORRECT" : "INCORRECT";
 
   fb.innerHTML = `
-    <div style="font-weight:700; font-size:14px; margin-bottom:10px;">
+    <div style="font-weight:700; margin-bottom:10px;">
       ${title}
     </div>
 
