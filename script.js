@@ -10,33 +10,70 @@ let answered = [];
 let awaitingNext = false;
 let darkMode = false;
 
-/* ================= EMAIL DATA ================= */
+/* ================= RANDOM DOMAINS ================= */
 function randomDomain() {
   const domains = [
     "northironridge.com",
     "valewoodtech.net",
     "bluecorefinance.org",
     "halcyonlogistics.io",
-    "evercrestsolutions.com"
+    "evercrestsolutions.com",
+    "silverpeakenterprises.com",
+    "westfieldsolutions.net"
   ];
   return domains[Math.floor(Math.random() * domains.length)];
 }
 
+/* ================= EMAIL DATA ================= */
 emails = {
   novice: [
     {
       from: `Emily Carter <ecarter@${randomDomain()}>`,
       subject: "Meeting Request",
-      body: "Dear Team,\n\nPlease schedule a meeting.\n\nBest regards,\nEmily Carter",
+      body: "Dear Team,\n\nI would like to schedule a meeting this week.\n\nBest regards,\nEmily Carter",
       correct: true,
-      explanation: "This email is professional, polite, and clearly structured."
+      explanation: "Clear, polite, and professionally structured communication."
     },
     {
       from: `unknown@${randomDomain()}`,
       subject: "meeting",
       body: "hey can we meet",
       correct: false,
-      explanation: "This email is too informal and lacks professional structure."
+      explanation: "Too informal and lacks business email etiquette."
+    }
+  ],
+
+  intermediate: [
+    {
+      from: `Karen Mitchell <kmitchell@${randomDomain()}>`,
+      subject: "Weekly Update",
+      body: "Dear Team,\n\nProject is on track.\n\nRegards,\nKaren",
+      correct: true,
+      explanation: "Concise and professional workplace update."
+    },
+    {
+      from: `manager@${randomDomain()}`,
+      subject: "Update",
+      body: "I already told you this.",
+      correct: false,
+      explanation: "Dismissive tone is unprofessional in workplace communication."
+    }
+  ],
+
+  expert: [
+    {
+      from: `Angela Foster <afoster@${randomDomain()}>`,
+      subject: "Quarterly Report",
+      body: "Dear Board Members,\n\nPlease review the quarterly report.\n\nKind regards,\nAngela Foster",
+      correct: true,
+      explanation: "Appropriate executive-level clarity and tone."
+    },
+    {
+      from: `exec@${randomDomain()}`,
+      subject: "Financials",
+      body: "Here are the numbers.",
+      correct: false,
+      explanation: "Too vague for executive-level communication."
     }
   ]
 };
@@ -50,7 +87,7 @@ function startGame(level) {
   answered = new Array(currentEmails.length).fill(false);
   awaitingNext = false;
 
-  // IMPORTANT: dynamic scoring system
+  // dynamic scoring
   pointsPerQuestion = Math.floor(100 / currentEmails.length);
 
   document.getElementById("start-screen").classList.add("hidden");
@@ -71,8 +108,12 @@ function renderInbox() {
     const li = document.createElement("li");
     li.textContent = email.subject;
 
-    if (!answered[i]) li.onclick = () => openEmail(i);
-    else li.style.opacity = "0.4";
+    if (!answered[i]) {
+      li.onclick = () => openEmail(i);
+    } else {
+      li.style.opacity = "0.4";
+      li.style.pointerEvents = "none";
+    }
 
     list.appendChild(li);
   });
@@ -124,7 +165,7 @@ function answer(choice) {
   document.getElementById("actions").classList.add("hidden");
 }
 
-/* ================= NEXT ================= */
+/* ================= NEXT EMAIL ================= */
 function nextEmail() {
   awaitingNext = false;
   clearFeedback();
@@ -133,13 +174,16 @@ function nextEmail() {
 
 function openNextEmail() {
   const next = currentEmails.findIndex((e, i) => !answered[i]);
+
   if (next === -1) return gameOver(true);
+
   openEmail(next);
 }
 
-/* ================= FEEDBACK (GREEN / RED BOX FIX) ================= */
+/* ================= FEEDBACK ================= */
 function showFeedback(correct, text) {
   const box = document.getElementById("feedback");
+
   box.classList.remove("hidden");
 
   box.innerHTML = `
@@ -161,8 +205,9 @@ function showFeedback(correct, text) {
 }
 
 function clearFeedback() {
-  document.getElementById("feedback").classList.add("hidden");
-  document.getElementById("feedback").innerHTML = "";
+  const box = document.getElementById("feedback");
+  box.classList.add("hidden");
+  box.innerHTML = "";
 }
 
 /* ================= UI ================= */
@@ -170,19 +215,33 @@ function updateUI() {
   document.getElementById("strikes").textContent = `Strikes: ${strikes} / 3`;
   document.getElementById("score").textContent = `Score: ${score}/100`;
 
-  const grade =
-    score >= 90 ? "A" :
-    score >= 80 ? "B" :
-    score >= 70 ? "C" :
-    score >= 50 ? "D" : "F";
-
-  document.getElementById("grade").textContent = `Grade: ${grade}`;
+  document.getElementById("grade").textContent =
+    `Grade: ${getGrade(score)}`;
 }
 
+/* ================= GRADE SYSTEM ================= */
+function getGrade(score) {
+  if (score >= 90) return "A";
+  if (score >= 80) return "B";
+  if (score >= 70) return "C";
+  if (score >= 60) return "D";
+  return "F";
+}
+
+/* ================= HIGHLIGHT ================= */
 function highlight(i) {
   document.querySelectorAll("#email-list li").forEach((el, idx) => {
     el.classList.toggle("selected", idx === i);
   });
+}
+
+/* ================= DARK MODE ================= */
+function toggleMode() {
+  darkMode = !darkMode;
+  document.body.classList.toggle("dark", darkMode);
+
+  document.getElementById("modeToggle").textContent =
+    darkMode ? "☀️ Light Mode" : "🌙 Dark Mode";
 }
 
 /* ================= GAME OVER ================= */
@@ -190,17 +249,11 @@ function gameOver(win) {
   document.getElementById("app").classList.add("hidden");
   document.getElementById("end-screen").classList.remove("hidden");
 
-  const grade =
-    score >= 90 ? "A" :
-    score >= 80 ? "B" :
-    score >= 70 ? "C" :
-    score >= 50 ? "D" : "F";
-
   document.getElementById("end-message").innerHTML =
     win ? "🎉 Inbox Cleared!" : "💀 Game Over";
 
   document.getElementById("final-score").innerHTML =
-    `Score: ${score}/100<br>Grade: ${grade}<br>Strikes: ${strikes}/3`;
+    `Score: ${score}/100<br>Grade: ${getGrade(score)}<br>Strikes: ${strikes}/3`;
 }
 
 /* ================= UTIL ================= */
